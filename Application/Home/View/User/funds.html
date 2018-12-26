@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>账单</title>
+	<link rel="stylesheet" href="__ROOT__/Public/Home/css/aui.min.css">
+	<link rel="stylesheet" type="text/css" href="__ROOT__/Public/Home/css/style.css">
+	<script type="text/javascript" src="__ROOT__/Public/Home/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="__ROOT__/Public/Home/js/fontSize.js"></script>
+	<style type="text/css">
+		 .bills_list{height: .96rem;overflow: hidden;border-bottom: 1px solid #eee;background: #fff;padding:.1re 0 .1rem 0;box-sizing: content-box;}
+		.bills_list .fl{height: .96rem;padding-left: .1rem;}
+		.bills_list .fr{height: .96rem;padding-right: .1rem;}
+		.bills_list .fl li:first-child{font-size: .33rem;color: #333;}
+		.bills_list .fl li span{background: #41ae86;border-radius: .1rem;color: #fff;font-size: .26rem;margin-left: .07rem;padding: 0 .05rem;}
+		.bills_list .fr li:first-child{font-size: .33rem;color: #333;}
+		.bills_list .fl li:last-child{font-size: .26rem;color: #41ae86;}
+		.bills_list .fr li:last-child{font-size: .28rem;color: #333;}
+		.bills_list .fr li:last-child span{font-size: .26rem;color: #c8505a;}
+	</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	  <h1 class="mui-title">账单</h1>
+	</header>
+	<div class="mui-content">
+	    <!--<ul>-->
+	    <!--<foreach name="res" item='v'>-->
+        	<!--<li class="bills_list">-->
+        		<!--<ul class="fl">-->
+        			<!--<li>444445444444<span>成功</span></li>-->
+        			<!--<li><if condition="$v.state eq 1"> +<elseif condition="$v.state eq 2"/>- </if>{$v.income}元</li>-->
+        		<!--</ul>-->
+        		<!--<ul class="fr">-->
+        			<!--<li><?php echo date("m-d H:i:s",$v['addtime']); ?></li>-->
+        			<!--&lt;!&ndash; <li><if condition="$v.state eq 1">盈利：<elseif condition="$v.state eq 2"/>减少：</if>	<span>  {$v.income}元</span></li>	 &ndash;&gt;-->
+        			<!--<li><if condition="$v.state eq 1"> 盈利：<elseif condition="$v.state eq 2"/>减少： </if><span>{$v.income}元</span></li>	-->
+        		<!--</ul>-->
+        	<!--</li>-->
+        	<!--</foreach>-->
+        <!--</ul>-->
+	    <table class="my_group_table">
+	    	<tr>
+	    		<th>事件</th>
+	    		<th>金额</th>
+	    		<th>时间</th>
+	    	</tr>
+			<foreach name="res" item='v'>
+	    	<tr>
+	    		<td>{$v.reson}</td>
+	    		<td><if condition="$v.state eq 1"> +<elseif condition="$v.state eq 2"/>- </if>{$v.income}</td>
+	    		<td><?php echo date("m-d H:i:s",$v['addtime']); ?></td>
+	    	</tr>
+			</foreach>
+
+	    </table>
+	</div>
+	<include file="Common/footer" />
+	<!--<nav class="mui-bar mui-bar-tab">-->
+		<!--<a class="mui-tab-item" data-href="index.html">-->
+			<!--<span class="mui-icon"><img src="__ROOT__/Public/Home/img/7.png" alt=""></span>-->
+			<!--<span class="mui-tab-label">首页</span>-->
+		<!--</a>-->
+		<!--<a class="mui-tab-item mui-active" data-href="funds.html">-->
+			<!--<span class="mui-icon" style="width: 20px;"><img src="__ROOT__/Public/Home/img/81.png" alt=""></span>-->
+			<!--<span class="mui-tab-label">账单</span>-->
+		<!--</a>-->
+		<!--<a class="mui-tab-item" data-href="recharge1.html">-->
+			<!--<span class="mui-icon"><img src="__ROOT__/Public/Home/img/91.png" alt=""></span>-->
+			<!--<span class="mui-tab-label">充值</span>-->
+		<!--</a>-->
+		<!--<a class="mui-tab-item" data-href="my.html">-->
+			<!--<span class="mui-icon"><img src="__ROOT__/Public/Home/img/10.png" alt=""></span>-->
+			<!--<span class="mui-tab-label">我的</span>-->
+		<!--</a>-->
+	<!--</nav>-->
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>首页</title>
+    <link rel="stylesheet" href="__ROOT__/Public/Home/css/aui.min.css">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Home/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Home/css/font.css">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/Public/Home/css/style.css">
+    <script type="text/javascript" src="__ROOT__/Public/Home/js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Home/js/fontSize.js"></script>
+    <script type="text/javascript" src="__ROOT__/Public/Home/js/swiper.min.js"></script>
+</head>
+<body class="paddingBottom bodybg">
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="__ROOT__/Public/Home/img/p_1.png?1" alt="" class="bannerImg"></div>
+        <div class="swiper-slide"><img src="__ROOT__/Public/Home/img/p_2.png?1" alt="" class="bannerImg"></div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
+<ul class="tab">
+    <li>
+        <a href="/index.php/Home/Index/assets.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-wodezichan"></i></li>
+                <li>我的资产</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/Index/withdraw.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-tixian"></i></li>
+                <li>账户提现</li>
+
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/User/recharge.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-chongzhi2"></i></li>
+                <li>账户充值</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/User/upgrade.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-huiyuan"></i></li>
+                <li>会员升级</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/Index/telCharge.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-huafeichongzhi"></i></li>
+                <li>话费充值</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="">
+            <ul class="grid">
+                <li><i class="iconfont icon-guanwang"></i></li>
+                <li>官网</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/Index/shop.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-shangcheng"></i></li>
+                <li>空冲商城</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/Index/mall.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-jifenshangcheng"></i></li>
+                <li>积分商城</li>
+            </ul>
+        </a>
+    </li>
+    <li>
+        <a href="/index.php/Home/Index/contact.html">
+            <ul class="grid">
+                <li><i class="iconfont icon-zaixiankefu"></i></li>
+                <li>在线客服</li>
+            </ul>
+        </a>
+    </li>
+</ul>
+<include file="Common/footer" />
+<script type="text/javascript">
+    $(function(){
+
+        var mySwiper = new Swiper('.swiper-container',{
+            pagination : '.swiper-pagination',
+            paginationClickable :true,
+            autoplay : 2000,
+            autoplayDisableOnInteraction : false,
+            loop : true,
+
+        })
+        $("#buy").click(function() {
+            window.location.href="detail.html"
+        });
+        $(".select li").click(function() {
+            $(this).addClass('selected').siblings().removeClass('selected');
+        });
+
+    });
+</script>
+</body>
+</html>
