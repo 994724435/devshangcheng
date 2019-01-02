@@ -36,7 +36,17 @@ class IndexController extends CommonController {
     }
 
     public function addproduct(){
+        $types= M('type')->order('sort asc')->select();
+        $temp_array=array();    
+        foreach ($types as $key => $value) {
+                if ($value['pid'] == 0) {
+                    $temp_array[]= $value;
+                    unset($types[$key]);
+                }
+        }   
+       
         if($_POST){
+
             $pic='';
             if($_FILES['thumb']['name']){   // 上传文件
                 $thumb = imgFile();
@@ -50,17 +60,15 @@ class IndexController extends CommonController {
                     $pic=$p.$img;
                 }
             }
+       
             $data['name'] =$_POST['name'];
-            $data['type'] =$_POST['type'];
-            $data['cont'] =$_POST['cont'];
+            $data['ftype'] =$_POST['ftype'];
+            $data['ctype'] =$_POST['ctype'];
+            $data['cont'] =$_POST['content1'];
             $data['pic'] =__ROOT__.$pic;
             $data['price'] =$_POST['price'];
-            $data['effectdays'] =$_POST['effectdays'];
-            $data['daycome'] =$_POST['daycome'];
-            $data['daynum'] =$_POST['daynum'];
-            $data['one'] =$_POST['one'];
-            $data['two'] =$_POST['two'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
+
             $product =M('product');
             $result = $product->add($data);
             if($result){
@@ -70,17 +78,26 @@ class IndexController extends CommonController {
             }
 
         }
+         $this->assign('fid',$temp_array);
         $this->display();
     }
 
     public function productlist(){
         $product =M('product');
-        $result = $product->select();
+        $result = $product->order('state asc')->select();
         $this->assign('res',$result);
         $this->display();
     }
 
     public function editeproduct(){
+        $types= M('type')->order('sort asc')->select();
+        $temp_array=array();    
+        foreach ($types as $key => $value) {
+                if ($value['pid'] == 0) {
+                    $temp_array[]= $value;
+                    unset($types[$key]);
+                }
+        }  
         $product =M('product');
         if($_POST){
             $pic='';
@@ -98,17 +115,13 @@ class IndexController extends CommonController {
                 }
             }
             $data['name'] =$_POST['name'];
-            $data['type'] =$_POST['type'];
-            $data['cont'] =$_POST['cont'];
+            $data['ftype'] =$_POST['ftype'];
+            $data['ctype'] =$_POST['ctype'];
+            $data['cont'] =$_POST['content1'];
             if($pic){
                 $data['pic'] =$pic;
             }
             $data['price'] =$_POST['price'];
-            $data['effectdays'] =$_POST['effectdays'];
-            $data['daycome'] =$_POST['daycome'];
-            $data['daynum'] =$_POST['daynum'];
-            $data['one'] =$_POST['one'];
-            $data['two'] =$_POST['two'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
             $result = $product->where(array('id'=>$_GET['id']))->save($data);
             if($result){
@@ -120,6 +133,7 @@ class IndexController extends CommonController {
         }
         $result = $product->where(array('id'=>$_GET['id']))->select();
         $this->assign('res',$result[0]);
+        $this->assign('fid',$temp_array);
         $this->display();
     }
 

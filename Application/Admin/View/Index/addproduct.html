@@ -1,6 +1,34 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+	<link rel="stylesheet" href="__ROOT__/Public/Admin/js/themes/default/default.css" />
+	<link rel="stylesheet" href="__ROOT__/Public/Admin/plugins/code/prettify.css" />
+	<script charset="utf-8" src="__ROOT__/Public/Admin/js/kindeditor.js"></script>
+	<script charset="utf-8" src="__ROOT__/Public/Admin/js/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="__ROOT__/Public/Admin/js/plugins/code/prettify.js"></script>
+	<script>
+		KindEditor.ready(function(K) {
+			var editor1 = K.create('textarea[name="content1"]', {
+				cssPath : '__ROOT__/Public/Admin/js/plugins/code/prettify.css',
+				uploadJson : '__ROOT__/Public/Admin/js/php/upload_json.php',
+				fileManagerJson : '__ROOT__/Public/Admin/js/php/file_manager_json.php',
+				allowFileManager : true,
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+				}
+			});
+			prettyPrint();
+		});
+	</script>
+
 <include file="Common/header" />
         <div id="page-wrapper">
         <div class="graphs">
@@ -21,11 +49,12 @@
 
 
 								<div class="form-group">
-									<label for="focusedinput" class="col-sm-2 control-label">产品名</label>
+									<label for="focusedinput" class="col-sm-2 control-label">产品类别</label>
 									<div class="col-sm-8">
-										<select class="form-control1" name="type">
-											<option value="1">空充商城</option>
-											<option value="2">积分商城</option>
+										<select class="form-control1" name="ftype">
+										     <foreach name="fid" item='v'>
+											<option value="{$v.id}">{$v.name}</option>
+											</foreach>	
 										</select>
 									</div>
 									<div class="col-sm-2">
@@ -33,17 +62,58 @@
 									</div>
 								</div>
 
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">产品描述</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="text" name="cont" value="" class="form-control1" id="focusedinput" placeholder="" style="height: 80px;">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
 								<div class="form-group">
-									<label for="focusedinput" class="col-sm-2 control-label">产品图片</label>
+									<label for="focusedinput" class="col-sm-2 control-label">产品子类别</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="ctype">
+										<option value="6">米面粮油</option>
+										     <!-- <foreach name="fid" item='v'>
+											<option value="{$v.id}">{$v.name}</option>
+											</foreach>	 -->
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否推荐</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="istui">
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否特色</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="iste">
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否精品</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="isjing">
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">网络图片地址</label>
 									<div class="col-sm-8">
 										<input type="text" name="pic" class="form-control1" id="focusedinput" placeholder="">
 									</div>
@@ -71,54 +141,17 @@
 									</div>
 								</div>
 
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">理财有效天数（天）</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="number" name="effectdays" value="" class="form-control1" id="focusedinput" placeholder="">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
+								<br />
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">内容</label>
+									<div class="col-sm-8">
+										<textarea name="content1" style="width:700px;height:200px;visibility:hidden;"><?php echo htmlspecialchars($htmlData); ?></textarea>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
 
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">理财每日收益（元）</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="number" name="daycome" value="" class="form-control1" id="focusedinput" placeholder="">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">每日发放数量</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="number" name="daynum" value="" class="form-control1" id="focusedinput" placeholder="">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
-
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">一代每日返利（%）</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="text" name="one" value="" class="form-control1" id="focusedinput" placeholder="">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
-
-								<!--<div class="form-group">-->
-									<!--<label for="focusedinput" class="col-sm-2 control-label">二代每日返利（%）</label>-->
-									<!--<div class="col-sm-8">-->
-										<!--<input type="text" name="two" value="" class="form-control1" id="focusedinput" placeholder="">-->
-									<!--</div>-->
-									<!--<div class="col-sm-2">-->
-										<!--<p class="help-block"></p>-->
-									<!--</div>-->
-								<!--</div>-->
 							      <div class="panel-footer">
 									<div class="row">
 										<div class="col-sm-8 col-sm-offset-2">

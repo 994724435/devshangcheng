@@ -17,7 +17,7 @@
 		        <tr>
 		          <th>编号</th>
 					<th>名称</th>
-					<th>来源</th>
+					<!-- <th>来源</th> -->
 		          <!--<th style="width: 300px">描述</th>-->
 		          <th>图片</th>
 					<th>价格</th>
@@ -43,9 +43,9 @@
 		        
 		          <th scope="row">{$v.id}</th>
 				  <th>{$v.name}</th>
-				  <th><if condition="$v.type eq 1"> 空充商城<elseif condition="$v.type eq 2"/>积分商城 </if></th>
+			<!-- 	  <th><if condition="$v.type eq 1"> 空充商城<elseif condition="$v.type eq 2"/>积分商城 </if></th> -->
 		          <!--<th style="width: 300px">{$v.cont}</th>-->
-		          <th><img src="{$v.pic}" style="width: 100px;"></th>
+		          <th><img src="{$v.pic}" style="width: 40px;"></th>
 				  <th>{$v.price}</th>
 				  <!--<th>{$v.daycome}</th>-->
 				  <!--<th>{$v.daynum}</th>-->

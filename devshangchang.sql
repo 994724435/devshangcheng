@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-26 21:57:22
+Date: 2019-01-02 21:55:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -240,26 +240,27 @@ CREATE TABLE `p_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL COMMENT '产品名',
   `cont` text COMMENT '产品描述',
-  `type` int(1) DEFAULT '1' COMMENT '1空冲商城 2积分商城',
+  `type` int(1) DEFAULT '1' COMMENT '1',
   `pic` varchar(255) DEFAULT NULL COMMENT '产品图片',
-  `price` varchar(100) DEFAULT NULL COMMENT '售卖价格',
-  `effectdays` varchar(30) DEFAULT NULL COMMENT '理财有效天数',
-  `daycome` varchar(100) DEFAULT NULL COMMENT '理财每日收益',
-  `daynum` int(11) DEFAULT NULL COMMENT '每日发放数量',
-  `one` varchar(50) DEFAULT NULL COMMENT '一代每日返利',
-  `two` varchar(50) DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT NULL COMMENT '售卖价格',
+  `ftype` int(10) DEFAULT NULL COMMENT '父级别分类',
+  `ctype` int(10) DEFAULT NULL COMMENT '子类类型',
+  `istui` int(1) DEFAULT '0' COMMENT '0 不推荐   1推荐',
+  `iste` int(1) DEFAULT '0' COMMENT '0非特色  1特色',
+  `isjing` int(1) DEFAULT '0' COMMENT '0不是精品  1精品',
   `state` int(3) DEFAULT '1' COMMENT '1上架  2下架',
   `addtime` varchar(100) DEFAULT NULL,
   `salenum` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_product
 -- ----------------------------
-INSERT INTO `p_product` VALUES ('2', '手机', null, '1', '/register/Public/Uploads/2017-03-31/58ddce2af1148.png', '100', null, null, null, null, null, '1', '2017-11-30 22:14:38', '0');
-INSERT INTO `p_product` VALUES ('3', '钱付叁号', null, '1', '/register/Public/Uploads/2017-03-31/58ddce371bfd2.png', '200', null, null, null, null, null, '1', '2017-11-30 22:14:16', '0');
-INSERT INTO `p_product` VALUES ('8', '手表', null, '1', '/Public/Uploads/2017-11-30/5a2010be48b86.jpg', '100', null, null, null, null, null, '1', '2017-11-30 22:14:11', '0');
+INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '4', '6', '0', '0', '0', '1', '2019-01-02 21:48:08', '0');
+INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', null, '1', '/Public/Uploads/2019-01-02/5c2cbdab50395.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-02 21:33:31', '0');
+INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '0', '0', '2', '2019-01-02 21:46:55', '0');
+INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', null, '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '2', '6', '0', '0', '0', '1', '2019-01-02 21:38:51', '0');
 
 -- ----------------------------
 -- Table structure for `p_quan`
@@ -316,6 +317,34 @@ INSERT INTO `p_rite` VALUES ('15', '0..08', '08-16');
 INSERT INTO `p_rite` VALUES ('16', '0.3', '08-17');
 INSERT INTO `p_rite` VALUES ('17', '30', '11-01');
 INSERT INTO `p_rite` VALUES ('18', '20', '11-30');
+
+-- ----------------------------
+-- Table structure for `p_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_type`;
+CREATE TABLE `p_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) DEFAULT NULL COMMENT '父ID',
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `pic` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `state` int(1) DEFAULT '1' COMMENT '状态1 有效',
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
+  `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_type
+-- ----------------------------
+INSERT INTO `p_type` VALUES ('1', '0', '粮油大米', null, '1', '1', '2019-01-02 21:16:00');
+INSERT INTO `p_type` VALUES ('2', '0', '烟酒饮料', null, '1', '2', '2019-01-02 21:16:01');
+INSERT INTO `p_type` VALUES ('3', '0', '休闲食品', null, '1', '3', '2019-01-02 21:16:02');
+INSERT INTO `p_type` VALUES ('4', '0', '个人洗护', null, '1', '4', '2019-01-02 21:16:03');
+INSERT INTO `p_type` VALUES ('5', '0', '家居家纺', null, '1', '5', '2019-01-02 21:16:05');
+INSERT INTO `p_type` VALUES ('6', '1', '米面粮油', null, '1', null, '2019-01-02 21:10:52');
+INSERT INTO `p_type` VALUES ('7', '1', '食用油', null, '1', null, '2019-01-02 21:11:01');
+INSERT INTO `p_type` VALUES ('8', '1', '厨房调料', null, '1', null, '2019-01-02 21:11:27');
+INSERT INTO `p_type` VALUES ('9', '1', '特色干货', null, '1', null, '2019-01-02 21:11:43');
 
 -- ----------------------------
 -- Table structure for `p_user`
