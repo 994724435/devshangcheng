@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本机
+Source Server         : bendi
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : devshangchang
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-02 21:55:13
+Date: 2019-01-03 18:52:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -209,17 +209,16 @@ DROP TABLE IF EXISTS `p_orderlog`;
 CREATE TABLE `p_orderlog` (
   `logid` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL COMMENT '用户id',
+  `shopid` int(11) DEFAULT NULL COMMENT '店铺id',
   `productid` int(11) NOT NULL,
   `productname` varchar(64) DEFAULT NULL,
-  `productmoney` varchar(32) DEFAULT NULL COMMENT '产品带来的利润',
+  `productmoney` decimal(10,0) DEFAULT NULL COMMENT '产品价格',
   `state` int(1) NOT NULL DEFAULT '0' COMMENT '0待支付 1收益中 2已完成',
   `orderid` varchar(128) NOT NULL COMMENT '订单id',
-  `addtime` int(12) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `num` int(5) DEFAULT NULL COMMENT '购买数量',
-  `price` varchar(40) DEFAULT NULL COMMENT '购买单价',
   `totals` varchar(40) DEFAULT NULL,
   `addymd` date DEFAULT NULL,
-  `type` int(2) DEFAULT '1' COMMENT '1买地  2 1000买幼崽 3 成年5000 4母牦牛10000  10买商城物品',
   `option` varchar(1000) DEFAULT NULL COMMENT '其他说明',
   PRIMARY KEY (`logid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
@@ -227,10 +226,10 @@ CREATE TABLE `p_orderlog` (
 -- ----------------------------
 -- Records of p_orderlog
 -- ----------------------------
-INSERT INTO `p_orderlog` VALUES ('88', '1', '2', '钱付贰号', null, '1', '1512032076', '1512032076', '1', '100', '100', '2017-11-30', '2', '2');
-INSERT INTO `p_orderlog` VALUES ('86', '1', '2', '钱付贰号', '100', '2', '1512031063', '1512031063', '1', '100', '100', '2017-11-30', '10', '');
-INSERT INTO `p_orderlog` VALUES ('87', '1', '3', '钱付叁号', '100', '1', '1512031726', '1512031726', '1', '200', '200', '2017-11-30', '1', '1');
-INSERT INTO `p_orderlog` VALUES ('89', '1', '2', '钱付贰号', null, '1', '1512032178', '1512032178', '1', '100', '100', '2017-11-30', '2', '2');
+INSERT INTO `p_orderlog` VALUES ('88', '1', null, '2', '钱付贰号', null, '1', '1512032076', '0000-00-00 00:00:00', '1', '100', '2017-11-30', '2');
+INSERT INTO `p_orderlog` VALUES ('86', '1', null, '2', '钱付贰号', '100', '2', '1512031063', '0000-00-00 00:00:00', '1', '100', '2017-11-30', '');
+INSERT INTO `p_orderlog` VALUES ('87', '1', null, '3', '钱付叁号', '100', '1', '1512031726', '2015-12-03 17:26:00', '1', '200', '2017-11-30', '1');
+INSERT INTO `p_orderlog` VALUES ('89', '1', null, '2', '钱付贰号', null, '1', '1512032178', '0000-00-00 00:00:00', '1', '100', '2017-11-30', '2');
 
 -- ----------------------------
 -- Table structure for `p_product`
@@ -317,6 +316,27 @@ INSERT INTO `p_rite` VALUES ('15', '0..08', '08-16');
 INSERT INTO `p_rite` VALUES ('16', '0.3', '08-17');
 INSERT INTO `p_rite` VALUES ('17', '30', '11-01');
 INSERT INTO `p_rite` VALUES ('18', '20', '11-30');
+
+-- ----------------------------
+-- Table structure for `p_shop`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_shop`;
+CREATE TABLE `p_shop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shopname` varchar(255) DEFAULT NULL,
+  `logourl` varchar(255) DEFAULT NULL,
+  `state` int(1) DEFAULT '1' COMMENT '0 封店 1 正常 ',
+  `istui` int(1) DEFAULT '0' COMMENT '0不是首页推荐  1推荐',
+  `online` int(1) DEFAULT '1' COMMENT '营业状态 0 未营业 1营业',
+  `onelinetime` varchar(255) DEFAULT NULL COMMENT '营业时间',
+  `tel` varchar(255) DEFAULT NULL COMMENT '电话',
+  `addr` varchar(255) DEFAULT NULL COMMENT '地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_shop
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `p_type`
