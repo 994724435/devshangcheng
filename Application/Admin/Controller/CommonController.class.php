@@ -12,7 +12,7 @@ class CommonController extends Controller {
 //	            echo "</script>";
 //				exit;
 		}
-		$user = M('user');
+		$user = M('p_user');
 		$result= $user->where(array('name'=>$_SESSION['uname']))->select();
 		if(!$result[0]['manager']){
             echo "账号已被禁用";

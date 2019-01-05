@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class TypeController extends CommonController {
 	public function lists(){
-        $article =M('article');
+        $article =M('p_article');
         if($_GET['type']){
             $res = $article->where(array('type'=>$_GET['type']))->select();
         }else{
@@ -17,7 +17,7 @@ class TypeController extends CommonController {
     public function addtype(){
        
         if($_POST['title']){
-            $article =M('article');
+            $article =M('p_article');
             $data['type'] =$_POST['type'];
             $data['title'] =$_POST['title'];
             $data['cont'] =$_POST['content1'];
@@ -33,7 +33,7 @@ class TypeController extends CommonController {
     }
 
     public function delete(){
-        $article =M('article');
+        $article =M('p_article');
         if($_GET['id']==1){
             echo "<script>alert('公司简介不能删除');window.location.href = '".__ROOT__."/index.php/Admin/Article/lists';</script>";exit();
         }
@@ -44,7 +44,7 @@ class TypeController extends CommonController {
     }
 
     public function editearticle(){
-        $article =M('article');
+        $article =M('p_article');
         if($_POST['title']){
 //            $data['type'] =$_POST['type'];
             $data['title'] =$_POST['title'];

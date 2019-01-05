@@ -5,13 +5,13 @@ use Think\Controller;
 header('content-type:text/html;charset=utf-8');
 class IndexController extends CommonController {
 	public function comproduct(){
-	    M("orderlog")->where(array('logid'=>$_GET['id']))->save(array('state'=>2));
+	    M("p_orderlog")->where(array('logid'=>$_GET['id']))->save(array('state'=>2));
         echo "<script>alert('修改成功');window.location.href = '".__ROOT__."/index.php/Admin/Index/select';</script>";
         exit();
     }
 
     public function main(){
-        $user = M('user');
+        $user = M('p_user');
 //        if($_SESSION['manager']==2){
             $user_res= $user->select();
 //        }
@@ -21,7 +21,7 @@ class IndexController extends CommonController {
 
     // 密码修改
     public function userpwd(){
-        $user = M('user');
+        $user = M('p_user');
         if($_POST){
             $data['password'] =$_POST['psd1'];
             $data['manager'] =$_POST['manager'];
@@ -36,7 +36,7 @@ class IndexController extends CommonController {
     }
 
     public function addproduct(){
-        $types= M('type')->order('sort asc')->select();
+        $types= M('p_type')->order('sort asc')->select();
         $temp_array=array();    
         foreach ($types as $key => $value) {
                 if ($value['pid'] == 0) {
@@ -69,7 +69,7 @@ class IndexController extends CommonController {
             $data['price'] =$_POST['price'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
 
-            $product =M('product');
+            $product =M('p_product');
             $result = $product->add($data);
             if($result){
                 echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
@@ -83,14 +83,14 @@ class IndexController extends CommonController {
     }
 
     public function productlist(){
-        $product =M('product');
+        $product =M('p_product');
         $result = $product->order('state asc')->select();
         $this->assign('res',$result);
         $this->display();
     }
 
     public function editeproduct(){
-        $types= M('type')->order('sort asc')->select();
+        $types= M('p_type')->order('sort asc')->select();
         $temp_array=array();    
         foreach ($types as $key => $value) {
                 if ($value['pid'] == 0) {
@@ -98,7 +98,7 @@ class IndexController extends CommonController {
                     unset($types[$key]);
                 }
         }  
-        $product =M('product');
+        $product =M('p_product');
         if($_POST){
             $pic='';
             if($_FILES['thumb']['name']){   // 上传文件
@@ -138,7 +138,7 @@ class IndexController extends CommonController {
     }
 
     public function deleteproduct(){
-        $product =M('product');
+        $product =M('p_product');
         $result = $product->where(array('id'=>$_GET['id']))->select();
         if($result[0]){
             $state =$result[0]['state'];
@@ -159,7 +159,7 @@ class IndexController extends CommonController {
     }
 
     public function select(){
-        $orderlog = M('orderlog');
+        $orderlog = M('p_orderlog');
         if($_GET['state']){
 //            $map['name']=array('like','%'.$_GET['name'].'%');
             $map['state'] =$_GET['state'];
@@ -180,7 +180,7 @@ class IndexController extends CommonController {
     // 添加管理员
     public function useradd(){
         if ($_POST) {
-            $user = M('user');
+            $user = M('p_user');
             $data['password'] =$_POST['psd1'];
             $data['name']   = $_POST['name'];
             $data['manager']   = $_POST['manager'];
@@ -201,7 +201,7 @@ class IndexController extends CommonController {
     }
 
     public function userdelete(){
-        $user = M('user');
+        $user = M('p_user');
         $res = $user->where(array('id'=>$_GET['id']))->delete();
         if ($res) {
             echo "<script>alert('删除成功');window.location.href = '".__ROOT__."/index.php/Admin/Index/main';</script>";

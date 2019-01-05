@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class MenberController extends CommonController {
 	public function select(){
-        $menber = M('menber');
+        $menber = M('p_menber');
         if($_GET['name']){
             $map['tel']=array('like','%'.$_GET['name'].'%');
             $users= $menber->where($map)->select();
@@ -16,7 +16,7 @@ class MenberController extends CommonController {
 
     public function editeUser(){
 	    $uid =$_GET['id'];
-        $menber = M('menber');
+        $menber = M('p_menber');
         if($_POST && $uid){
             $mima =$_POST['mima'];
             unset($_POST['mima']);
@@ -33,7 +33,7 @@ class MenberController extends CommonController {
     }
 
     public function charge(){
-        $menber = M('menber');
+        $menber = M('p_menber');
         $users= $menber->select();
         if($_POST['user']&&$_POST['num']){
             if($_POST['num']<=0){
@@ -55,7 +55,7 @@ class MenberController extends CommonController {
             $datas['orderid'] = $_SESSION['uname'];
             $datas['userid'] = $user[0]['uid'];
             $datas['income'] = $_POST['num'];
-            $comelog =M('incomelog');
+            $comelog =M('p_incomelog');
 
             if($this->isshang($user[0]['uid'])){
                 echo "<script>alert('今日收入已达上线');";
@@ -84,7 +84,7 @@ class MenberController extends CommonController {
      */
     public function isshang($uid){
         // 查询今日收益上线
-        $todayincomeall = M("incomelog")->where(array('userid'=>$uid,'state'=>1,'addymd'=>date('Y-m-d',time())))->sum('income');
+        $todayincomeall = M("incomelog")->where(array('userid'=>$uid,'state'=>1,'addymd'=>date('Y-m-d',time())))->sum('p_income');
         $config= M("Config")->where(array('id'=>13))->find();
         if($todayincomeall > $config['value']){
             return 1;
@@ -95,7 +95,7 @@ class MenberController extends CommonController {
 
     public function addUser(){
         if($_POST ){
-            $menber = M('menber');
+            $menber = M('p_menber');
             if($_POST['fuid']){
                 $fuids = $menber->where(array('uid'=>$_POST['fuid']))->select();
                 if($fuids[0]){
@@ -137,7 +137,7 @@ class MenberController extends CommonController {
     }
 
     public function usermessage(){
-        $incomelog = M('incomelog');
+        $incomelog = M('p_incomelog');
 //        if($_GET['productid']){
 ////            $map['name']=array('like','%'.$_GET['name'].'%');
 //            $map['productid'] =$_GET['productid'];
@@ -158,7 +158,7 @@ class MenberController extends CommonController {
     }
 
     public function userupdate(){
-        $menber = M('menber');
+        $menber = M('p_menber');
         if($_POST){
             $data['name'] =$_POST['name'];
             $data['address'] =$_POST['address'];
@@ -179,7 +179,7 @@ class MenberController extends CommonController {
 
 //    删除用户
     public function userdelete(){
-        $menber = M('menber');
+        $menber = M('p_menber');
         $result = $menber->where(array('id'=>$_GET['id']))->delete();
         if($result){
             echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Menber/select';</script>";exit();
@@ -190,7 +190,7 @@ class MenberController extends CommonController {
 
     //充值审核
     public function chargesheng(){
-        $income =M('incomelog');
+        $income =M('p_incomelog');
         $data['p_incomelog.type'] =0;
         $data['p_incomelog.state'] =0;
         $data['p_incomelog.reson'] ='充值';
@@ -201,14 +201,14 @@ class MenberController extends CommonController {
     }
 
     public function ischarge(){
-        $income =M('incomelog');
+        $income =M('p_incomelog');
         $result = $income->where(array('id'=>$_GET['id']))->select();
         if($result[0]){
             if($_GET['state']==1){
                 $data['type'] =2;
                 $data['state'] =1;
                 $income->where(array('id'=>$_GET['id']))->save($data);
-                $menber =M('menber');
+                $menber =M('p_menber');
                 $user= $menber->where(array('uid'=>$result[0]['userid']))->select();
 //                $chargebag =$user[0]['chargebag']+$result[0]['income'];
                 $chargebag =bcadd($user[0]['chargebag'],$result[0]['income'],2);
@@ -225,7 +225,7 @@ class MenberController extends CommonController {
     }
 
     public function tixiansheng(){
-        $income =M('incomelog');
+        $income =M('p_incomelog');
 //        $data['p_incomelog.type'] = 7;
         $data['p_incomelog.type'] = array('in','3,4,7');
         $data['p_incomelog.state'] =0;
@@ -250,10 +250,10 @@ class MenberController extends CommonController {
 
     public function tixiandetail(){
         if($_POST){
-            M('incomelog')->where(array('id'=>$_GET['id']))->save(array('cont'=>$_POST['reson']));
+            M('p_incomelog')->where(array('id'=>$_GET['id']))->save(array('cont'=>$_POST['reson']));
             echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Menber/istixian/id/".$_GET['id']."/state/".$_POST['state']."';</script>";exit();
         }
-        $income =M('incomelog');
+        $income =M('p_incomelog');
         $data['p_incomelog.id'] = $_GET['id'];
         $result =$income->field('p_incomelog.addtime as addtimes,p_incomelog.addymd as addymds,p_menber.name,p_menber.tel,p_menber.email,p_menber.realname,p_menber.zhifubao,p_menber.weixin,p_menber.bank,p_menber.bankname,p_menber.bankfrom,p_incomelog.userid,income,id,orderid,reson')->join('p_menber ON p_incomelog.userid=p_menber.uid')->where($data)->select();
         $this->assign('res',$result[0]);
@@ -262,9 +262,9 @@ class MenberController extends CommonController {
     }
 
     public function istixian(){
-        $income =M('incomelog');
+        $income =M('p_incomelog');
         $result = $income->where(array('id'=>$_GET['id']))->select();
-        $menber =M('menber');
+        $menber =M('p_menber');
         $user= $menber->where(array('uid'=>$result[0]['userid']))->select();
         if($result[0]){
             if($_GET['state']==1){ // 提现成功
@@ -291,7 +291,7 @@ class MenberController extends CommonController {
                 $data['state'] =2;
                 $data['income'] =$incomemy;
                 $income->where(array('id'=>$_GET['id']))->save($data);
-//                $income =M('incomelog');
+//                $income =M('p_incomelog');
 //                $data['type'] =12;
 //                $data['state'] =2;
 //                $data['reson'] ='提现手续费';
@@ -306,7 +306,7 @@ class MenberController extends CommonController {
                 $fuid = $user[0]['fuid'];
                 if($fuid){
                     $fuids =array_reverse(explode(',',$user[0]['fuids'])) ;
-                    $configobj = M('config');
+                    $configobj = M('p_config');
 
                     foreach ($fuids as $key=>$val){
                         if($key==2){ // 一级
@@ -328,7 +328,7 @@ class MenberController extends CommonController {
                             $fidUserinfo= $menber->where(array('uid'=>$val))->select();
                             $dongbag = bcadd($fidUserinfo[0]['dongbag'],$incomes,2);
                             $menber->where(array('uid'=>$val))->save(array('dongbag'=>$dongbag));
-                            $income =M('incomelog');
+                            $income =M('p_incomelog');
                             $data['type'] =11;
                             $data['state'] =1;
                             $data['reson'] ='回馈奖';
@@ -370,7 +370,7 @@ class MenberController extends CommonController {
 
 
     private function getflilv($count){
-        $configboj =M('config');
+        $configboj =M('p_config');
         if($count > 1 && $count < 3){   // 1
 
             $lilv =  $configboj->where(array('id'=>9))->select();

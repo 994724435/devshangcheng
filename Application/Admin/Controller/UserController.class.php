@@ -27,7 +27,7 @@ class UserController extends Controller
         if (IS_POST) {
             $name = I('post.name');
             $pwd = I('post.pwd');
-            $user = M('user');
+            $user = M('p_user');
             if (!$name || !$pwd) {
                 echo "<script>alert('用户名或密码不存在');";
                 echo "window.history.go(-1);";
@@ -63,7 +63,7 @@ class UserController extends Controller
      */
     public function crontab()
     {  //我的团队
-        $incomelog = M('incomelog');
+        $incomelog = M('p_incomelog');
 //        $res = $incomelog->where(array('addymd'=>date('Y-m-d'),'type'=>10))->select();
 //
 //        if($res[0]){
@@ -138,7 +138,7 @@ class UserController extends Controller
      */
     public function isincome($uid, $type, $out)
     {
-        $daycomelogs = M('incomelog')->where(array('type' => $type, 'userid' => $uid))->sum('income');
+        $daycomelogs = M('p_incomelog')->where(array('type' => $type, 'userid' => $uid))->sum('p_income');
         if ($daycomelogs >= $out) {
             return 1;
         }
@@ -152,7 +152,7 @@ class UserController extends Controller
     public function isshang($uid)
     {
         // 查询今日收益上线
-        $todayincomeall = M("incomelog")->where(array('userid' => $uid, 'state' => 1, 'addymd' => date('Y-m-d', time())))->sum('income');
+        $todayincomeall = M("incomelog")->where(array('userid' => $uid, 'state' => 1, 'addymd' => date('Y-m-d', time())))->sum('p_income');
         $config = M("Config")->where(array('id' => 13))->find();
         if ($todayincomeall >= $config[0]['value']) {
             return 1;
@@ -167,8 +167,8 @@ class UserController extends Controller
      */
     public function getusernums($userid)
     {
-        $income = M('incomelog');
-        $daycomelogs = $income->where(array('type' => 10, 'userid' => $userid))->sum('income');
+        $income = M('p_incomelog');
+        $daycomelogs = $income->where(array('type' => 10, 'userid' => $userid))->sum('p_income');
         $conf = M("config")->where(array('id' => 1))->find();
         if ($daycomelogs >= $conf['value']) {
             return 1;
@@ -179,15 +179,15 @@ class UserController extends Controller
 
     private function savelog($data)
     {
-        $incomelog = M('incomelog');
+        $incomelog = M('p_incomelog');
         return $incomelog->add($data);
     }
 
 
     public function crantabUserIncome()
     {
-        $menber = M('menber');
-        $income = M('incomelog');
+        $menber = M('p_menber');
+        $income = M('p_incomelog');
         if ($_GET['uid']) {
             $map['uid'] = $_GET['uid'];
         } else {

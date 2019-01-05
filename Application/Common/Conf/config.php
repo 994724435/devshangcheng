@@ -2,11 +2,11 @@
 return array(
 	'DB_TYPE'   => 'mysql', // 数据库类型
 	'DB_HOST'   => '127.0.0.1', // 服务器地址
-	'DB_NAME'   => 'devshangchang', // 数据库名
+	'DB_NAME'   => 'cs_365_6', // 数据库名
 	'DB_USER'   => 'root', // 用户名
 	'DB_PWD'    => 'mysql', // 密码
 	'DB_PORT'   => 3306, // 端口
-	'DB_PREFIX' => 'p_', // 数据库表前缀
+	'DB_PREFIX' => '', // 数据库表前缀
     //支付宝 支付配置
     'ALI_CONFIG'  => array(
         'gatewayUrl'            => 'https://openapi.alipay.com/gateway.do',//支付宝网关（固定)'
