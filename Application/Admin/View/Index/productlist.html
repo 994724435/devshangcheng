@@ -50,7 +50,8 @@
 				  <!--<th>{$v.daycome}</th>-->
 				  <!--<th>{$v.daynum}</th>-->
 				   <th><if condition="$v.state eq 1">出售中<elseif condition="$v.state eq 2"/>已下架</if></th>
-				  <th><a href="__ROOT__/index.php/Admin/Index/editeproduct/id/{$v.id}">修改</a>|<if condition="$v.state eq 1"><a href="javascript:if(confirm('确认下架吗?'))window.location='__ROOT__/index.php/Admin/Index/deleteproduct/id/{$v.id}'">下 架</a><elseif condition="$v.state eq 2"/><a href="javascript:if(confirm('确认上架吗?'))window.location='__ROOT__/index.php/Admin/Index/deleteproduct/id/{$v.id}'">上 架</a></if> </th>
+				  <th><a href="__ROOT__/index.php/Admin/Index/editeproduct/id/{$v.id}">修改</a>|<if condition="$v.state eq 1"><a href="javascript:if(confirm('确认下架吗?'))window.location='__ROOT__/index.php/Admin/Index/deleteproduct/id/{$v.id}'">下 架</a><elseif condition="$v.state eq 2"/><a href="javascript:if(confirm('确认上架吗?'))window.location='__ROOT__/index.php/Admin/Index/deleteproduct/id/{$v.id}'">上 架</a></if>
+					  | <a href="__ROOT__/index.php/Admin/Index/editeproductbanner/id/{$v.id}">轮播图</a></th>
 		        </tr>
 		      	<?php $i++ ;?>
 		       </foreach>		      

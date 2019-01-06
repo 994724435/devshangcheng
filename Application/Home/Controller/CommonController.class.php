@@ -12,7 +12,7 @@ class CommonController extends Controller {
 			echo "</script>";
 			exit;
 		}
-		$menber =M('menber');
+		$menber =M('p_menber');
 		$res_user =$menber->where(array('uid'=>session('uid')))->select();
 		if($res_user[0]['isdelete']){
             echo "<script>alert('账号已被禁用');";

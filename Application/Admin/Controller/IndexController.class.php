@@ -2,6 +2,11 @@
 
 namespace Admin\Controller;
 use Think\Controller;
+vendor('Qiniu.Auth');
+vendor('Qiniu.Storage.UploadManager');
+use Qiniu\Auth ;
+use Qiniu\Storage\BucketManager;
+use Qiniu\Storage\UploadManager;
 header('content-type:text/html;charset=utf-8');
 class IndexController extends CommonController {
 	public function comproduct(){
@@ -46,26 +51,25 @@ class IndexController extends CommonController {
         }   
        
         if($_POST){
-
             $pic='';
             if($_FILES['thumb']['name']){   // 上传文件
-                $thumb = imgFile();
-                $info = $thumb['info'];
+                $setting = C('UPLOAD_FILE_QINIU');
+                $Upload = new \Think\Upload($setting);
+                $info = $Upload->upload($_FILES);
                 if(!$info) {// 上传错误提示错误信息
 
                 }else{// 上传成功
-                    $path = $info['thumb']['savepath'];
-                    $p = ltrim($path,'.');
-                    $img = $info['thumb']['savename'];
-                    $pic=$p.$img;
+                    $pic=$info['thumb']['url'];
                 }
             }
-       
+            $data['istui'] =$_POST['istui'];
+            $data['iste'] =$_POST['iste'];
+            $data['isjing'] =$_POST['isjing'];
             $data['name'] =$_POST['name'];
             $data['ftype'] =$_POST['ftype'];
             $data['ctype'] =$_POST['ctype'];
             $data['cont'] =$_POST['content1'];
-            $data['pic'] =__ROOT__.$pic;
+            $data['pic'] =$pic;
             $data['price'] =$_POST['price'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
 
@@ -89,6 +93,51 @@ class IndexController extends CommonController {
         $this->display();
     }
 
+    public function editeproductbanner()
+    {
+        $product=M('p_product_banner');
+        if($_FILES['thumb']['name']){
+            $pic='';
+            if($_FILES['thumb']['name']){   // 上传文件
+                $setting = C('UPLOAD_FILE_QINIU');
+                $Upload = new \Think\Upload($setting);
+                $info = $Upload->upload($_FILES);
+                if(!$info) {// 上传错误提示错误信息
+
+                }else{// 上传成功
+                    $pic=$info['thumb']['url'];
+                }
+            }
+
+            $data['url'] =$pic;
+            $data['proid'] =$_GET['id'];
+            $data['addtime'] =date('Y-m-d H:i:s',time());
+
+            $result = $product->add($data);
+            if($result){
+                echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/editeproductbanner/id/".$_GET['id']."';</script>";
+            }else{
+                echo "<script>alert('添加失败');window.location.href = '".__ROOT__."/index.php/Admin/Index/editeproductbanner/id/".$_GET['id']."';</script>";
+            }
+
+        }
+
+        $result = $product->where(array('proid'=>$_GET['id']))->select();
+        $this->assign('res',$result);
+        $this->display();
+    }
+
+    public function deletebanner(){
+        $product =M('p_product_banner');
+        $res = $product->where(array('id'=>$_GET['id']))->delete();
+
+        if($res){
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/editeproductbanner/id/".$_GET['pid']."';</script>";
+        }else{
+            echo "<script>alert('修改失败');window.location.href = '".__ROOT__."/index.php/Admin/Index/editeproductbanner/id/".$_GET['pid']."';</script>";
+        }
+    }
+
     public function editeproduct(){
         $types= M('p_type')->order('sort asc')->select();
         $temp_array=array();    
@@ -102,18 +151,20 @@ class IndexController extends CommonController {
         if($_POST){
             $pic='';
             if($_FILES['thumb']['name']){   // 上传文件
-                $thumb = imgFile();
-                $info = $thumb['info'];
+                $setting = C('UPLOAD_FILE_QINIU');
+                $Upload = new \Think\Upload($setting);
+                $info = $Upload->upload($_FILES);
                 if(!$info) {// 上传错误提示错误信息
 
                 }else{// 上传成功
-                    $path = $info['thumb']['savepath'];
-                    $p = ltrim($path,'.');
-                    $img = $info['thumb']['savename'];
-                    $pic=$p.$img;
-                    $pic=__ROOT__.$pic;
+                    $pic=$info['thumb']['url'];
                 }
             }
+
+            $data['istui'] =$_POST['istui'];
+            $data['iste'] =$_POST['iste'];
+            $data['isjing'] =$_POST['isjing'];
+
             $data['name'] =$_POST['name'];
             $data['ftype'] =$_POST['ftype'];
             $data['ctype'] =$_POST['ctype'];
@@ -136,6 +187,7 @@ class IndexController extends CommonController {
         $this->assign('fid',$temp_array);
         $this->display();
     }
+
 
     public function deleteproduct(){
         $product =M('p_product');

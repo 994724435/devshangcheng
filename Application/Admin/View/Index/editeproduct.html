@@ -74,7 +74,46 @@
 										<p class="help-block"></p>
 									</div>
 								</div>
-						
+							    <div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否推荐</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="istui">
+										<option value="$res.istui"><if condition="$res.istui eq 1"> 是<else/>不是 </if></option>
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否特色</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="iste">
+										<option value="$res.iste"><if condition="$res.iste eq 1"> 是<else/>不是 </if></option>
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="focusedinput" class="col-sm-2 control-label">是否精品</label>
+									<div class="col-sm-8">
+										<select class="form-control1" name="isjing">
+										<option value="$res.isjing"><if condition="$res.isjing eq 1"> 是<else/>不是 </if></option>
+										<option value="0">不是</option>
+										<option value="1">是</option>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										<p class="help-block"></p>
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label for="focusedinput" class="col-sm-2 control-label">网络图片地址</label>
 									<div class="col-sm-8">
@@ -85,7 +124,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="focusedinput" class="col-sm-2 control-label">产品图片</label>
+									<label for="focusedinput" class="col-sm-2 control-label">封面图</label>
 									<div class="col-sm-8">
 										<img src="{$res.pic}" alt="" style="width: 200px">
 									</div>

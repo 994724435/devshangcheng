@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : 本机
 Source Server Version : 50553
 Source Host           : localhost:3306
-Source Database       : devshangchang
+Source Database       : cs_365_6
 
 Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-05 18:11:11
+Date: 2019-01-06 20:35:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,6 +37,21 @@ CREATE TABLE `p_article` (
 INSERT INTO `p_article` VALUES ('1', '公司简介', '1', '1<img src=\"/devmuchang/Public/Admin/js/attached/image/20171121/20171121124432_79040.png\" alt=\"\" /><img src=\"/dev/devmuchang/Public/Admin/js/attached/image/20171125/20171125135922_56452.jpg\" alt=\"\" />', '2017-11-25 13:59:24', '2017-11-25', 'admin', '1');
 INSERT INTO `p_article` VALUES ('6', '分析专家李云龙标题', '2', '1<img src=\"/dev/devmuchang/Public/Admin/js/attached/image/20171125/20171125135939_82358.jpg\" alt=\"\" />', '2017-11-25 13:59:40', '2017-11-25', 'admin', '1');
 INSERT INTO `p_article` VALUES ('7', '公告', '2', '1', '2017-11-21 20:37:22', '2017-11-21', 'admin', '1');
+
+-- ----------------------------
+-- Table structure for `p_banner`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_banner`;
+CREATE TABLE `p_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(256) DEFAULT NULL,
+  `coment` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_banner
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `p_cart`
@@ -213,15 +228,35 @@ CREATE TABLE `p_product` (
   `addtime` varchar(100) DEFAULT NULL,
   `salenum` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_product
 -- ----------------------------
-INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '4', '6', '0', '0', '0', '1', '2019-01-02 21:48:08', '0');
-INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', null, '1', '/Public/Uploads/2019-01-02/5c2cbdab50395.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-02 21:33:31', '0');
-INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '0', '0', '2', '2019-01-02 21:46:55', '0');
-INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', null, '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '2', '6', '0', '0', '0', '1', '2019-01-02 21:38:51', '0');
+INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '111', '1', '6', '1', '1', '0', '1', '2019-01-06 10:29:53', '0');
+INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', '', '1', '/Public/Uploads/2019-01-02/5c2cbdab50395.png', '12', '1', '6', '1', '0', '1', '1', '2019-01-06 10:30:01', '0');
+INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '1', '1', '1', '2019-01-06 10:30:12', '0');
+INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '', '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '1', '6', '1', '1', '1', '1', '2019-01-06 10:30:20', '0');
+INSERT INTO `p_product` VALUES ('13', '13000000003', '32312423', '1', 'http://df.cqyuyan.cn/_2019-01-06_5c31990d78d69.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-06 13:58:37', '0');
+INSERT INTO `p_product` VALUES ('14', '104', '21312', '1', 'http://df.cqyuyan.cn/_2019-01-06_5c3198ddcc021.png', '24', '1', '6', '0', '0', '0', '1', '2019-01-06 13:57:50', '0');
+
+-- ----------------------------
+-- Table structure for `p_product_banner`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_product_banner`;
+CREATE TABLE `p_product_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proid` int(11) DEFAULT NULL COMMENT '产品ID',
+  `name` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_product_banner
+-- ----------------------------
+INSERT INTO `p_product_banner` VALUES ('7', '12', null, 'http://df.cqyuyan.cn/_2019-01-06_5c31b0a9148c2.png', '2019-01-06 15:39:21');
 
 -- ----------------------------
 -- Table structure for `p_type`
