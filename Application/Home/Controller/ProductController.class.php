@@ -8,35 +8,8 @@ class ProductController extends CommonController{
     // 详情
     public function detail(){
         $product =M('p_product');
-        $result  = $product->where(array('id'=>$_GET['id']))->select();
-        $banner_list  = M('p_product_banner')->where(array('proid'=>$_GET['id']))->select();
-        if($_POST){
-            $data['num'] =$_POST['number'];
-            $data['prices'] =$result[0]['price'];
-            $data['userid'] =session('uid');
-            $data['productid'] =$_GET['id'];
-            $data['productname'] =$result[0]['name'];
-            $data['productmoney'] =$result[0]['daycome'];
-            $data['states']       =0;
-            $data['addtime']       =date('Y-m-d H:i:s',time());
-            $data['orderid'] = date('YmdHis',time()).rand(1000,9999);
-//            if(empty(session('uid')||empty($result[0]['name']))){
-//                print_r("此产品不存在");die;
-//            }
-            $orderlog =M('p_orderlog');
-            $res_order = $orderlog->add($data);
-            if($res_order){
-                echo "<script>";
-                echo "window.location.href='".__ROOT__."/index.php/Home/Product/orderDetail/orderid/".$data['orderid']."';";
-                echo "</script>";
-                exit;
-            }else{
-                echo "<script>alert('下单失败');";
-                echo "window.location.href='".__ROOT__."/index.php/Home/Product/product';";
-                echo "</script>";
-                exit;
-            }
-        }
+        $result  = $product->where(array('id'=>I(id)))->select();
+        $banner_list  = M('p_product_banner')->where(array('proid'=>I(id)))->select();
         $this->assign('res',$result[0]);
         $this->assign('banner',$banner_list);
 
@@ -44,6 +17,28 @@ class ProductController extends CommonController{
     }
 
     public function shopcart(){
+        $id =I('id');
+        $current_num=I('current_num');
+        $cart =M('p_cart');
+        if ($id){
+            $arr_id =explode(',',$id);
+            $arr_num =explode(',',$current_num);
+            foreach ($arr_id as $k=>$v){
+                $data= array();
+                $data['productid'] =$v;
+                $data['type'] =1;
+                $data['uid'] =session('uid');
+                $res_tem =$cart->where($data)->find();
+                if (!$res_tem['id']){
+                    $data['num'] =$arr_num[$k];
+                    $data['addtime'] =date('Y-m-d H:i:s',time());
+                    $cart->add($data);
+                }
+            }
+        }
+        $where=array('p_cart.uid'=>session('uid'),'p_cart.type'=>1);
+        $result = $cart->field('p_cart.id,p_cart.productid,p_product.name,p_cart.num,p_product.pic,p_product.price')->join('p_product ON p_cart.productid=p_product.id')->where($where)->select();
+        $this->assign('res',$result);
         $this->display();
     }
     public function deleteorder(){
