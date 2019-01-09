@@ -24,6 +24,16 @@ class UserController extends Controller
 
     public function login()
     {
+//         $user = M('m_rob_order');
+//         // $where='createDate >='.'2018-12-16';
+//         $where['createDate'] = array('EGT',date("Y-m-d") );
+//         $res =$user->where($where)->sum('price');
+//         if ($res) {
+//             # code...
+//         }else{
+//            $res=0;
+//         }
+//         print_r('今日抢单总额度：'.$res);die;
         if (IS_POST) {
             $name = I('post.name');
             $pwd = I('post.pwd');

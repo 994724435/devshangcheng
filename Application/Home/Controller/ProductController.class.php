@@ -29,10 +29,13 @@ class ProductController extends CommonController{
                 $data['type'] =1;
                 $data['uid'] =session('uid');
                 $res_tem =$cart->where($data)->find();
+
+                $data['num'] =$arr_num[$k];
+                $data['addtime'] =date('Y-m-d H:i:s',time());
                 if (!$res_tem['id']){
-                    $data['num'] =$arr_num[$k];
-                    $data['addtime'] =date('Y-m-d H:i:s',time());
                     $cart->add($data);
+                }else{
+                    $cart->where(array('id'=>$res_tem['id']))->save($data);
                 }
             }
         }
@@ -41,18 +44,18 @@ class ProductController extends CommonController{
         $this->assign('res',$result);
         $this->display();
     }
-    public function deleteorder(){
-        $orderlog =M('p_orderlog');
-        $result  = $orderlog->where(array('orderid'=>$_GET['orderid']))->select();
-        if(!$result[0]||$result[0]['states']!=0){
-            echo "<script>alert('订单不存在');";
-            echo "window.location.href='".__ROOT__."/index.php/Home/Index/financial';";
+    public function deletecart(){
+        $orderlog =M('p_cart');
+        $result  = $orderlog->where(array('id'=>I('id')))->select();
+        if(!$result[0]){
+            echo "<script>alert('货品不存在');";
+            echo "window.location.href='".__ROOT__."/index.php/Home/Product/shopcart';";
             echo "</script>";
             exit;
         }
-        $orderlog->where(array('orderid'=>$_GET['orderid']))->delete();
+        $orderlog->where(array('id'=>I('id')))->delete();
         echo "<script>alert('删除成功');";
-        echo "window.location.href='".__ROOT__."/index.php/Home/Index/financial';";
+        echo "window.location.href='".__ROOT__."/index.php/Home/Product/shopcart';";
         echo "</script>";
         exit;
     }

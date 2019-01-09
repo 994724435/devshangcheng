@@ -17,7 +17,7 @@
 	<body>
 		<header data-am-widget="header" class="am-header am-header-default sq-head ">
 			<div class="am-header-left am-header-nav">
-				<a href="javascript:history.back()" class="">
+				<a href="/index.php/Home/Index/index" class="">
 					<i class="am-icon-chevron-left"></i>
 				</a>
 			</div>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <b class="shop-list-price">￥{$v.price} </b>
-                        <div class="del"><i class="am-icon-trash"></i></div>
+                        <div class="del"><a href="/index.php/Home/Product/deletecart/id/{$v.id}"><i class="am-icon-trash"></i></a></div>
                     </li>
                 </foreach>
 
@@ -77,36 +77,7 @@
 	    </div>
 	    
 <!--底部-->
- <div style="height: 55px;"></div>
- <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
-      <ul class="am-navbar-nav am-cf am-avg-sm-4">   
-          <li>
-            <a href="index.html" class="curr">
-                <span class="am-icon-home"></span>
-                <span class="am-navbar-label">首页</span>
-            </a>
-          </li>
-          <li>
-            <a href="category.html" class="">
-                <span class="am-icon-th-large"></span>
-                <span class="am-navbar-label">分类</span>
-            </a>
-          </li>
-       
-          <li>
-            <a href="shopcart.html" class="">
-                <span class="am-icon-shopping-cart"></span>
-                <span class="am-navbar-label">购物车</span>
-            </a>
-          </li>
-          <li>
-            <a href="member.html" class="">
-                <span class="am-icon-user"></span>
-                <span class="am-navbar-label">我的55</span>
-            </a>
-          </li>
-      </ul>
-</div>
+<include file="Common/footer" />
  
  
  
