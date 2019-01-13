@@ -67,51 +67,35 @@ class UserController extends Controller
         echo "<script>window.location.href = '" . __ROOT__ . "/index.php/Admin/User/login';</script>";
     }
 
-    /**
-     * 静态收益 ok
-     * 1收益 2充值 3静态提现  4动态体现  5 注册下级 6下单购买 7积分体现 8积分转账 9复投码转账 10分红收益 11 动态收益
+    /*
+     * 日常数据检查
      */
     public function crontab()
-    {  //我的团队
-        $incomelog = M('p_incomelog');
-//        $res = $incomelog->where(array('addymd'=>date('Y-m-d'),'type'=>10))->select();
-//
-//        if($res[0]){
-//            print_r('今日受益已结算');die;
-//        }
-        $str ='<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-        $menber = M("menber");
-        if($this->isdong() == 2){
-            echo $str;
-            echo "<script>alert('资金未处于冻结状态');";
-            echo "window.location.href='".__ROOT__."/index.php/Admin/Config/index';";
-            echo "</script>";
-            exit;
-        }
-        $alluser = $menber->select();
-        foreach ($alluser as $key => $val) {
-            // 收益
-              if($val['djbag'] > 0){
-                  $data['state'] = 1;
-                  $data['reson'] = "产生利息";
-                  $data['type'] = 1;
-                  $data['addymd'] = date('Y-m-d', time());
-                  $data['addtime'] = time();
-                  $data['orderid'] = 0;
-                  $data['userid'] = $val['uid'];
-                  $incomes = bcmul($val['djbag'],0.001,2);
-                  if($incomes > 0){
-                      $data['income'] = $incomes;
-                      $this->savelog($data);
-                      $this->addmoney($val['uid'],$incomes);
-                  }
+    {
+        $message="";
+        $Model = M();
+        $sql = "SELECT m.num from ( SELECT userId,count(*) as num from `m_rob_order` WHERE createDate>=curdate()  GROUP BY userId ORDER BY num desc ) m WHERE m.num>1 ";
+        $rob_is_two = $Model->query($sql);
 
-              }
-//            $this->addmoney($val['uid'], $incomes);
-//            $this->savelog($data);
-
+        if ($rob_is_two){
+            $message ="今日抢单有大于2的异常数据";
+            print_r($message);
         }
 
+        $account_sql="SELECT	S.recordToUserId FROM s_account_record S WHERE S.createDate >= curdate() AND S.createDate IN ( SELECT m.createDate FROM ( SELECT A.createDate,	A.recordToUserId,	COUNT(recordToUserId) AS num	FROM	s_account_record A	WHERE	A.recordType = 0	AND A.createDate >= curdate()	GROUP BY	A.createDate,	A.recordToUserId	) m	WHERE	m.num > 1) ORDER BY  S.createDate,	S.recordToUserId ASC";
+        $account_res = $Model->query($account_sql);
+
+        if ($account_res){
+            print_r("今日异常重复到账数据");
+            $message =$message."今日异常重复到账数据";
+        }
+
+        $sql_plan ="SELECT m.num from ( SELECT planToonUserId,count(*) as num from m_mate where createDate>curdate() GROUP BY price,planToonUserId,cashapplyUserId ORDER BY num desc) m where m.num>2";
+        $account_res = $Model->query($sql_plan);
+        if ($account_res){
+            print_r("今日有排单重复");
+            $message =$message."今日有排单重复";
+        }
         echo 'success';
     }
 

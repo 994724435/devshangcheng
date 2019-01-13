@@ -9,6 +9,9 @@ class UserController extends CommonController{
        $this->display();
     }
 
+    public function saftystep(){
+        $this->display();
+    }
 
 
 }

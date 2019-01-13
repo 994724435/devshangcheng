@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>55社区 </title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <!-- <link rel="icon" type="image/png" href="/theme/default/__ROOT__/Public/Home/images/favicon.png"> -->
+		<link href="__ROOT__/Public/Home/css/amazeui.min.css" rel="stylesheet" type="text/css" />
+		<link href="__ROOT__/Public/Home/css/style.css" rel="stylesheet" type="text/css" />
+		<script src="__ROOT__/Public/Home/js/jquery-1.10.2.min.js"></script>
+		<script src="__ROOT__/Public/Home/js/time.js"></script>
+	</head>
+	<body>
+		<header data-am-widget="header" class="am-header am-header-default sq-head ">
+			<div class="am-header-left am-header-nav">
+				<a href="javascript:history.back()" class="">
+					<i class="am-icon-chevron-left"></i>
+				</a>
+			</div>
+			<h1 class="am-header-title">
+  	            <a href="" class="">商品分类</a>
+            </h1>
+	    </header>
+	    <div style="height: 49px;"></div>
+	    <div class="cate-search">
+
+	    	<form action="/index.php/Home/Product/list" method="GET">
+	    	<input type="text" name="keywords" class="cate-input" placeholder="请输入您要的搜索的产品关键词" />
+	    	<input type="submit" class="cate-btn" value=" " />
+	    	</form>
+	    </div>
+	    <div class="content-list">
+	    	<div class="list-left">
+	    		<li class="<?php if(!$_GET['id']){echo 'current';} ?>"><a href="/index.php/Home/Product/category">所有类别</a></li>
+				<foreach name="type_list" item='v'>
+	    		<li class="<?php if($v['id']==$_GET['id']){echo 'current';} ?>"><a href="/index.php/Home/Product/category/id/{$v.id}">{$v.name}</a></li>
+				</foreach>
+	    	</div>
+	    	<div class="list-right">
+	    		<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-default am-no-layout">
+
+					<foreach name="child_list" item='v'>
+				       <li>
+				        <div class="am-gallery-item">
+				            <a href="list.html" class="">
+				              <img src="{$v.pic}">
+				                <h3 class="am-gallery-title">{$v.name}</h3>
+				            </a>
+				        </div>
+				      </li>
+					</foreach>
+				      
+				</ul>
+	    	</div>
+	    </div>
+	    
+	    <!--底部-->
+		<include file="Common/footer" />
+ 
+ 
+ 
+ 
+ 
+ 
+<script src="__ROOT__/Public/Home/js/jquery.min.js"></script>
+<script src="__ROOT__/Public/Home/js/amazeui.min.js"></script>
+	</body>
+</html>

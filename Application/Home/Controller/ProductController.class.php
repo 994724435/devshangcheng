@@ -60,4 +60,20 @@ class ProductController extends CommonController{
         exit;
     }
 
+    public function category(){
+        $type_list= M('p_type')->where(array('pid'=>0))->order('sort asc')->select();
+        $cdata=array();
+        $cdata['pid']= array('NEQ','0');
+        if(I('id')){
+          $cdata['pid']=I('id');
+        }
+        $child_list = M('p_type')->where($cdata)->order('sort asc')->select();
+        $this->assign('type_list',$type_list);
+        $this->assign('child_list',$child_list);
+        $this->display();
+    }
+
+    public function specialprice(){
+        $this->display();
+    }
 }
