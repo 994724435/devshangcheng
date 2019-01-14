@@ -21,11 +21,12 @@ class CommonController extends Controller {
             exit;
         }
 
+        $isshop =0;
         $shop =M('p_shop')->where(array('userid'=>session('uid')))->find();
 		if($shop['id']){
-		    $isshop =1;
-        }else{
-            $isshop =0;
+		    if ($shop['status'] != 0){
+                $isshop =1;
+            }
         }
         $this->assign('isshop',$isshop);
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-13 21:55:35
+Date: 2019-01-14 22:16:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -206,7 +206,7 @@ INSERT INTO `p_product_banner` VALUES ('7', '12', null, 'http://df.cqyuyan.cn/_2
 DROP TABLE IF EXISTS `p_shop`;
 CREATE TABLE `p_shop` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) DEFAULT NULL,
+  `userid` int(11) NOT NULL,
   `shopname` varchar(255) DEFAULT NULL,
   `logo` varchar(255) DEFAULT NULL,
   `online` int(11) DEFAULT '1' COMMENT '1 在营业  0 未营业',
@@ -214,13 +214,18 @@ CREATE TABLE `p_shop` (
   `tel` varchar(255) DEFAULT NULL,
   `addr` varchar(255) DEFAULT NULL,
   `zhizhao` varchar(255) DEFAULT NULL COMMENT '营业执照',
-  `status` int(11) DEFAULT '1' COMMENT '1 正常 2封店',
+  `status` int(11) DEFAULT '0' COMMENT '0审核中  1 正常 2封店',
+  `intro` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_shop
 -- ----------------------------
+INSERT INTO `p_shop` VALUES ('1', '6', '店小二', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18', '1337689900', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '0', '店铺没有简介');
+INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '0', '阿斯顿发斯蒂芬阿斯顿发生');
+INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '0', '阿斯顿发送到发送到');
+INSERT INTO `p_shop` VALUES ('4', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '0', '撒打发斯蒂芬');
 
 -- ----------------------------
 -- Table structure for `p_type`
