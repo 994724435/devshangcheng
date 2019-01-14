@@ -72,6 +72,7 @@ class UserController extends Controller
      */
     public function crontab()
     {
+        $issend=0;
         $message="";
         $Model = M();
         $sql = "SELECT m.num from ( SELECT userId,count(*) as num from `m_rob_order` WHERE createDate>=curdate()  GROUP BY userId ORDER BY num desc ) m WHERE m.num>1 ";
@@ -79,6 +80,7 @@ class UserController extends Controller
 
         if ($rob_is_two){
             $message ="今日抢单有大于2的异常数据";
+            $issend =1;
             print_r($message);
         }
 
@@ -95,6 +97,20 @@ class UserController extends Controller
         if ($account_res){
             print_r("今日有排单重复");
             $message =$message."今日有排单重复";
+            $issend=1;
+        }
+
+        if ($issend) {
+            vendor('Ucpaas.Ucpaas','','.class.php');
+            //初始化必填
+            $options['accountsid']='91fab867d00475a570640abe64d7454f';
+            $options['token']='89d730355ab7a6f3bcc02daa43d81557';
+            $ucpass = new \Ucpaas($options);
+            $appId = "cd9233a18f5f421c8a19381c9e8833e7";
+            $to = $tel;
+            $templateId = "421973";
+            $param=$message ;
+            $resmsg =$ucpass->templateSMS($appId,$to,$templateId,$param);
         }
         echo 'success';
     }

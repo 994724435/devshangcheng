@@ -132,26 +132,26 @@ class LoginController extends Controller{
             echo 3;
         }
 
-        $istel =M('menber')->where(array('tel'=>$tel))->select();
-        if($istel[0]){
-            echo 4;
-            exit();
-        }
+        // $istel =M('menber')->where(array('tel'=>$tel))->select();
+        // if($istel[0]){
+        //     echo 4;
+        //     exit();
+        // }
 
-        $message = M('message');
-        $ismessage = $message->where(array('tel'=>$tel,'state'=>1))->select();
-        if($ismessage[0]){
-            echo 2;
-            exit();
-        }
+        // $message = M('message');
+        // $ismessage = $message->where(array('tel'=>$tel,'state'=>1))->select();
+        // if($ismessage[0]){
+        //     echo 2;
+        //     exit();
+        // }
 
-        $data['session'] =md5(time() . rand(1,1000000));
-        $data['cont'] = rand(1000,9999);
-        $data['time'] = time();
-        $data['tel'] = $tel;
-        $data['date'] = date('Y-m-d',time());
-        $data['state'] = 1;
-        $message->add($data);
+        // $data['session'] =md5(time() . rand(1,1000000));
+        // $data['cont'] = rand(1000,9999);
+        // $data['time'] = time();
+        // $data['tel'] = $tel;
+        // $data['date'] = date('Y-m-d',time());
+        // $data['state'] = 1;
+        // $message->add($data);
 
         vendor('Ucpaas.Ucpaas','','.class.php');
         //初始化必填
@@ -161,7 +161,7 @@ class LoginController extends Controller{
         $appId = "cd9233a18f5f421c8a19381c9e8833e7";
         $to = $tel;
         $templateId = "421973";
-        $param=$data['cont'] ;
+        $param='你好' ;
         $resmsg =$ucpass->templateSMS($appId,$to,$templateId,$param);
         session('messageEid',$data['session']);
         echo 1;
