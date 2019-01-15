@@ -28,6 +28,7 @@ class CommonController extends Controller {
                 $isshop =1;
             }
         }
+ 
         $this->assign('isshop',$isshop);
 
 	}

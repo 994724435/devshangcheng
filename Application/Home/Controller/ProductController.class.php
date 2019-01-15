@@ -76,4 +76,19 @@ class ProductController extends CommonController{
     public function specialprice(){
         $this->display();
     }
+
+
+    public function lists(){
+        $product =M('p_product');
+        if (I('ftype')) {
+            
+        }
+        if (I('ctype')) {
+           $where['ctype'] = I('ctype');
+        }
+
+        $result  = $product->where($where)->select();
+        $this->assign('res',$result);
+        $this->display();
+    }
 }

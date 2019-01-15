@@ -34,38 +34,38 @@
 	    </header>
 	    <div style="height: 49px;"></div>
 	    <div class="member">
-	    	<div class="mem-tit">15078921546 
+	    	<div class="mem-tit">{$userinfo['useraccount']}
 	    		<!--<a href="step.html" class="step"><img src="__ROOT__/Public/Home/images/step.png" width="26"/></a>-->
 	    	</div>
 	    	<div class="mem-pic">
 		    	<div class="mem-pic-bg" style="background-image: url(__ROOT__/Public/Home/images/memtx.png);"></div>
-		    	<a href="" class="men-level">√普通会员</a>
+		    	<!-- <a href="" class="men-level">√普通会员</a> -->
 	    	</div>
 	    	<ul class="member-menu">
 			<li>
 				<a href="records.html">
-					<p class="yellow">0</p>
+					<p class="yellow">{$useraccount['totalprice']}</p>
 					<p class="black">帐户余额 </p>
 				</a>
 			</li>
             <li>
 				<a href="integral.html">
-					<p class="yellow">0</p>
+					<p class="yellow">{$useraccount['integral']}  </p>
 					<p class="black">积分 </p>
 				</a>
 			</li>
 			<li>
 				<a href="yhq.html">
-					<p class="yellow">0</p>
+					<p class="yellow">{$shopcart}</p>
 					<p class="black">购物车 </p>
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a href="collect.html">
 					<p class="yellow">0</p>
 					<p class="black">我的收藏 </p>
 				</a>
-			</li>
+			</li> -->
 		</ul>
 	    </div>
 	    <div class="user-list">

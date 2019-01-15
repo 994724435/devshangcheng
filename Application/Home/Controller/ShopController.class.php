@@ -6,6 +6,8 @@ header('content-type:text/html;charset=utf-8');
 class ShopController extends CommonController{
 
     public function member(){
+       $userinfo = M('s_user')->where(array('id'=>session('uid')))->find(); 
+       $this->assign('userinfo',$userinfo);
        $this->display();
     }
 
