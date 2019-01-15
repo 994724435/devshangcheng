@@ -1,0 +1,78 @@
+
+
+
+<include file="Common/header" />
+           
+        
+        <div id="page-wrapper">
+        <div class="graphs">	  
+    <div class="content_bottom">
+     <div class="col-md-12 span_3">
+		  <div class="bs-example1" data-example-id="contextual-table">
+		    <table class="table">
+		      <thead>
+		        <tr style="text-align: center;">
+		           <!-- <h3> <span><a href="__ROOT__/index.php/Admin/Quan/addproduct">添加券</a></h3> -->
+		        </tr>
+		        <tr>
+		          <!-- <th>店铺编号</th> -->
+		          <th>用户账号</th>
+					<th>店铺名称</th>
+					<th>logo</th>
+		            <th>营业时间</th>
+					<th>店铺电话</th>
+					<th>店铺地址</th>
+					<th>营业执照</th>
+					<th>店铺状态</th>
+					<th>操作</th>
+		        </tr>
+		      </thead>
+		      <tbody>	      
+		      <?php 
+		      		$i = 1;
+		      	?>
+		      <foreach name="res" item='v'>
+		      
+		      	<?php 
+		      		if(($i%2)==1){
+						echo "<tr class='active'>";
+					}else{
+						echo "<tr class='info'>";
+					}
+		      	?>
+		        
+		          <!-- <th scope="row">{$v.id}</th> -->
+		          <th>{$v.useraccount}</th>
+				  <th>{$v.shopname}</th>
+				  <th><img src="{$v.logo}" style="width: 50px;"></th>
+				  <th>{$v.ontime}</th>
+				  <th>{$v.tel}</th>
+				  <th>{$v.addr}</th>
+				  <th><img src="{$v.zhizhao}" style="width: 80px;"></th>
+				  
+				   <th><if condition="$v.status eq 0"><span style="color: #4f4f4f">待审核</span><elseif condition="$v.status eq 1"/>正常<elseif condition="$v.status eq 2"/>已封店</if></th>
+				  <th>
+				  	<a href="/index.php/Admin/Shop/editshop/id/{$v.id}">修改| </a>
+				  	<if condition="$v.status eq 1"><a href="javascript:if(confirm('确认封店吗?'))window.location='__ROOT__/index.php/Admin/Shop/deleteshop/id/{$v.id}'">封店</a>
+				  <elseif condition="$v.status eq 0"/><a href="/index.php/Admin/Shop/pass/id/{$v.id}">通过审核</a>	<else/><a href="javascript:if(confirm('确认解封吗?'))window.location='__ROOT__/index.php/Admin/Shop/deleteshop/id/{$v.id}'">解封店铺</a></if> </th>
+		        </tr>
+		      	<?php $i++ ;?>
+		       </foreach>		      
+		      </tbody>
+		    </table>
+		   </div>
+	   </div>
+		<div class="clearfix"> </div>
+	    </div>
+		<div class="copy">
+           <p>Copyright &copy; <?php echo date('Y',time()); ?>  All rights reserved.</p>
+	    </div>
+		</div>
+       </div>
+      <!-- /#page-wrapper -->
+   </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="__ROOT__/Public/admin/js/bootstrap.min.js"></script>
+</body>
+</html>

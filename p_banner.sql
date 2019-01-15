@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本机
+Source Server         : bendi
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : cs_365_6
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-14 22:16:14
+Date: 2019-01-15 14:45:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -216,16 +216,18 @@ CREATE TABLE `p_shop` (
   `zhizhao` varchar(255) DEFAULT NULL COMMENT '营业执照',
   `status` int(11) DEFAULT '0' COMMENT '0审核中  1 正常 2封店',
   `intro` text,
+  `addtime` datetime DEFAULT NULL,
+  `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_shop
 -- ----------------------------
-INSERT INTO `p_shop` VALUES ('1', '6', '店小二', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18', '1337689900', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '0', '店铺没有简介');
-INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '0', '阿斯顿发斯蒂芬阿斯顿发生');
-INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '0', '阿斯顿发送到发送到');
-INSERT INTO `p_shop` VALUES ('4', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '0', '撒打发斯蒂芬');
+INSERT INTO `p_shop` VALUES ('1', '6', '店小二111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18111', '1337689900111', '重庆花花村子111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '2', '店铺没有简介1111', '2019-01-15 14:41:31', '2019-01-15 14:41:31');
+INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭1', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '2', '阿斯顿发斯蒂芬阿斯顿发生', '2019-01-15 14:33:49', '2019-01-15 14:33:49');
+INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '0', '阿斯顿发送到发送到', null, null);
+INSERT INTO `p_shop` VALUES ('4', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '0', '撒打发斯蒂芬', '2019-01-15 14:32:20', '2019-01-15 14:32:22');
 
 -- ----------------------------
 -- Table structure for `p_type`
