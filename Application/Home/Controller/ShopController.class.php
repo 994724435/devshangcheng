@@ -5,16 +5,6 @@ use Think\Controller;
 header('content-type:text/html;charset=utf-8');
 class ShopController extends CommonController{
 
-    public function member(){
-       $userinfo = M('s_user')->where(array('id'=>session('uid')))->find(); 
-       $this->assign('userinfo',$userinfo);
-       $this->display();
-    }
-
-    public function saftystep(){
-        $this->display();
-    }
-
     public function shoplist(){
         $this->display();
     }
@@ -85,8 +75,10 @@ class ShopController extends CommonController{
             echo "</script>";
             exit;
         }
+        $this->display();
+    }
 
-
+    public function shopvisit(){
         $this->display();
     }
 }

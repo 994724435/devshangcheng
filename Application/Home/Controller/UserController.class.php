@@ -21,5 +21,8 @@ class UserController extends CommonController{
         $this->display();
     }
 
+    public function allorder(){
+        $this->display();
+    }
 
 }
