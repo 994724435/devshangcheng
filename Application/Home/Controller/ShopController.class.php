@@ -4,7 +4,13 @@ namespace Home\Controller;
 use Think\Controller;
 header('content-type:text/html;charset=utf-8');
 class ShopController extends CommonController{
+    public function shoporder(){
+        $this->display();
+    }
 
+    public function shop(){
+            $this->display();
+        }
     public function shoplist(){
         $this->display();
     }

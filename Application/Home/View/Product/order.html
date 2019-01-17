@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title> </title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="icon" type="image/png" href="/theme/default/__ROOT__/Public/Home/images/favicon.png">
+		<link href="__ROOT__/Public/Home/css/amazeui.min.css" rel="stylesheet" type="text/css" />
+		<link href="__ROOT__/Public/Home/css/style.css" rel="stylesheet" type="text/css" />
+		<script src="__ROOT__/Public/Home/js/jquery-1.10.2.min.js"></script>
+		<script src="__ROOT__/Public/Home/js/date.js"></script>
+		<script src="__ROOT__/Public/Home/js/iscroll.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#beginTime').date();
+				$('#endTime').date({theme:"datetime"});
+			});
+        </script>
+		<style>
+			.am-slider-default .am-control-nav{ text-align: center;}
+			.am-slider-default .am-control-nav li a.am-active{ background: #fdb325;}
+			.am-slider-default .am-control-nav li a{ border: 0; width: 10px; height: 10px;}
+			.imbuy{
+				border-radius: 15px;
+				display: block;
+				padding: 5px 8px;}
+		</style>
+	</head>
+	<body>
+		<header data-am-widget="header" class="am-header am-header-default sq-head ">
+			<div class="am-header-left am-header-nav">
+				<a href="javascript:history.back()" class="">
+					<i class="am-icon-chevron-left"></i>
+				</a>
+			</div>
+			<h1 class="am-header-title">
+  	            <a href="" class="">确认订单</a>
+            </h1>
+	    </header>
+	    <div style="height: 49px;"></div>
+		<if condition="$addr_res">
+			<h5 class="order-tit">收货人信息</h5>
+			<div class="order-name">
+				<a href="#">
+					<p class="order-tele">{$addr_res.name}&nbsp;&nbsp;&nbsp;{$addr_res.tel}</p>
+					<p class="order-add">{$addr_res.province}{$addr_res.city}{$addr_res.city} {$addr_res.addr}</p>
+				</a>
+				<i class="am-icon-angle-right"></i>
+			</div>
+		<else/>
+			<div class="add-address">
+				<a href="/index.php/Home/Product/address/id/<?php echo $_GET['id'] ?>/current_num/<?php echo $_GET['current_num'] ?>">+新建收货地址</a>
+				<i class="am-icon-angle-right"></i>
+			</div>
+		</if>
+
+
+
+
+
+        <div style="background: #eee; height: 10px;"></div>
+        <h5 class="order-tit">确认订单信息</h5>
+        <ul class="shopcart-list" style="padding-bottom: 0; margin-top: 0;">
+			<foreach name="list_info" item='v'>
+	    	<li>
+                <img src="{$v.pic}" class="shop-pic" />
+                <div class="order-mid">
+                	<div class="tit">{$v.name} 包邮</div>
+                	<div class="order-price">￥{$v.price} <i>X{$v.current_num}</i></div>
+                </div>
+	    	</li>
+			</foreach>
+
+	    </ul>
+	    <ul class="order-infor">
+	    	<li class="order-infor-first">
+	    		<span>商品总计：</span>
+	    		<i>￥{$total_price}</i>
+	    	</li>
+	    	<li class="order-infor-first">
+	    		<span>运费：</span>
+	    		<i>包邮</i>
+	    	</li>
+	    	<!--<li class="order-infor-first">-->
+	    		<!--<a href="integral.html">积分抵费></a>-->
+	    	<!--</li>-->
+	    	<!--<li class="order-infor-first">-->
+	    		<!--<a href="yhq.html">选择优惠券></a>-->
+	    	<!--</li>-->
+	    </ul>
+	    <div style="background: #eee; height: 10px;"></div>
+	    
+	    <!--<input id="beginTime" class="select-time" placeholder="请选择配送时间 >" />-->
+		</div>
+		<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+
+		<div id="datePlugin"></div>
+	    <div style="background: #eee; height: 10px;"></div>
+		<input type="hidden"  name="addr_ids" value="<?php echo $_GET['addr_id']; ?>">
+	    <textarea placeholder="备注说明" class="bz-infor" name="commits"></textarea>
+	    <div style="background: #eee; height: 10px;"></div>
+	    <div style="height: 55px;"></div>
+	    <div class="shop-fix">
+	    	<div class="order-text">
+	    		应付总额：<span>￥{$total_price}</span>
+	    	</div>
+
+			<input type="submit" value='提交订单' class="js-btn imbuy" id="imbuys">
+	    	<!--<a href="pay.html" class="js-btn">提交订单</a>-->
+	    </div>
+		</form>
+		<!--底部-->
+		<include file="Common/footer" />
+ 
+	</body>
+</html>

@@ -58,4 +58,5 @@ class CommonController extends Controller {
 		return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
 	}
 
+
 }
