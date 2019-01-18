@@ -20,7 +20,7 @@ class ProductController extends CommonController{
             }
 
            $account_info =  M('s_account')->where(array('userId'=>session('uid')))->find();
-       
+
            if($account_info['totalprice'] < $istrueorder['totals']){
                echo "<script>alert('账户余额不足');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
                exit();
