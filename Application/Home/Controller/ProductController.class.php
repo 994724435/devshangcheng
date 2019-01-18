@@ -6,6 +6,65 @@ header('content-type:text/html;charset=utf-8');
 class ProductController extends CommonController{
 
     /**
+     * 下单密码支付
+     */
+    public function paypassword(){
+        if(!$_GET['orderid']){
+            echo "<script>alert('订单ID异常');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
+            exit();
+        }else{
+            $istrueorder= M('p_orderlog')->where(array('userid'=>session('uid'),'orderid'=>$_GET['orderid']))->find();
+            if(!$istrueorder['id']){
+                echo "<script>alert('异常订单');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
+                exit();
+            }
+
+           $account_info =  M('s_account')->where(array('userId'=>session('uid')))->find();
+       
+           if($account_info['totalprice'] < $istrueorder['totals']){
+               echo "<script>alert('账户余额不足');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
+               exit();
+           }
+        }
+
+        if($_POST){
+          $userinfo =  M('p_user')->where(array('uid'=>session('uid')))->find();
+          if($userinfo['password'] != md5(trim($_POST['password']))  ){
+              echo "<script>alert('密码错误');window.location.href = '".__ROOT__."/index.php/Home/Product/paypassword/orderid/".$_GET['orderid']."';</script>";
+              exit();
+          }
+
+
+            $res_order = M('p_orderlog')->where(array('orderid'=>$_GET['orderid']))->save(array('state'=>1));
+            if($res_order){
+                $datalog['recordBody'] ='下单购买';
+                $datalog['recordPrice'] = intval($res_order['totals']);
+                $recordNowPrice = bcsub($account_info['totalprice'],$istrueorder['totals']);
+                $datalog['recordNowPrice'] = $recordNowPrice;
+                $datalog['recordStatus'] = 0;
+                $datalog['recordType'] =0;
+                $datalog['recordMold'] =5;
+                $datalog['recordToObject'] ='购买商品，订单号'.$istrueorder['orderid'];
+                $datalog['recordToUserId'] =session('uid');
+                $datalog['recordToAccountId'] =  $istrueorder['shopid'];
+                $datalog['createDate'] =date('Y-m-d H:i:s');
+                $is_log = M('p_incomelog')->add($datalog);
+                if($is_log){
+                    $account['totalPrice'] =$recordNowPrice;
+                    $account['canPrice'] =$recordNowPrice;
+                    M('s_account')->where(array('userId'=>session('uid')))->save($account);
+                }
+            }
+
+            echo "<script>alert('支付成功');window.location.href = '".__ROOT__."/index.php/Home/User/allorder';</script>";
+            exit();
+
+        }
+
+        $this->display();
+    }
+
+    /**
      * 下单确认页面
      */
     public function order(){
@@ -35,6 +94,19 @@ class ProductController extends CommonController{
         }
 
         if($_POST){
+            // 是否有待支付订单
+            $isnopay= M('p_orderlog')->where(array('userid'=>session('uid'),'state'=>0))->find();
+            if($isnopay['id']){
+                echo "<script>alert('存在待支付订单');window.location.href = '".__ROOT__."/index.php/Home/User/allorder';</script>";
+                exit();
+            }
+
+            //是否有支付密码
+            $ispaypass= M('p_user')->where(array('uid'=>session('uid')))->find();
+            if( empty($ispaypass['id'])){
+                echo "<script>alert('请设置支付密码');window.location.href = '".__ROOT__."/index.php/Home/User/password/id/".$_GET['id']."/current_num/".$_GET['current_num']."/addr_id/ ';</script>";
+                exit();
+            }
             $orderid =date('YmdHis').rand(1000,9999);
             if(empty($addr_res)){
                 echo "<script>alert('收货地址必填');window.location.href = '".__ROOT__."/index.php/Home/Product/order/id/".$_GET['id']."/current_num/".$_GET['current_num']."/addr_id/ ';</script>";
@@ -59,7 +131,8 @@ class ProductController extends CommonController{
                 M('p_orderlog')->add($data);
             }
 
-            
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Home/Product/paypassword/orderid/".$orderid."';</script>";
+            exit();
         }
         $this->assign('total_price',$total_price);
         $this->assign('addr_res',$addr_res);

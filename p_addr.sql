@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-17 18:33:48
+Date: 2019-01-18 17:36:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -93,42 +93,23 @@ INSERT INTO `p_cart` VALUES ('9', '10', '5', '1', '1', '2019-01-15 15:55:08');
 DROP TABLE IF EXISTS `p_incomelog`;
 CREATE TABLE `p_incomelog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` int(11) DEFAULT '1' COMMENT '1分红收益2充值 3静态提现  4升级  5 注册下级 6下单购买 7积分体现 8话费充值 9 回馈奖 10积分商城购买',
-  `state` int(11) DEFAULT '1' COMMENT '1收入   2支出 3失败',
-  `reson` varchar(255) DEFAULT NULL COMMENT '原因',
-  `addymd` date DEFAULT NULL,
-  `addtime` int(12) DEFAULT NULL,
-  `orderid` varchar(100) DEFAULT '1' COMMENT '1 卖方 2 买方',
-  `userid` int(11) DEFAULT NULL,
-  `income` varchar(64) DEFAULT '0' COMMENT '金额',
-  `cont` varchar(1000) NOT NULL COMMENT '后台备注',
-  `username` varchar(100) DEFAULT NULL,
-  `tel` varchar(100) DEFAULT NULL,
-  `commitid` varchar(64) DEFAULT '1',
-  `weixin` varchar(100) DEFAULT NULL,
+  `recordBody` varchar(125) DEFAULT '' COMMENT '记录详情',
+  `recordPrice` int(11) DEFAULT '1' COMMENT '1收入   2支出 3失败',
+  `recordNowPrice` int(11) DEFAULT NULL,
+  `recordStatus` int(1) DEFAULT NULL COMMENT '增加或减少标识：0-减少  1-增加',
+  `recordType` int(1) DEFAULT NULL COMMENT '当前记录对应账户类型：0-金额  1-积分',
+  `recordMold` int(1) DEFAULT NULL COMMENT '账单类型：0-排单 1-抢单 2-收款  3-提现  4-赠送(接收)积分  5商城下单 ',
+  `recordToObject` varchar(255) DEFAULT NULL COMMENT '当前记录对应对象',
+  `recordToUserId` int(11) DEFAULT NULL COMMENT '当前记录对应的用户id',
+  `recordToAccountId` int(11) DEFAULT NULL COMMENT '关联账户',
+  `createDate` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=695 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=696 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_incomelog
 -- ----------------------------
-INSERT INTO `p_incomelog` VALUES ('669', '6', '2', '下单购买', '2017-11-30', '1512031727', '87', '1', '200', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('670', '6', '2', '下单购买', '2017-11-30', '1512032076', '88', '1', '100', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('668', '6', '2', '下单购买', '2017-11-30', '1512031063', '86', '1', '100', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('671', '10', '2', '下单购买', '2017-11-30', '1512032178', '89', '1', '100', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('672', '2', '1', '充值', '2017-11-30', '1512032223', '201711301657033082', '1', '100', 'http://chongzhi.dev.com/index.php/Home/User/recharge.html?', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('673', '7', '0', '余额提现', '2017-11-30', '1512032386', '1', '1', '100', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('674', '2', '0', '充值', '2017-11-30', '1512033941', '201711301725418707', '1', '100', 'http://chongzhi.dev.com/index.php/Home/User/recharge.html?', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('685', '1', '1', '分红收益', '2017-11-30', '1512047655', '0', '1', '2.00', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('686', '8', '2', '话费充值', '2017-12-01', '1512139024', '1512139024', '1', '10', '', null, '18883287644', '1', null);
-INSERT INTO `p_incomelog` VALUES ('687', '4', '2', '会员升级(代金券)', '2017-12-02', '1512175550', '1', '1', '1399', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('688', '4', '2', '会员升级(代金券)', '2017-12-02', '1512175727', '1', '1', '2699', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('689', '4', '2', '会员升级(代金券)', '2017-12-02', '1512175997', '1', '1', '1399', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('690', '4', '2', '会员升级(代金券)', '2017-12-03', '1512265238', '1', '1', '700', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('691', '11', '1', null, '2017-12-03', '1512266843', '1', '1', '10', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('692', '11', '1', null, '2017-12-03', '1512267009', '1', '1', '1', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('693', '11', '1', '个人工单', '2017-12-03', '1512267737', '1', '1', '100', '', null, null, '1', null);
-INSERT INTO `p_incomelog` VALUES ('694', '11', '1', '个人工单', '2017-12-03', '1512267793', '1', '1', '10', '', null, '100', '1', null);
+INSERT INTO `p_incomelog` VALUES ('695', '下单购买', '0', '4976', '0', '0', '5', '购买商品，订单号201901181722432133', '5', '5', '2019-01-18 17:28:51');
 
 -- ----------------------------
 -- Table structure for `p_login`
@@ -172,7 +153,7 @@ CREATE TABLE `p_orderlog` (
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `addrid` int(11) NOT NULL COMMENT '收货地址id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_orderlog
@@ -181,9 +162,14 @@ INSERT INTO `p_orderlog` VALUES ('88', '1', null, '2', '钱付贰号', null, nul
 INSERT INTO `p_orderlog` VALUES ('86', '1', null, '2', '钱付贰号', '100', null, '2', '1512031063', '1', '100', '10', '', null, null, '0');
 INSERT INTO `p_orderlog` VALUES ('87', '1', null, '3', '钱付叁号', '100', null, '1', '1512031726', '1', '200', '1', '1', null, null, '0');
 INSERT INTO `p_orderlog` VALUES ('89', '1', null, '2', '钱付贰号', null, null, '1', '1512032178', '1', '100', '2', '2', null, null, '0');
-INSERT INTO `p_orderlog` VALUES ('90', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171825425660', '1', '111', '1', '', '2019-01-17 18:25:42', null, '0');
-INSERT INTO `p_orderlog` VALUES ('91', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171830337412', '1', '111', '1', '', '2019-01-17 18:30:33', null, '6');
-INSERT INTO `p_orderlog` VALUES ('92', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171831092330', '1', '111', '1', 'test', '2019-01-17 18:31:09', null, '6');
+INSERT INTO `p_orderlog` VALUES ('90', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171825425660', '1', '111', '1', '', '2019-01-17 18:25:42', '2019-01-18 09:24:14', '0');
+INSERT INTO `p_orderlog` VALUES ('91', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171830337412', '1', '111', '1', '', '2019-01-17 18:30:33', '2019-01-18 09:24:14', '6');
+INSERT INTO `p_orderlog` VALUES ('92', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171831092330', '1', '111', '1', 'test', '2019-01-17 18:31:09', '2019-01-18 09:24:15', '6');
+INSERT INTO `p_orderlog` VALUES ('93', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901180914001990', '1', '111', '1', 'test', '2019-01-18 09:14:00', '2019-01-18 09:24:16', '6');
+INSERT INTO `p_orderlog` VALUES ('94', '6', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901180924219281', '1', '111', '1', '', '2019-01-18 09:24:21', '2019-01-18 13:59:10', '6');
+INSERT INTO `p_orderlog` VALUES ('95', '6', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901181519345930', '2', '222', '1', '', '2019-01-18 15:19:34', '2019-01-18 17:20:07', '6');
+INSERT INTO `p_orderlog` VALUES ('96', '6', '5', '11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '12', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '0', '201901181720372407', '2', '24', '1', '呀呀呀呀有', '2019-01-18 17:20:37', '2019-01-18 17:22:22', '6');
+INSERT INTO `p_orderlog` VALUES ('97', '5', '5', '11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '12', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '1', '201901181722432133', '2', '24', '1', '', '2019-01-18 17:22:43', '2019-01-18 17:28:51', '6');
 
 -- ----------------------------
 -- Table structure for `p_product`
@@ -300,19 +286,18 @@ INSERT INTO `p_type` VALUES ('9', '3', '特色干货', '/Public/Home/images/test
 DROP TABLE IF EXISTS `p_user`;
 CREATE TABLE `p_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `password` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL COMMENT '登录名',
-  `openid` varchar(255) DEFAULT NULL COMMENT '微信ID',
-  `nickname` varchar(255) DEFAULT NULL COMMENT '微信昵称',
-  `address` varchar(255) DEFAULT NULL COMMENT '微信地址',
-  `userface` varchar(255) DEFAULT NULL COMMENT '维信头像',
-  `addtime` varchar(255) DEFAULT NULL COMMENT '注册时间',
-  `manager` int(2) DEFAULT '1' COMMENT '0 禁用账号 1管理员 2 超级管理员',
+  `uid` int(11) DEFAULT NULL COMMENT '登录名',
+  `password` varchar(125) DEFAULT NULL,
+  `state` int(1) DEFAULT '1' COMMENT '1 有效',
+  `addtime` datetime DEFAULT NULL COMMENT '注册时间',
+  `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES ('1', '123asd', 'admin', null, null, null, null, '2017-03-10 13:56:27', '2');
-INSERT INTO `p_user` VALUES ('2', '123456', 'admin2', null, null, null, null, '2017-03-10 13:56:27', '2');
+INSERT INTO `p_user` VALUES ('1', '0', '123asd', '1', '2017-03-10 13:56:27', null);
+INSERT INTO `p_user` VALUES ('2', '0', '123456', '1', '2017-03-10 13:56:27', null);
+INSERT INTO `p_user` VALUES ('16', '6', '2', '1', '2019-01-18 13:54:02', '2019-01-18 13:58:49');
+INSERT INTO `p_user` VALUES ('17', '5', 'c4ca4238a0b923820dcc509a6f75849b', '1', '2019-01-18 13:59:28', '2019-01-18 13:59:28');
