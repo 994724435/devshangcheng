@@ -14,21 +14,7 @@
         <link href="__ROOT__/Public/Home/css/style.css" rel="stylesheet" type="text/css" />
         <script src="__ROOT__/Public/Home/js/jquery-1.10.2.min.js"></script>
         <script src="__ROOT__/Public/Home/js/time.js"></script>
-        <script>
-                    $(function () {
-                        var elm = $('#shortbar');
-                        var startPos = $(elm).offset().top;
-                        $.event.add(window, "scroll", function () {
-                            var p = $(window).scrollTop();
-                            if (p > startPos) {
-                                elm.addClass('sortbar-fixed');
-                            } else {
-                                elm.removeClass('sortbar-fixed');
-                            }
-                        });
-                    });
 
-        </script>
     </head>
     <body>
 <!--图片轮换-->
@@ -122,9 +108,9 @@
       </li>
       <li>
         <div class="am-gallery-item">
-            <a href="/index.php/Home/Product/category" class="">
+            <a href="/index.php/Home/Product/lists" class="">
               <img src="__ROOT__/Public/Home/images/icon7.png" />
-              <p>分类</p>
+              <p>商品</p>
             </a>
         </div>
       </li>
@@ -150,7 +136,7 @@
             <li>
               <div class="am-gallery-item">
                   <a href="/index.php/Home/Product/detail/id/{$v.id}" class="">
-                    <img src="{$v.pic}"  style="height: 130px;">
+                    <img src="{$v.pic}"  style="max-height: 130px;">
                       <h3 class="am-gallery-title">{$v.name}</h3>
                       <div class="am-gallery-desc">￥{$v.price}</div>
                   </a>
@@ -170,7 +156,7 @@
             <li>
               <div class="am-gallery-item">
                   <a href="/index.php/Home/Product/detail/id/{$v.id}" class="">
-                    <img src="{$v.pic}" / style="height: 130px;">
+                    <img src="{$v.pic}"  style="max-height: 130px;">
                       <h3 class="am-gallery-title">{$v.name}</h3>
                       <div class="am-gallery-desc">￥{$v.price}</div>
                   </a>
@@ -191,7 +177,7 @@
             <li>
               <div class="am-gallery-item">
                   <a href="/index.php/Home/Product/detail/id/{$v.id}" class="">
-                    <img src="{$v.pic}" / style="height: 130px;">
+                    <img src="{$v.pic}"  style="max-height: 130px;">
                       <h3 class="am-gallery-title">{$v.name}</h3>
                       <div class="am-gallery-desc">￥{$v.price}</div>
                   </a>
@@ -206,42 +192,17 @@
     推荐商家
  </div>
  <ul class="yule">
+     <foreach name="shoplist" item='v'>
         <li>
-            <a href="/index.php/Home/Shop/shopvisit">
-                <img src="__ROOT__/Public/Home/images/test.jpg">
+            <a href="/index.php/Home/Shop/shopvisit/shopid/{$v.id}">
+                <img src="{$v.pic}">
                 <div style="width: 70%; float: left;">
-                <h3 class="title">青山湖区熊氏锁业</h3>
-                <p class="intro">开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱</p>
+                <h3 class="title">{$v.shopname}</h3>
+                <p class="intro">{$v.intro}</p>
                 </div>
             </a>
         </li>
-        <li>
-            <a href="shopvisit.html">
-                <img src="__ROOT__/Public/Home/images/test.jpg">
-                <div style="width: 70%; float: left;">
-                <h3 class="title">青山湖区熊氏锁业</h3>
-                <p class="intro">开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱</p>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="shopvisit.html">
-                <img src="__ROOT__/Public/Home/images/test.jpg">
-                <div style="width: 70%; float: left;">
-                <h3 class="title">青山湖区熊氏锁业</h3>
-                <p class="intro">开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱</p>
-                </div>
-            </a>
-        </li>
-        <li>
-            <a href="shopvisit.html">
-                <img src="__ROOT__/Public/Home/images/test.jpg">
-                <div style="width: 70%; float: left;">
-                <h3 class="title">青山湖区熊氏锁业</h3>
-                <p class="intro">开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱</p>
-                </div>
-            </a>
-        </li>
+     </foreach>
  </ul>
  <!--底部-->
  <include file="Common/footer" />

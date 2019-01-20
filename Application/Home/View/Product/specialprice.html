@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>55社区 </title>
+		<title>365商城 </title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -36,83 +36,39 @@
 			      <div class="am-tabs-bd">
 			          <div data-tab-panel-0 class="am-tab-panel am-active">
                          <ul data-am-widget="gallery" class="am-gallery special am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" >
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-										<div class="am-gallery-desc">￥68.00 </div>
-	                                    <!--<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>-->
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-	                                    <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
+							 <foreach name="product_list" item='v'>
+								 <if condition="$v.iste eq 1">
+									 <li>
+										<div class="am-gallery-item">
+											<a href="detail.html" class="">
+											  <img src="{$v.pic}"/>
+												<h3 class="am-gallery-title">{$v.name}</h3>
+												<div class="am-gallery-desc">￥{$v.price} </div>
+												<!--<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>-->
+											</a>
+										</div>
+									 </li>
+								 </if>
+							 </foreach>
+
 						 </ul>
 			          </div>
 			          <div data-tab-panel-1 class="am-tab-panel ">
 			             <ul data-am-widget="gallery" class="am-gallery special am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" >
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-	                                    <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-	                                    <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
-						      <li>
-						        <div class="am-gallery-item">
-						            <a href="detail.html" class="">
-						              <img src="__ROOT__/Public/Home/images/test10.png"/>
-						                <h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-						                <div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-						            </a>
-						        </div>
-						      </li>
+							 <foreach name="product_list" item='v'>
+								 <if condition="$v.iste neq 1">
+									 <li>
+										 <div class="am-gallery-item">
+											 <a href="detail.html" class="">
+												 <img src="{$v.pic}"/>
+												 <h3 class="am-gallery-title">{$v.name}</h3>
+												 <div class="am-gallery-desc">￥{$v.price} </div>
+												 <!--<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>-->
+											 </a>
+										 </div>
+									 </li>
+								 </if>
+							 </foreach>
 						 </ul>
 			          </div>
 			      </div>

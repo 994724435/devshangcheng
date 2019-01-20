@@ -28,7 +28,7 @@ class CommonController extends Controller {
                 $isshop =1;
             }
         }
-
+        $this->assign('userinfocommon',$res_user[0]);
         $this->assign('isshop',$isshop);
 
 	}

@@ -22,6 +22,8 @@
 				    border-radius: 15px;
 				    display: block;
 				    padding: 5px 0;}
+
+			.black {font-size: 1.7rem;}
 		</style>
 	</head>
 	<body>
@@ -35,7 +37,7 @@
 				</a> -->
 			</div>
 			<h1 class="am-header-title">
-  	            <a href="" class="">XXX店铺</a>
+  	            <a href="" class="">{$shop_info.shopname}</a>
             </h1>
             <div class="am-header-right am-header-nav">
                 <a href="step.html" class="">
@@ -47,7 +49,7 @@
 			</div>
 	    </header>
 	    <div style="height: 49px;"></div>
-		<div class="member">
+		<div class="member" style="background-image: url(__ROOT__/Public/Home/images/10d7f3f70a644ade750e0a596afb78756f.jpg);width: 100%">
 	    	<div class="mem-tit"> &nbsp;&nbsp;&nbsp;&nbsp; <!-- 15078921546  -->
 	    		<!-- <a href="step.html" class="step"><img src="__ROOT__/Public/Home/images/step.png" width="26"/></a> -->
 	    	</div>
@@ -59,25 +61,25 @@
 	    	<ul class="member-menu">
 			<li>
 				<a href="#">
-					<p class="yellow">2</p>
+					<p class="black">{$sale_num}</p>
 					<p class="black">在售商品 </p>
 				</a>
 			</li>
             <li>
 				<a href="#">
-					<p class="yellow">10</p>
-					<p class="black">今日订单 </p>
+					<p class="black">{$order_num}</p>
+					<p class="black">订单总量 </p>
 				</a>
 			</li>
 			<li>
 				<a href="#">
-					<p class="yellow">0</p>
-					<p class="black">月成交量</p>
+					<p class="black">{$good_commits_num}</p>
+					<p class="black">成交好评</p>
 				</a>
 			</li>
 			<li>
 				<a href="#">
-					<p class="yellow">0</p>
+					<p class="black">0</p>
 					<p class="black">今日访问</p>
 				</a>
 			</li>
@@ -97,33 +99,17 @@
 		    <div class="am-tab-panel am-fade am-in am-active detail " id="tab1" >
 		           <div class="user-list">
 	    	 <ul data-am-widget="gallery" class="am-gallery pro-list am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"  >
-			      <li>
-			        <div class="am-gallery-item">
-			            <a href="detail.html" class="">
-			              <img src=" __ROOT__/Public/Home/images/test.png" />
-			                <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
-			                <div class="am-gallery-desc">￥52</div>
-			            </a>
-			        </div>
-			      </li>
-			      <li>
-			        <div class="am-gallery-item">
-			            <a href="detail.html" class="">
-			              <img src=" __ROOT__/Public/Home/images/test1.png" />
-			                <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
-			                <div class="am-gallery-desc">￥39</div>
-			            </a>
-			        </div>
-			      </li>
+				 <foreach name="sale_list" item='v'>
 			        <li>
 			        <div class="am-gallery-item">
-			            <a href="detail.html" class="">
-			              <img src=" __ROOT__/Public/Home/images/test2.png" />
-			                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-			                <div class="am-gallery-desc">￥45.8</div>
+			            <a href="/index.php/Home/Product/detail/id/{$v.id}" class="">
+			              <img src="{$v.pic}" />
+			                <h3 class="am-gallery-title">{$v.name}</h3>
+			                <div class="am-gallery-desc">￥{$v.price}</div>
 			            </a>
 			        </div>
 			      </li>
+				 </foreach>
 			  </ul>	
 		  
 	   		 </div>
@@ -131,9 +117,7 @@
 
 		    <div class="am-tab-panel am-fade detail " id="tab2">
 		         <div class="comment">
-		         	 <p>产地: 中国大陆</p>
-                    <p>功效: 瘦身,美容,提神,抗氧化,保健,降三高</p>
-                    <p>保质期: >2年</p>
+		         	{$shop_info.intro}
 		         </div>
 		    </div>
 		  </div>

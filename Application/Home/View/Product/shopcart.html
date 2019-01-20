@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>55社区 </title>
+		<title>365商城 </title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -39,16 +39,16 @@
             <ul class="shopcart-list">
                 <foreach name="res" item='v'>
                     <li>
-                        <label class="am-checkbox am-warning">
-                            <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
-                        </label>
+                        <!--<label class="am-checkbox am-warning">-->
+                            <!--<input type="checkbox" checked="checked" value="" data-am-ucheck checked>-->
+                        <!--</label>-->
                         <a href="/index.php/Home/Product/detail/id/{$v.productid}"><img src="{$v.pic}" class="shop-pic" /></a>
                         <div class="shop-list-mid">
                             <div class="tit"><a href="/index.php/Home/Product/detail/id/{$v.productid}">{$v.name}</a></div>
                             <div class="d-stock">
-                                <a class="decrease">-</a>
+                                <a class="decrease" data="{$v.price}">-</a>
                                 <input id="num" readonly="" class="text_box" name="" type="text" value="{$v.num}">
-                                <a class="increase">+</a>
+                                <a class="increase" data="{$v.price}">+</a>
                             </div>
                         </div>
                         <b class="shop-list-price">￥{$v.price} </b>
@@ -70,9 +70,10 @@
             </label>
             <a class="del">批量删除</a> -->
             <a href="tureorder.html" class="js-btn">去结算</a>
-            <div class="js-text">
-            	<P>合计：<b>￥217.80</b></P>
-            	<p class="js-car">免费配送</p>
+            <div class="js-text" style="margin-top: 17px;">
+            	<P>合计：<b>￥ <span class="allprice">{$allprice}</span></b></P>
+                <!--<P>合计：<b>￥217.80</b></P>-->
+            	<!--<p class="js-car">免费配送</p>-->
             </div>
 	    </div>
 	    
@@ -89,17 +90,24 @@
 			var current_num = parseInt(self.siblings('input').val());
 			current_num += 1;
 			self.siblings('input').val(current_num);
-			update_item(self.siblings('input').data('item-id'));
-		})		
+            var nowllprice = $('.allprice').text();
+            var  newaiiprice =Number(nowllprice) + Number(self.attr("data"));
+            $('.allprice').html(newaiiprice);
+		});
 		$('.decrease').click(function(){
 			var self = $(this);
 			var current_num = parseInt(self.siblings('input').val());
-			if(current_num > 1){
+			if(current_num > 0){
 				current_num -= 1;
 				self.siblings('input').val(current_num);
-				update_item(self.siblings('input').data('item-id'));
+
+                nowllprice = $('.allprice').text();
+                console.log(self.attr("data")	);
+                newaiiprice =Number(nowllprice) - Number(self.attr("data"));
+                $('.allprice').html(newaiiprice);
 			}
-		})
+		});
+        
 	})
 </script>
 <script src="__ROOT__/Public/Home/js/jquery.min.js"></script>

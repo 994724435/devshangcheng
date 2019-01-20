@@ -50,7 +50,8 @@
     text-overflow: ellipsis;
     line-height: 18px;}
 .pro-list .am-gallery-desc{ color: #ff5500;}
-.yule{ overflow: hidden; margin-top: 12px;}
+/*.yule{ overflow: hidden; margin-top: 12px;}*/
+ .yule{ overflow: hidden; }
 .yule li { margin: 0 10px; border-bottom: 1px solid #ddd; overflow: hidden;  padding: 15px 0;}
 .yule li:last-child{ border: 0;}
 .whitebar .yule img {

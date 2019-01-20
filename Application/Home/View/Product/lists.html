@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>55社区 </title>
+		<title>365商城 </title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -32,20 +32,21 @@
 	    	<li><a href=""><i class="list-price">价格</i></li>
 	    	<li><a href="">新品</a></li> -->
 	    </ul>
+		<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 	    <ul class="list-pro">
 	    	<foreach name="res" item='v'>
 	    	<li>
-	    		<a href="detail.html"><img src="{$v.pic}" class="list-pic" /></a>
+	    		<a href="/index.php/Home/Product/detail/id/{$v.id}"><img src="{$v.pic}" class="list-pic" /></a>
 	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">{$v.name}</a></div>
-                	<div class="am-gallery-desc" data="52">￥{$v.price}</div>
-                	<p>销量：5件</p>
+                	<div class="tit"><a href="/index.php/Home/Product/detail/id/{$v.id}">{$v.name}</a></div>
+                	<div class="am-gallery-desc" data="{$v.price}">￥{$v.price}</div>
+                	<p>销量：{$v.salenum}件</p>
                 </div>
                 <div class="list-cart">
 	                <div class="d-stock ">
-			                <a class="decrease">-</a>
-			                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-			                <a class="increase">+</a>
+			                <a class="decrease"  data="{$v.price}">-</a>
+			                <input id="num" readonly="" class="text_box" name="{$v.id}" type="text" value="0">
+			                <a class="increase" data="{$v.price}" >+</a>
 	                </div>
                 </div>
                 <!--<a href="" class="list-cart"><img src="__ROOT__/Public/Home/images/cart.png" width="30"/></a>-->
@@ -55,13 +56,14 @@
 	    </ul>
 	   <div class="fix-bot">
 	   	 <!-- <div class="fix-bot-cart"> <i>8</i> </div>-->
-	   	  <a href="tureorder.html" class="list-js">去结算</a>
+	   	  <!--<a href="tureorder.html" class="list-js">去结算</a>-->
+		   <input type="submit" value="去结算" class="list-js" >
 	   	  <div class="js-text">
-            	<p><b>￥217.80</b></p>
-            	<p class="js-car">购物满50元免运费</p>
+            	<p ><b >￥ <span class="allprice">0</span></b></p>
+            	<p class="js-car"></p>
           </div>
 	   </div>
-
+		</form>
 <script src="__ROOT__/Public/Home/js/jquery.min.js"></script>
 <script src="__ROOT__/Public/Home/js/amazeui.min.js"></script>
 <script>
@@ -76,7 +78,9 @@ $(function(){
 				self.siblings(".text_box").fadeIn();
 			}
 			self.siblings('input').val(current_num);
-			// update_item(self.siblings('input').data('item-id'));
+			var nowllprice = $('.allprice').text();
+		    var  newaiiprice =Number(nowllprice) + Number(self.attr("data"));
+			$('.allprice').html(newaiiprice);
 		})		
 		$('.decrease').click(function(){
 			var self = $(this);
@@ -88,7 +92,10 @@ $(function(){
 					self.siblings(".text_box").fadeOut();
                 }
 				self.siblings('input').val(current_num);
-				// update_item(self.siblings('input').data('item-id'));
+				nowllprice = $('.allprice').text();
+                console.log(self.attr("data")	);
+				newaiiprice =Number(nowllprice) - Number(self.attr("data"));
+                $('.allprice').html(newaiiprice);
 			}
 		})
 	})

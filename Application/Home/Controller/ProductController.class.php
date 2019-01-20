@@ -19,6 +19,10 @@ class ProductController extends CommonController{
                 exit();
             }
 
+            if($istrueorder['state'] != 1){
+                echo "<script>alert('订单状态异常');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
+                exit();
+            }
            $account_info =  M('s_account')->where(array('userId'=>session('uid')))->find();
 
            if($account_info['totalprice'] < $istrueorder['totals']){
@@ -35,15 +39,15 @@ class ProductController extends CommonController{
           }
 
 
-            $res_order = M('p_orderlog')->where(array('orderid'=>$_GET['orderid']))->save(array('state'=>1));
+            $res_order = M('p_orderlog')->where(array('orderid'=>$_GET['orderid']))->save(array('state'=>2));
             if($res_order){
                 $datalog['recordBody'] ='下单购买';
-                $datalog['recordPrice'] = intval($res_order['totals']);
+                $datalog['recordPrice'] = intval($istrueorder['totals']);
                 $recordNowPrice = bcsub($account_info['totalprice'],$istrueorder['totals']);
                 $datalog['recordNowPrice'] = $recordNowPrice;
                 $datalog['recordStatus'] = 0;
                 $datalog['recordType'] =0;
-                $datalog['recordMold'] =5;
+                $datalog['recordMold'] =6;
                 $datalog['recordToObject'] ='购买商品，订单号'.$istrueorder['orderid'];
                 $datalog['recordToUserId'] =session('uid');
                 $datalog['recordToAccountId'] =  $istrueorder['shopid'];
@@ -94,6 +98,16 @@ class ProductController extends CommonController{
         }
 
         if($_POST){
+            // 当前登录人的店铺
+            $user_shop_info= M('p_shop')->where(array('userid'=>session('uid')))->find();
+            foreach($arr_id as $k=>$v){
+                $temp_product =  M('p_product')->where(array('id'=>$v))->find();
+                if($temp_product['shopid'] == $user_shop_info['id']){
+                    echo "<script>alert('自己不能购买自己商品');window.location.href = '".__ROOT__."/index.php/Home/Index/index';</script>";
+                    exit();
+                }
+            }
+
             // 是否有待支付订单
             $isnopay= M('p_orderlog')->where(array('userid'=>session('uid'),'state'=>0))->find();
             if($isnopay['id']){
@@ -120,7 +134,7 @@ class ProductController extends CommonController{
                 $data['productname'] = $v['name'];
                 $data['productmoney'] = $v['price'];
                 $data['producturl'] = $v['pic'];
-                $data['state'] =0;
+                $data['state'] =1;
                 $data['orderid'] = $orderid;
                 $data['producturl'] = $v['pic'];
                 $data['num'] = $v['current_num'];
@@ -245,6 +259,12 @@ class ProductController extends CommonController{
         }
         $where=array('p_cart.uid'=>session('uid'),'p_cart.type'=>1);
         $result = $cart->field('p_cart.id,p_cart.productid,p_product.name,p_cart.num,p_product.pic,p_product.price')->join('p_product ON p_cart.productid=p_product.id')->where($where)->select();
+
+        $allprice =0;
+        foreach ($result as $v){
+            $allprice=$allprice+ $v['num']*$v['price'];
+        }
+        $this->assign('allprice',$allprice);
         $this->assign('res',$result);
         $this->display();
     }
@@ -278,6 +298,8 @@ class ProductController extends CommonController{
     }
 
     public function specialprice(){
+        $product_list = M('p_product')->where(array('state'=>1))->select();
+        $this->assign('product_list',$product_list);
         $this->display();
     }
 
@@ -290,8 +312,26 @@ class ProductController extends CommonController{
         if (I('ctype')) {
            $where['ctype'] = I('ctype');
         }
+        if($_POST){
+            $canid ='';
+            $cancurrent_num ='';
+            foreach ($_POST as $k=>$value){
+                if($value){
+                    $canid=$canid.','.$k;
+                    $cancurrent_num=$cancurrent_num.','.$value;
+                }
+            }
+            $canid = substr($canid,1,strlen($canid));
+            $cancurrent_num = substr($cancurrent_num,1,strlen($cancurrent_num));
+            if($canid){
+                echo "<script>";
+                echo "window.location.href='".__ROOT__."/index.php/Home/Product/order?id=".$canid."&current_num=".$cancurrent_num."';";
+                echo "</script>";
+                exit;
+            }
 
-        $result  = $product->where($where)->select();
+        }
+        $result  = $product->where($where)->order('salenum DESC')->select();
         $this->assign('res',$result);
         $this->display();
     }

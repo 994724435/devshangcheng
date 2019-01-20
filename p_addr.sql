@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : bendi
+Source Server         : 本机
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : cs_365_6
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-18 17:36:20
+Date: 2019-01-20 20:48:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `p_addr` (
   `addtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_addr
@@ -43,7 +43,8 @@ INSERT INTO `p_addr` VALUES ('2', '4', 'Admin', '15922917289', '北京市', '北
 INSERT INTO `p_addr` VALUES ('3', '4', 'Admin', '15922917289', '省份', '地级市', '区、县级市', '打算发斯蒂芬', '1', '0', '2019-01-17 15:15:33', '2019-01-17 16:39:45');
 INSERT INTO `p_addr` VALUES ('4', '4', 'Admin', '15922917289', '省份', '地级市', '区、县级市', '打算发斯蒂芬', '1', '1', '2019-01-17 15:17:17', '2019-01-17 16:39:46');
 INSERT INTO `p_addr` VALUES ('5', '2', '绩效管理', '15922917289', '北京市', '北京市', '崇文区', 'dsfasdfasfsdfasdf', '1', '1', '2019-01-17 16:41:25', '2019-01-17 17:23:26');
-INSERT INTO `p_addr` VALUES ('6', '5', '绩效管理', '15922917289', '天津市', '天津市', '河西区', 'fasdfasdfasdfasdf', '1', '1', '2019-01-17 18:10:42', null);
+INSERT INTO `p_addr` VALUES ('6', '4', '绩效管理', '15922917289', '天津市', '天津市', '河西区', 'fasdfasdfasdfasdf', '1', '1', '2019-01-17 18:10:42', '2019-01-19 17:18:43');
+INSERT INTO `p_addr` VALUES ('7', '5', 'admin', '13649588123', '北京市', '北京市', '崇文区', 'asdfasdfasfaf', '1', '1', '2019-01-20 13:01:38', null);
 
 -- ----------------------------
 -- Table structure for `p_banner`
@@ -72,7 +73,7 @@ CREATE TABLE `p_cart` (
   `type` int(1) DEFAULT '1' COMMENT '1购物车  2 收藏',
   `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_cart
@@ -84,8 +85,34 @@ INSERT INTO `p_cart` VALUES ('4', '644', '1', '1', '1', '2019-01-07 20:23:03');
 INSERT INTO `p_cart` VALUES ('5', '11', '1', '2', '1', '2019-01-07 20:23:53');
 INSERT INTO `p_cart` VALUES ('6', '644', '11', '1', '1', '2019-01-07 20:44:55');
 INSERT INTO `p_cart` VALUES ('7', '12', '1', '2', '1', '2019-01-09 14:34:04');
-INSERT INTO `p_cart` VALUES ('10', '12', '5', '1', '1', '2019-01-13 15:41:25');
+INSERT INTO `p_cart` VALUES ('11', '12', '5', '2', '1', '2019-01-20 20:24:15');
 INSERT INTO `p_cart` VALUES ('9', '10', '5', '1', '1', '2019-01-15 15:55:08');
+
+-- ----------------------------
+-- Table structure for `p_express`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_express`;
+CREATE TABLE `p_express` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(24) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL COMMENT '快递名称',
+  `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_express
+-- ----------------------------
+INSERT INTO `p_express` VALUES ('1', 'SF', '顺丰速运', null);
+INSERT INTO `p_express` VALUES ('2', 'HTKY', '百世快递', null);
+INSERT INTO `p_express` VALUES ('3', 'ZTO', '中通快递', null);
+INSERT INTO `p_express` VALUES ('4', 'STO', '申通快递', null);
+INSERT INTO `p_express` VALUES ('5', 'YTO', '圆通速递', null);
+INSERT INTO `p_express` VALUES ('6', 'YD', '韵达速递', null);
+INSERT INTO `p_express` VALUES ('7', 'YZPY', '邮政快递', null);
+INSERT INTO `p_express` VALUES ('8', 'EMS', 'EMS', null);
+INSERT INTO `p_express` VALUES ('9', 'HHTT', '天天快递', null);
+INSERT INTO `p_express` VALUES ('10', 'JD', '京东快递', '2019-01-19 17:46:53');
 
 -- ----------------------------
 -- Table structure for `p_incomelog`
@@ -98,18 +125,23 @@ CREATE TABLE `p_incomelog` (
   `recordNowPrice` int(11) DEFAULT NULL,
   `recordStatus` int(1) DEFAULT NULL COMMENT '增加或减少标识：0-减少  1-增加',
   `recordType` int(1) DEFAULT NULL COMMENT '当前记录对应账户类型：0-金额  1-积分',
-  `recordMold` int(1) DEFAULT NULL COMMENT '账单类型：0-排单 1-抢单 2-收款  3-提现  4-赠送(接收)积分  5商城下单 ',
+  `recordMold` int(1) DEFAULT NULL COMMENT '账单类型：0-排单 1-抢单 2-收款  3-提现  4-赠送(接收)积分  6商城下单 ',
   `recordToObject` varchar(255) DEFAULT NULL COMMENT '当前记录对应对象',
   `recordToUserId` int(11) DEFAULT NULL COMMENT '当前记录对应的用户id',
   `recordToAccountId` int(11) DEFAULT NULL COMMENT '关联账户',
   `createDate` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=696 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=704 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_incomelog
 -- ----------------------------
-INSERT INTO `p_incomelog` VALUES ('695', '下单购买', '0', '4976', '0', '0', '5', '购买商品，订单号201901181722432133', '5', '5', '2019-01-18 17:28:51');
+INSERT INTO `p_incomelog` VALUES ('698', '下单购买', '24', '76', '0', '0', '6', '购买商品，订单号201901191124273384', '5', '5', '2019-01-19 11:24:30');
+INSERT INTO `p_incomelog` VALUES ('699', '下单购买', '2', '74', '0', '0', '6', '购买商品，订单号201901191129215186', '5', '5', '2019-01-19 11:29:29');
+INSERT INTO `p_incomelog` VALUES ('700', '下单购买', '24', '50', '0', '0', '6', '购买商品，订单号201901191124273384', '5', '5', '2019-01-19 13:04:54');
+INSERT INTO `p_incomelog` VALUES ('701', '下单购买', '2', '48', '0', '0', '6', '购买商品，订单号201901191129215186', '5', '5', '2019-01-19 18:37:42');
+INSERT INTO `p_incomelog` VALUES ('702', '下单购买', '222', '778', '0', '0', '6', '购买商品，订单号201901201302389797', '5', '5', '2019-01-20 13:02:42');
+INSERT INTO `p_incomelog` VALUES ('703', '下单购买', '222', '556', '0', '0', '6', '购买商品，订单号201901201301441489', '5', '5', '2019-01-20 13:05:53');
 
 -- ----------------------------
 -- Table structure for `p_login`
@@ -132,6 +164,30 @@ INSERT INTO `p_login` VALUES ('1', 'admin', '123asd', '2017-09-16', '1505552484'
 INSERT INTO `p_login` VALUES ('2', 'admin', '123asd', '2017-09-16', '1505552539', '127.0.0.1');
 
 -- ----------------------------
+-- Table structure for `p_ordercommits`
+-- ----------------------------
+DROP TABLE IF EXISTS `p_ordercommits`;
+CREATE TABLE `p_ordercommits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderid` varchar(32) DEFAULT NULL,
+  `userid` int(11) NOT NULL,
+  `shopid` int(11) NOT NULL,
+  `productid` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1 好评 2中评 3 差评',
+  `commits` text,
+  `addtime` datetime DEFAULT NULL,
+  `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of p_ordercommits
+-- ----------------------------
+INSERT INTO `p_ordercommits` VALUES ('4', '201901191129215186', '5', '5', '10', '1', '\r\n		撒大声地', '2019-01-19 21:29:09', '2019-01-20 14:08:27');
+INSERT INTO `p_ordercommits` VALUES ('3', '201901191124273384', '5', '5', '11', '2', 'niceadfad\r\n		', '2019-01-19 21:06:27', '2019-01-19 21:19:46');
+INSERT INTO `p_ordercommits` VALUES ('5', '201901201302389797', '5', '5', '12', '3', '不好不好', '2019-01-20 13:09:39', '2019-01-20 13:09:39');
+
+-- ----------------------------
 -- Table structure for `p_orderlog`
 -- ----------------------------
 DROP TABLE IF EXISTS `p_orderlog`;
@@ -143,7 +199,7 @@ CREATE TABLE `p_orderlog` (
   `productname` varchar(256) DEFAULT NULL,
   `productmoney` decimal(10,0) DEFAULT NULL COMMENT '产品带来的利润',
   `producturl` varchar(128) DEFAULT NULL,
-  `state` int(1) NOT NULL DEFAULT '0' COMMENT '0待支付 1完成支付 2已完成',
+  `state` int(1) NOT NULL DEFAULT '1' COMMENT '1待支付 2完成支付待收货 3已发货 4收货待评价  5 交易完成 6 已取消 7退换货',
   `orderid` varchar(128) NOT NULL COMMENT '订单id',
   `num` int(5) DEFAULT NULL COMMENT '购买数量',
   `totals` decimal(10,0) DEFAULT NULL,
@@ -152,24 +208,19 @@ CREATE TABLE `p_orderlog` (
   `addtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `addrid` int(11) NOT NULL COMMENT '收货地址id',
+  `express` varchar(12) DEFAULT NULL COMMENT '快递',
+  `expressname` varchar(64) DEFAULT NULL COMMENT '快递名称',
+  `expressorderid` varchar(128) DEFAULT NULL COMMENT '快递单号',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_orderlog
 -- ----------------------------
-INSERT INTO `p_orderlog` VALUES ('88', '1', null, '2', '钱付贰号', null, null, '1', '1512032076', '1', '100', '2', '2', null, null, '0');
-INSERT INTO `p_orderlog` VALUES ('86', '1', null, '2', '钱付贰号', '100', null, '2', '1512031063', '1', '100', '10', '', null, null, '0');
-INSERT INTO `p_orderlog` VALUES ('87', '1', null, '3', '钱付叁号', '100', null, '1', '1512031726', '1', '200', '1', '1', null, null, '0');
-INSERT INTO `p_orderlog` VALUES ('89', '1', null, '2', '钱付贰号', null, null, '1', '1512032178', '1', '100', '2', '2', null, null, '0');
-INSERT INTO `p_orderlog` VALUES ('90', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171825425660', '1', '111', '1', '', '2019-01-17 18:25:42', '2019-01-18 09:24:14', '0');
-INSERT INTO `p_orderlog` VALUES ('91', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171830337412', '1', '111', '1', '', '2019-01-17 18:30:33', '2019-01-18 09:24:14', '6');
-INSERT INTO `p_orderlog` VALUES ('92', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901171831092330', '1', '111', '1', 'test', '2019-01-17 18:31:09', '2019-01-18 09:24:15', '6');
-INSERT INTO `p_orderlog` VALUES ('93', '2', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901180914001990', '1', '111', '1', 'test', '2019-01-18 09:14:00', '2019-01-18 09:24:16', '6');
-INSERT INTO `p_orderlog` VALUES ('94', '6', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901180924219281', '1', '111', '1', '', '2019-01-18 09:24:21', '2019-01-18 13:59:10', '6');
-INSERT INTO `p_orderlog` VALUES ('95', '6', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '0', '201901181519345930', '2', '222', '1', '', '2019-01-18 15:19:34', '2019-01-18 17:20:07', '6');
-INSERT INTO `p_orderlog` VALUES ('96', '6', '5', '11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '12', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '0', '201901181720372407', '2', '24', '1', '呀呀呀呀有', '2019-01-18 17:20:37', '2019-01-18 17:22:22', '6');
-INSERT INTO `p_orderlog` VALUES ('97', '5', '5', '11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '12', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '1', '201901181722432133', '2', '24', '1', '', '2019-01-18 17:22:43', '2019-01-18 17:28:51', '6');
+INSERT INTO `p_orderlog` VALUES ('100', '5', '5', '11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '12', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '5', '201901191124273384', '2', '24', '1', '好好', '2019-01-19 11:24:27', '2019-01-19 20:21:53', '6', 'SF', '顺丰速运', '14124214123412');
+INSERT INTO `p_orderlog` VALUES ('101', '5', '5', '10', '特价武夷山桐木关正山小种红茶高档礼盒2', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '5', '201901191129215186', '2', '2', '1', '', '2019-01-19 11:29:21', '2019-01-19 21:29:09', '6', 'HTKY', '百世快递', '23412412341234');
+INSERT INTO `p_orderlog` VALUES ('102', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '2', '201901201301441489', '2', '222', '1', '', '2019-01-20 13:01:44', '2019-01-20 13:05:53', '7', null, null, null);
+INSERT INTO `p_orderlog` VALUES ('103', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '5', '201901201302389797', '2', '222', '1', '', '2019-01-20 13:02:38', '2019-01-20 13:09:39', '7', 'ZTO', '中通快递', '123456789');
 
 -- ----------------------------
 -- Table structure for `p_product`
@@ -192,18 +243,19 @@ CREATE TABLE `p_product` (
   `salenum` int(11) DEFAULT '0',
   `shopid` int(11) NOT NULL COMMENT '店铺ID',
   `youfei` decimal(10,0) DEFAULT '0' COMMENT '邮费',
+  `isdelete` int(1) DEFAULT '0' COMMENT '0 未删除 1已删除',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_product
 -- ----------------------------
-INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '111', '1', '6', '1', '1', '0', '1', '2019-01-06 10:29:53', '0', '5', null);
-INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', '', '1', 'http://df.cqyuyan.cn/_2019-01-09_5c35b08508dc8.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-09 16:27:49', '0', '5', null);
-INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '1', '1', '1', '2019-01-06 10:30:12', '0', '5', null);
-INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '', '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '1', '6', '1', '1', '1', '1', '2019-01-06 10:30:20', '0', '5', null);
-INSERT INTO `p_product` VALUES ('13', '13000000003', '32312423', '1', 'http://df.cqyuyan.cn/_2019-01-13_5c3adb51120e5.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-13 14:31:45', '0', '5', null);
-INSERT INTO `p_product` VALUES ('14', '104', '21312', '1', 'http://df.cqyuyan.cn/_2019-01-06_5c3198ddcc021.png', '24', '1', '6', '0', '0', '0', '1', '2019-01-06 13:57:50', '0', '5', '0');
+INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '111', '1', '6', '1', '1', '0', '2', '2019-01-06 10:29:53', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', '', '1', 'http://df.cqyuyan.cn/_2019-01-09_5c35b08508dc8.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-09 16:27:49', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '1', '1', '1', '2019-01-06 10:30:12', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '', '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '1', '6', '1', '1', '1', '1', '2019-01-06 10:30:20', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('13', '13000000003', '32312423', '1', 'http://df.cqyuyan.cn/_2019-01-13_5c3adb51120e5.png', '12', '1', '6', '0', '0', '0', '1', '2019-01-13 14:31:45', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('14', '104', '21312', '1', 'http://df.cqyuyan.cn/_2019-01-06_5c3198ddcc021.png', '24', '1', '6', '0', '0', '0', '1', '2019-01-06 13:57:50', '10', '5', '0', '0');
 
 -- ----------------------------
 -- Table structure for `p_product_banner`
@@ -239,18 +291,20 @@ CREATE TABLE `p_shop` (
   `zhizhao` varchar(255) DEFAULT NULL COMMENT '营业执照',
   `status` int(11) DEFAULT '0' COMMENT '0审核中  1 正常 2封店',
   `intro` text,
+  `pic` varchar(255) DEFAULT NULL COMMENT '门店照片',
+  `istui` int(1) DEFAULT '0' COMMENT '0不推荐 1推荐',
   `addtime` datetime DEFAULT NULL,
   `updatetime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_shop
 -- ----------------------------
-INSERT INTO `p_shop` VALUES ('1', '6', '店小二111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18111', '1337689900111', '重庆花花村子111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '2', '店铺没有简介1111', '2019-01-15 14:41:31', '2019-01-15 14:41:31');
-INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭1', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '2', '阿斯顿发斯蒂芬阿斯顿发生', '2019-01-15 14:33:49', '2019-01-15 14:33:49');
-INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '0', '阿斯顿发送到发送到', null, null);
-INSERT INTO `p_shop` VALUES ('4', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '1', '撒打发斯蒂芬', '2019-01-15 14:32:20', '2019-01-15 15:00:38');
+INSERT INTO `p_shop` VALUES ('1', '6', '店小二111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18111', '1337689900111', '重庆花花村子111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '1', '开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱', '/Public/Home/images/test.jpg', '1', '2019-01-15 14:41:31', '2019-01-20 15:11:44');
+INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭1', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '1', '阿斯顿发斯蒂芬阿斯顿发生', '/Public/Home/images/test.jpg', null, '2019-01-15 14:33:49', '2019-01-20 13:49:52');
+INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '1', '阿斯顿发送到发送到', '/Public/Home/images/test.jpg', null, null, '2019-01-20 13:49:54');
+INSERT INTO `p_shop` VALUES ('5', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '1', '撒打发斯蒂芬', '/Public/Home/images/test.jpg', null, '2019-01-15 14:32:20', '2019-01-20 14:52:58');
 
 -- ----------------------------
 -- Table structure for `p_type`

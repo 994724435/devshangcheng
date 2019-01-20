@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>55社区 </title>
+		<title>365商城 </title>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -33,108 +33,56 @@
 	    	</form>
 	    </div>
 	    <ul class="order-style">
-	    	<li class="current"><a href="allorder.html">全部</a></li>
-	    	<li><a href="allorder.html">待付款</a></li>
-	    	<li><a href="allorder.html">待收货</a></li>
-	    	<li><a href="allorder.html">待评价</a></li>
-	    	<li><a href="allorder.html">退换货</a></li>
+			<li <if condition="$state eq 0">class="current"</if>><a href="/index.php/Home/Shop/shoporder">全部</a></li>
+			<li <if condition="$state eq 2">class="current"</if>><a href="/index.php/Home/Shop/shoporder/state/2">待发货</a></li>
+			<li <if condition="$state eq 3">class="current"</if>><a href="/index.php/Home/Shop/shoporder/state/3">已发货</a></li>
+			<li <if condition="$state eq 4">class="current"</if>><a href="/index.php/Home/Shop/shoporder/state/4">待评价</a></li>
+			<li <if condition="$state eq 5">class="current"</if>><a href="/index.php/Home/Shop/shoporder/state/5">已完成</a></li>
 	    </ul>
 	    <!--代付款-->
-	    <div class="c-comment">
-			<span class="c-comment-num">订单编号：15091651723688888</span>
-			<span class="c-comment-suc">待付款</span>
-		</div>
-		
-		<div class="c-comment-list" style="border: 0;">
-			<a class="o-con" href="">
-            	<div class="o-con-img"><img src="__ROOT__/Public/Home/images/test10.png"></div>
-                <div class="o-con-txt">
-                	<p>南丰蜜桔 南丰贡桔sss</p>
-                	<p class="price">￥88</p>
-                	<p>合计：<span>￥176.00</span></p>
-                </div>
-            	<div class="o-con-much"> <h4>x2</h4></div>
-            	
-            </a>
-            <div class="c-com-money">花5个商品 实付金额：<span>￥ 175.00</span></div>
-		</div>
-		<div class="c-com-btn">
-			<a href="tureorder.html">立即支付</a>
-			<a href="">取消订单</a>
-		</div>
-		<div class="clear"></div>
+		<foreach name="orderlog" item='v'>
+			<!--代付款-->
+			<div class="c-comment">
+				<span class="c-comment-num">订单编号：{$v.orderid}</span>
+				<span class="c-comment-suc">
+				<if condition="$v.state eq 1"> 待付款
+					<elseif condition="$v.state eq 2"/>
+					待发货
+					<elseif condition="$v.state eq 4"/>
+					待评价
+					<elseif condition="$v.state eq 5"/>
+					已完成
+				</if>
+			</span>
+			</div>
+
+			<div class="c-comment-list" style="border: 0;">
+				<a class="o-con" href="/index.php/Home/Shop/orderdetail?orderid={$v.orderid}">
+					<div class="o-con-img"><img src="{$v.producturl}"></div>
+					<div class="o-con-txt">
+						<p>{$v.productname}</p>
+						<p class="price">￥{$v.productmoney}</p>
+						<p>合计：<span>￥{$v['num'] * $v['productmoney'] }</span></p>
+					</div>
+					<div class="o-con-much"> <h4>x {$v.num}</h4></div>
+
+				</a>
+				<!--<div class="c-com-money">花{$v.num}个商品 实付金额：<span>￥ {$v['num'] * $v['productmoney'] }</span></div>-->
+			</div>
+			<div class="c-com-btn">
+				<if condition="$v.state eq 1">
+					<a href="/index.php/Home/Product/paypassword/orderid/{$v.orderid}">立即支付</a>
+					<!--<a href="">取消订单</a>-->
+					<elseif condition="$v.state eq 2"/>
+					<a href="/index.php/Home/Shop/orderdetail/orderid/{$v.orderid}">确认发货</a>
+					<!--<a href="javascript:alert('退货功能开发中')">退货</a>-->
+					<elseif condition="$v.state eq 4"/>
+				</if>
+			</div>
+
+			<!--代付款-->
+		</foreach>
 		<!--代付款-->
-		<!--待收货-->
-		 <div class="c-comment">
-			<span class="c-comment-num">订单编号：150916517682</span>
-			<span class="c-comment-suc">卖家已发货</span>
-		</div>
-		
-		<div class="c-comment-list" style="border: 0;">
-			<a class="o-con" href="">
-            	<div class="o-con-img"><img src="__ROOT__/Public/Home/images/test10.png"></div>
-                <div class="o-con-txt">
-                	<p>南丰蜜桔 南丰贡桔</p>
-                	<p class="price">￥88</p>
-                	<p>合计：<span>￥176.00</span></p>
-                </div>
-            	<div class="o-con-much"> <h4>x2</h4></div>
-            	
-            </a>
-            <div class="c-com-money">花5个商品 实付金额：<span>￥ 175.00</span></div>
-		</div>
-		<div class="c-com-btn">
-			<a href="">确认收货</a>
-		</div>
-		<div class="clear"></div>
-		<!--待收货-->
-		<!--交易成功-->
-		 <div class="c-comment">
-			<span class="c-comment-num">订单编号：150916517682</span>
-			<span class="c-comment-suc">交易成功ssss</span>
-		</div>
-		
-		<div class="c-comment-list" style="border: 0;">
-			<a class="o-con" href="">
-            	<div class="o-con-img"><img src="__ROOT__/Public/Home/images/test10.png"></div>
-                <div class="o-con-txt">
-                	<p>南丰蜜桔 南丰贡桔</p>
-                	<p class="price">￥88</p>
-                	<p>合计：<span>￥176.00</span></p>
-                </div>
-            	<div class="o-con-much"> <h4>x2</h4></div>
-            	
-            </a>
-            <div class="c-com-money">花5个商品 实付金额：<span>￥ 175.00</span></div>
-		</div>
-		<div class="c-com-btn">
-			<a href="">评价</a>
-		</div>
-		<div class="clear"></div>
-		<!--交易成功-->
-		<!--交易成功-->
-		 <div class="c-comment">
-			<span class="c-comment-num">订单编号：150916517682</span>
-			<span class="c-comment-suc">交易成功</span>
-		</div>
-		
-		<div class="c-comment-list" style="border: 0;">
-			<a class="o-con" href="">
-            	<div class="o-con-img"><img src="__ROOT__/Public/Home/images/test10.png"></div>
-                <div class="o-con-txt">
-                	<p>南丰蜜桔 南丰贡桔</p>
-                	<p class="price">￥88</p>
-                	<p>合计：<span>￥176.00</span></p>
-                </div>
-            	<div class="o-con-much"> <h4>x2</h4></div>
-            	
-            </a>
-            <div class="c-com-money">花5个商品 实付金额：<span>￥ 175.00</span></div>
-		</div>
-		<div class="c-com-btn">
-			<a href="">删除订单</a>
-		</div>
-		<div class="clear"></div>
-		<!--交易成功-->
+
 	</body>
 </html>

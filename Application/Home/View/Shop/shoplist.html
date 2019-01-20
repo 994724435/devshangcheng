@@ -36,112 +36,41 @@
 			      <div style="height: 49px;"></div>
 			      <div class="am-tabs-bd">
 			          <div data-tab-panel-0 class="am-tab-panel am-active">
-                         <ul class="yule">
-							<li>
-								<a href="/index.php/Home/Shop/shopvisit">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
+                         <ul class="yule" >
+							 <foreach name="res_all" item='v'>
+								 <if condition="$v.istui eq 1">
+								 <li>
+									<a href="/index.php/Home/Shop/shopvisit/shopid/{$v.id}">
+										<img src="{$v.pic}" style="width: 30%;">
+										<div style="width: 60%; float: left;">
+										<h3 class="title">{$v.shopname} </h3>
+										<p class="intro">{$v.intro}</p>
+										<p class="time">时间：{$v.addtime}</p>
+										</div>
+									</a>
+								 </li>
+							  </if>
+							 </foreach>
 				
 						</ul>
 			          </div>
 			          <div data-tab-panel-1 class="am-tab-panel ">
 			             <ul class="yule">
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a href="newsdetail.html">
-									<img src="__ROOT__/Public/Home/images/tt.png">
-									<div style="width: 70%; float: left;">
-									<h3 class="title">重庆市冷链物流园”将在5年内建成 </h3>
-									<p class="intro">研究发现：红葡萄酒或能预防失忆 葡萄酒或能预防失忆 副本</p>
-									<p class="time">时间：2015.12.24</p>
-									</div>
-								</a>
-							</li>
+							 <foreach name="res_all" item='v'>
+								 <if condition="$v.istui neq 1">
+									 <li>
+										 <a href="/index.php/Home/Shop/shopvisit/shopid/{$v.id}">
+											 <img src="{$v.pic}" style="width: 30%;">
+											 <div style="width: 60%; float: left;">
+												 <h3 class="title">{$v.shopname} </h3>
+												 <p class="intro">{$v.intro}</p>
+												 <p class="time">时间：{$v.addtime}</p>
+											 </div>
+										 </a>
+									 </li>
+								 </if>
+							 </foreach>
+
 				
 						</ul>
 			          </div>
