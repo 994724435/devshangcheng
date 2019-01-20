@@ -112,14 +112,14 @@ class UserController extends Controller
 
         // 5、存在三次排单用户
         $sql5 =$sql5."SELECT * FROM ( SELECT B.userid,B.dateform,B.price,count(*) as num FROM (                   ";
-$sql5 =$sql5."SELECT                                                                                      ";
-$sql5 =$sql5."  date_format(A.createDate, '%Y%m%d%H') as dateform,                                        ";
-$sql5 =$sql5."  A.*                                                                                       ";
-$sql5 =$sql5."FROM                                                                                        ";
-$sql5 =$sql5."  `m_platoon_order` A                                                                       ";
-$sql5 =$sql5."WHERE                                                                                       ";
-$sql5 =$sql5."  A.STATUS = 0                                                                              ";
-$sql5 =$sql5."  AND A.createDate >='2018-01-15' ) B GROUP BY B.dateform,B.price,B.userid ) c where c.num>2";
+        $sql5 =$sql5."SELECT                                                                                      ";
+        $sql5 =$sql5."  date_format(A.createDate, '%Y%m%d%H') as dateform,                                        ";
+        $sql5 =$sql5."  A.*                                                                                       ";
+        $sql5 =$sql5."FROM                                                                                        ";
+        $sql5 =$sql5."  `m_platoon_order` A                                                                       ";
+        $sql5 =$sql5."WHERE                                                                                       ";
+        $sql5 =$sql5."  A.STATUS = 0                                                                              ";
+        $sql5 =$sql5."  AND A.createDate >='2018-01-15' ) B GROUP BY B.dateform,B.price,B.userid ) c where c.num>2";
         $result5 = $Model->query($sql5);
         if ($result5) {
             print_r("存在账户三次排单");
@@ -161,137 +161,29 @@ $sql5 =$sql5."  AND A.createDate >='2018-01-15' ) B GROUP BY B.dateform,B.price,
         }
     }
 
-    /**
-     * 用户收入
-     * @param $uid
-     * @param $money
-     */
-    private function addmoney($uid, $money)
+
+
+    public function crantabrob()
     {
-        $menber = M("menber");
-        $userinfos = $menber->where(array('uid' => $uid))->select();
-        $dongbag = $afterincom = bcadd($userinfos[0]['djbag'], $money, 2);
-        $menber->where(array('uid' => $uid))->save(array('djbag'=>$dongbag));
-    }
-
-    /**
-     * @param $uid
-     * @param $type
-     * @param $out
-     * @return int
-     * 每个类型的牛 收益是否到期
-     */
-    public function isincome($uid, $type, $out)
-    {
-        $daycomelogs = M('p_incomelog')->where(array('type' => $type, 'userid' => $uid))->sum('p_income');
-        if ($daycomelogs >= $out) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * @return int 1大于  0小于 没有到上限
-     * 每日收益上限
-     */
-    public function isshang($uid)
-    {
-        // 查询今日收益上线
-        $todayincomeall = M("incomelog")->where(array('userid' => $uid, 'state' => 1, 'addymd' => date('Y-m-d', time())))->sum('p_income');
-        $config = M("Config")->where(array('id' => 13))->find();
-        if ($todayincomeall >= $config[0]['value']) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * @return int ok
-     * 是否有每日收益
-     */
-    public function getusernums($userid)
-    {
-        $income = M('p_incomelog');
-        $daycomelogs = $income->where(array('type' => 10, 'userid' => $userid))->sum('p_income');
-        $conf = M("config")->where(array('id' => 1))->find();
-        if ($daycomelogs >= $conf['value']) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    private function savelog($data)
-    {
-        $incomelog = M('p_incomelog');
-        return $incomelog->add($data);
-    }
-
-
-    public function crantabUserIncome()
-    {
-        $menber = M('p_menber');
-        $income = M('p_incomelog');
-        if ($_GET['uid']) {
-            $map['uid'] = $_GET['uid'];
-        } else {
-            $map['uid'] = array('gt', 9);
-        }
-        $result_user = $menber->where($map)->select();
-        foreach ($result_user as $k => $v) {
-            $chargebag = $v['chargebag'];
-            $incomebag = $v['incomebag'];
-            $allIncome = bcadd($chargebag, $incomebag, 2);  // 所有钱包
-
-            $daycomelogs = $income->where(array('state' => 1, 'userid' => $v['uid']))->select();
-            $userIncome = 0;
-            foreach ($daycomelogs as $k1 => $v1) {         // 收益
-                $userIncome = bcadd($userIncome, $v1['income'], 2);
+        $rob = M('m_rob')->order('id desc')->find();
+        if($rob['status'] == 0){
+            $createDate= strtotime($rob['createdate']);
+            $guonian=ceil((time()-$createDate)/60);
+            if($_GET['key'] =='d327b14ffca9e4c4'){
+                M('m_rob')->where(array('id'=>$rob['id']))->save(array('status'=>1));
+                echo '刷新成功';
+            }else{
+                echo '秘钥错误';
             }
-            if ($_GET['uid']) {
-                print_r("每日收益==》" . $userIncome);
-            }
-            $dayoutlogs = $income->where(array('state' => 2, 'userid' => $v['uid']))->select();
 
-            $userOut = 0;                              // 支出
-            foreach ($dayoutlogs as $k2 => $v2) {
-                $userOut = bcadd($userOut, $v2['income'], 2);
-            }
-            if ($_GET['uid']) {
-                print_r("<br>总支出==》" . $userOut);
-            }
-            $allIncomesUser = bcsub($userIncome, $userOut, 2);      // 总收入
-            if ($allIncomesUser < 0) {
-                print_r("userID" . $v['uid'] . "收入日志异常");
-            }
-            $layout = $allIncomesUser - $allIncome;
-            if ($layout != 0) {
-                print_r("用户ID：" . $v['uid'] . "<br>");
-                print_r("钱包总额：" . $allIncome . "<br>");
-                print_r("收入总额：" . $allIncomesUser . "<br><br><br>");
-            }
+        }else{
+            echo '暂无异常数据';
         }
-//        print_r($result_user);die;
+
     }
 
 
-    function crontabRite()
-    {
-        $today = date('m-d', time());
-        $isdate = M("Rite")->where(array('date' => $today))->select();
-        if ($isdate[0]) {
-//            $config= M("Config")->where(array('name'=>'daily_income'))->select();
-//            M("Rite")->where(array('date'=>$today))->save(array('cont'=>$config[0]['val'],'date'=>$today));
-            echo 2;
-            exit();
-        } else {
-            $config = M("Config")->where(array('id' => 1))->select();
-            M("Rite")->add(array('cont' => $config[0]['value'], 'date' => $today));
-            echo 1;
-            exit();
-        }
-    }
+
 }
 
 
