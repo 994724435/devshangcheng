@@ -1,0 +1,54 @@
+.intergralRow{
+	height: 1.56rem;
+	margin-left: .47rem;
+	padding-right: .27rem;
+	border-bottom: 1px solid #e1e1e1;
+}
+.intergralTitle{
+	display: inline-block;
+	width: 4.5rem;
+	font-size: .3rem;
+	color: #4d4d4d;
+	float: left;
+	/*overflow: hidden;*/
+	margin-top: .3rem;
+}
+
+.intergralTime{
+	position: absolute;
+	top: .4rem;
+	left: 0;
+	font-size: .26rem;
+	color: #808080;
+	height: .5rem;
+}
+
+.intergralTime2{
+	position: absolute;
+	top: .6rem;
+	left: 0;
+	font-size: .26rem;
+	color: #808080;
+	height: .5rem;
+}
+
+.intergralMoney{
+	margin-top: .6rem;
+	font-size: .36rem;
+	float: right;
+}
+
+.intergralSpending{
+	color: #e53b24;
+}
+
+.intergralIncome{
+	color: #65d281;
+}
+
+.oppositeAccount{
+	position: absolute;
+	left: 0rem;
+	top: .8rem;
+	font-size: .3rem;
+}

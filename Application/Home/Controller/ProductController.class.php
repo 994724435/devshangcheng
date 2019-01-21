@@ -264,6 +264,25 @@ class ProductController extends CommonController{
         foreach ($result as $v){
             $allprice=$allprice+ $v['num']*$v['price'];
         }
+
+        if($_POST){
+            $canid ='';
+            $cancurrent_num ='';
+            foreach ($_POST as $k=>$value){
+                if($value){
+                    $canid=$canid.','.$k;
+                    $cancurrent_num=$cancurrent_num.','.$value;
+                }
+            }
+            $canid = substr($canid,1,strlen($canid));
+            $cancurrent_num = substr($cancurrent_num,1,strlen($cancurrent_num));
+            if($canid){
+                echo "<script>";
+                echo "window.location.href='".__ROOT__."/index.php/Home/Product/order?id=".$canid."&current_num=".$cancurrent_num."';";
+                echo "</script>";
+                exit;
+            }
+        }
         $this->assign('allprice',$allprice);
         $this->assign('res',$result);
         $this->display();

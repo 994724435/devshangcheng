@@ -36,6 +36,7 @@
                 <div style="height: 10px; background: #eee;"></div>
             </div>
             <else/>
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
             <ul class="shopcart-list">
                 <foreach name="res" item='v'>
                     <li>
@@ -47,7 +48,7 @@
                             <div class="tit"><a href="/index.php/Home/Product/detail/id/{$v.productid}">{$v.name}</a></div>
                             <div class="d-stock">
                                 <a class="decrease" data="{$v.price}">-</a>
-                                <input id="num" readonly="" class="text_box" name="" type="text" value="{$v.num}">
+                                <input id="num" readonly="" class="text_box" name="{$v.productid}" type="text" value="{$v.num}">
                                 <a class="increase" data="{$v.price}">+</a>
                             </div>
                         </div>
@@ -59,24 +60,21 @@
             </ul>
         </if>
 
-
-
-
-	    
 	    <div class="shop-fix">
 	    	
 	    <!-- 	<label class="am-checkbox am-warning">
                <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
             </label>
             <a class="del">批量删除</a> -->
-            <a href="tureorder.html" class="js-btn">去结算</a>
+            <!--<a href="tureorder.html" class="js-btn">去结算</a>-->
+            <input type="submit" value="去结算" class="js-btn" style="padding: 5px 12px;">
             <div class="js-text" style="margin-top: 17px;">
             	<P>合计：<b>￥ <span class="allprice">{$allprice}</span></b></P>
                 <!--<P>合计：<b>￥217.80</b></P>-->
             	<!--<p class="js-car">免费配送</p>-->
             </div>
 	    </div>
-	    
+        </form>
 <!--底部-->
 <include file="Common/footer" />
  
