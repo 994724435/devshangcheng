@@ -168,4 +168,8 @@ class ShopController extends CommonController{
         $this->assign('shop_info',$shop_info);
         $this->display();
     }
+    //店铺商品
+    public function productlist(){
+        $this->display();
+    }
 }

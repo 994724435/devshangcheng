@@ -29,6 +29,12 @@ class ProductController extends CommonController{
                echo "<script>alert('账户余额不足');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
                exit();
            }
+
+            $dict = M('s_dict')->where(array('code'=>'DICT_SHOP_INTG'))->find();
+            if($dict['realvalue'] > $account_info['integral']){
+                echo "<script>alert('账户积分不足');window.location.href = '".__ROOT__."/index.php/Home/User/member';</script>";
+                exit();
+            }
         }
 
         if($_POST){
@@ -41,14 +47,14 @@ class ProductController extends CommonController{
 
             $res_order = M('p_orderlog')->where(array('orderid'=>$_GET['orderid']))->save(array('state'=>2));
             if($res_order){
-                $datalog['recordBody'] ='下单购买';
+                $datalog['recordBody'] ='下单购买扣除余额';
                 $datalog['recordPrice'] = intval($istrueorder['totals']);
                 $recordNowPrice = bcsub($account_info['totalprice'],$istrueorder['totals']);
                 $datalog['recordNowPrice'] = $recordNowPrice;
                 $datalog['recordStatus'] = 0;
                 $datalog['recordType'] =0;
                 $datalog['recordMold'] =6;
-                $datalog['recordToObject'] ='购买商品，订单号'.$istrueorder['orderid'];
+                $datalog['recordToObject'] =$istrueorder['orderid'];
                 $datalog['recordToUserId'] =session('uid');
                 $datalog['recordToAccountId'] =  $istrueorder['shopid'];
                 $datalog['createDate'] =date('Y-m-d H:i:s');
@@ -57,6 +63,19 @@ class ProductController extends CommonController{
                     $account['totalPrice'] =$recordNowPrice;
                     $account['canPrice'] =$recordNowPrice;
                     M('s_account')->where(array('userId'=>session('uid')))->save($account);
+                }
+
+                // 处理积分
+
+                if($dict['realvalue']){
+                    $datalog['recordBody'] ='下单购买扣除积分';
+                    $datalog['recordPrice'] =$dict['realvalue'];
+                    $datalog['recordType'] =1;
+                    $datalog['createDate'] =date('Y-m-d H:i:s');
+                    $recordNowintegral = bcsub($account_info['integral'],$dict['realvalue']);
+                    $datalog['recordNowPrice'] =$recordNowintegral;
+                    M('p_incomelog')->add($datalog);
+                    M('s_account')->where(array('userId'=>session('uid')))->save(array('integral'=>$recordNowintegral));
                 }
             }
 

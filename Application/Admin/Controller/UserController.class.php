@@ -151,18 +151,9 @@ class UserController extends Controller
     }
 
 
-
-    private function isdong(){
-        $config =M("config")->where(array('id'=>3))->find();
-        if($config['value'] ==1){
-            return 1;
-        }else{
-            return 2;
-        }
-    }
-
-
-
+    /*
+     * 抢单异常处理
+     */
     public function crantabrob()
     {
         $rob = M('m_rob')->order('id desc')->find();
@@ -179,9 +170,17 @@ class UserController extends Controller
         }else{
             echo '暂无异常数据';
         }
-
     }
 
+    /*
+     * 注册资料验证
+     */
+    public function checkuserreg(){
+        $weixin =I('weixin');
+        $alipay=I('alipay');
+        $bankAccount =I('bank');
+        $isrepweixin ="";
+    }
 
 
 }

@@ -141,4 +141,17 @@ class UserController extends CommonController{
         $this->display();
     }
 
+    //余额记录
+    public function records(){
+        $record_list = M('p_incomelog')->where(array('recordToUserId'=>session('uid'),'recordType'=>0))->order('id desc')->select();
+        $this->assign('record_list',$record_list);
+        $this->display();
+    }
+
+    //积分记录
+    public function recordsint(){
+        $record_list = M('p_incomelog')->where(array('recordToUserId'=>session('uid'),'recordType'=>1))->order('id desc')->select();
+        $this->assign('record_list',$record_list);
+        $this->display();
+    }
 }
