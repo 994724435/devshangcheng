@@ -170,7 +170,83 @@ class ShopController extends CommonController{
     }
     //店铺商品
     public function productlist(){
+        $shopinfo = M('p_shop')->field('id')->where(array('userid'=>session('uid')))->find();
+        $where['shopid'] =$shopinfo['id'];
+        $prolist = M('p_product')->where($where)->select();
 
+        $this->assign('prolist',$prolist);
         $this->display();
+    }
+
+    // 上架下架商品
+    public function changstate(){
+        $id =I('id');
+        $shopinfo = M('p_shop')->field('id')->where(array('userid'=>session('uid')))->find();
+        $where['shopid'] =$shopinfo['id'];
+        $where['id'] =$id;
+        $proinfo = M('p_product')->where($where)->find();
+        $state =1 ;
+        if($proinfo['state'] == 1){
+            $state = 2;
+        }
+        if($proinfo['id']){
+            M('p_product')->where($where)->save(array('state'=>$state));
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Home/Shop/productlist';</script>";
+            exit();
+        }else{
+            echo "<script>alert('ID异常');window.location.href = '".__ROOT__."/index.php/Home/Shop/productlist';</script>";
+            exit();
+        }
+    }
+
+    public function productedit(){
+        $id =$_GET['id'];
+        $shopinfo = M('p_shop')->field('id')->where(array('userid'=>session('uid')))->find();
+        $where['shopid'] =$shopinfo['id'];
+        $where['id'] =$id;
+        $proinfo = M('p_product')->where($where)->find();
+        if( !$proinfo['id']){
+            echo "<script>alert('ID异常');window.location.href = '".__ROOT__."/index.php/Home/Shop/productlist';</script>";
+            exit();
+        }
+        if($_POST){
+
+            if($_FILES){
+                $setting = C('UPLOAD_FILE_QINIU');
+                $Upload = new \Think\Upload($setting);
+                $info = $Upload->upload($_FILES);
+                if($info['pic']){
+                    $picdata['url'] =$info['pic']['url'];
+                    $picdata['proid'] =$id;
+                    $picdata['addtime'] =date('Y-m-d H:i:s',time());
+                    M('p_product_banner')->add($picdata);
+                }
+            }
+
+        }
+        $banner_list = M('p_product_banner')->where(array('proid'=>$id))->select();
+        $this->assign('proinfo',$proinfo);
+        $this->assign('banner_list',$banner_list);
+        $this->display();
+    }
+
+    public function deletebanner(){
+        $id = $_GET['id'];
+        $banner = M('p_product_banner')->where(array('id'=>$id))->find();
+        $proid = $banner['proid'];
+
+        $shopinfo = M('p_shop')->field('id')->where(array('userid'=>session('uid')))->find();
+        $where['id'] =$proid;
+        $where['shopid'] =$shopinfo['id'];
+        $proinfo = M('p_product')->where($where)->find();
+
+        if(empty($proinfo)){
+            echo "<script>alert('ID异常');window.location.href = '".__ROOT__."/index.php/Home/Shop/productlist';</script>";
+            exit();
+        }
+        M('p_product_banner')->where(array('id'=>$id))->delete();
+        echo "<script>window.location.href = '".__ROOT__."/index.php/Home/Shop/productedit/id/".$proid."';</script>";
+        exit();
+
     }
 }

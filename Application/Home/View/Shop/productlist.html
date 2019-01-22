@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>55社区 </title>
+	<title>365商城 </title>
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -41,35 +41,21 @@
 		<div class="am-tabs-bd">
 			<div data-tab-panel-0 class="am-tab-panel am-active">
 				<ul data-am-widget="gallery" class="am-gallery special am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" >
-					<li>
-						<div class="am-gallery-item">
-							<!-- <a href="detail.html" class=""> -->
-							<img src="__ROOT__/Public/Home/images/test10.png"/>
-							<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装 ￥68.00</h3>
-							<div class="am-gallery-desc">
-								&nbsp;<a href="productedit.html">编辑</a>
-								<p style="float: right;"><a href="">下架</a></p> </div>
-							<!-- </a> -->
-						</div>
-					</li>
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
+					<foreach name="prolist" item='v'>
+						<if condition="$v.state eq 1 ">
+						<li>
+							<div class="am-gallery-item">
+								<!-- <a href="detail.html" class=""> -->
+								<img src="{$v.pic}"/>
+								<h3 class="am-gallery-title">{$v.name} ￥{$v.price}</h3>
+								<div class="am-gallery-desc">
+									&nbsp;<a href="/index.php/Home/Shop/productedit/id/{$v.id}">编辑</a>
+									<p style="float: right;"><a href="/index.php/Home/Shop/changstate/id/{$v.id}">下架</a></p> </div>
+								<!-- </a> -->
+							</div>
+						</li>
+						</if>
+					</foreach>
 					<li >
 						<a href=""><img src="__ROOT__/Public/Home/images/add.png" class="addleft"></a>
 					</li>
@@ -78,42 +64,23 @@
 			</div>
 			<div data-tab-panel-1 class="am-tab-panel ">
 				<ul data-am-widget="gallery" class="am-gallery special am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default" >
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="am-gallery-item">
-							<a href="detail.html" class="">
-								<img src="__ROOT__/Public/Home/images/test10.png"/>
-								<h3 class="am-gallery-title">烟台红富士 一级果 以上 10斤装</h3>
-								<div class="am-gallery-desc">￥68.00 <del>￥168.00</del></div>
-							</a>
-						</div>
-					</li>
+					<foreach name="prolist" item='v'>
+						<if condition="$v.state eq 2">
+							<li>
+								<div class="am-gallery-item">
+									<!-- <a href="detail.html" class=""> -->
+									<img src="{$v.pic}"/>
+									<h3 class="am-gallery-title">{$v.name} ￥{$v.price}</h3>
+									<div class="am-gallery-desc">
+										&nbsp;<a href="/index.php/Home/Shop/productedit/id/{$v.id}">编辑</a>
+										<p style="float: right;">
+										<a href="/index.php/Home/Shop/changstate/id/{$v.id}">上架</a>
+										</p> </div>
+									<!-- </a> -->
+								</div>
+							</li>
+						</if>
+					</foreach>
 				</ul>
 			</div>
 		</div>
