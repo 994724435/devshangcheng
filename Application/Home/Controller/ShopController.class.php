@@ -170,6 +170,7 @@ class ShopController extends CommonController{
     }
     //店铺商品
     public function productlist(){
+
         $this->display();
     }
 }
