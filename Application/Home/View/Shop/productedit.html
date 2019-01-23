@@ -14,6 +14,31 @@
 		<link href="__ROOT__/Public/Home/css/style.css" rel="stylesheet" type="text/css" />
 		<script src="__ROOT__/Public/Home/js/jquery-1.10.2.min.js"></script>
 		<script src="__ROOT__/Public/Home/js/time.js"></script>
+		<style type="text/css">
+			label{
+				position: relative;
+			}
+			#fileinp{
+				/*position: absolute;*/
+				/*left: 0;*/
+				/*top: 0;*/
+				opacity: 0;
+			}
+			#btn{
+				/*margin-right: 1px;*/
+			}
+			/*#text{*/
+				/*color: red;*/
+			/*}*/
+			/*#btn{*/
+				/*padding: 5px 10px;*/
+				/*background: #00b0f0;*/
+				/*color: #FFF;*/
+				/*border: none;*/
+				/*border-radius: 5px;*/
+			/*}*/
+
+		</style>
 	</head>
 	<body>
 		<header data-am-widget="header" class="am-header am-header-default sq-head ">
@@ -42,6 +67,20 @@
 						    	<input type="text" name="name" value="{$proinfo.name}" placeholder="请输入商品名称" class="login-password">
 						    	<input type="number" name="price" value="{$proinfo.price}" placeholder="请输入价格" class="login-name">
 						    	<!-- <input type="text"  placeholder="消费积分" class="login-password"> -->
+
+								  <div class="am-form-group" style="margin-left: 20px;margin-top: 15px;">
+									  <img src="{$proinfo.pic}" style="max-width: 120px;">
+									  <label for="fileinp" style="margin-bottom: 0px;">
+										  <input type="file" name="fenmian" id="fileinp" >
+										  <input type="button" id="btn" value="选择文件"><span id="text"> <if condition="$proinfo['pic']"> 跟换封面图<else/>请上传封面图</if>  </span>
+
+									  </label>
+
+									  <!--<input type="file" name="pic"  id="doc-ipt-file-2"  id="fileinp" >-->
+									  <!-- <p class="am-form-help">请选择要上传的文件...</p> -->
+								  </div>
+								  <!-- <input value="新增图片" type="button" class="intra-btn"/> -->
+
 						        <input type="submit" class="login-btn" value="提交">
 						    </div>
 			          </div>
@@ -86,5 +125,11 @@
 
 	    <script src="__ROOT__/Public/Home/js/jquery.min.js"></script>
         <script src="__ROOT__/Public/Home/js/amazeui.min.js"></script>
+		<script type="text/javascript">
+			$("#fileinp").change(function () {
+				$("#text").html($("#fileinp").val());
+			})
+
+		</script>
 	</body>
 </html>

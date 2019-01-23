@@ -204,25 +204,56 @@ class ShopController extends CommonController{
         $shopinfo = M('p_shop')->field('id')->where(array('userid'=>session('uid')))->find();
         $where['shopid'] =$shopinfo['id'];
         $where['id'] =$id;
-        $proinfo = M('p_product')->where($where)->find();
-        if( !$proinfo['id']){
-            echo "<script>alert('ID异常');window.location.href = '".__ROOT__."/index.php/Home/Shop/productlist';</script>";
+        $p_product = M('p_product') ;
+        $proinfo =$p_product->where($where)->find();
+
+        if(!$shopinfo['id']){
+            echo "<script>alert('店铺ID异常');window.location.href = '".__ROOT__."/index.php/Home/Index/index';</script>";
             exit();
         }
+
+        if($id){
+            if( !$proinfo['id']){
+                echo "<script>alert('ID异常');window.location.href = '".__ROOT__."/index.php/Home/Index/index';</script>";
+                exit();
+            }
+        }
+
         if($_POST){
+
+            $data['name']=$_POST['name'];
+            $data['price']=$_POST['price'];
+            $data['cont']=$_POST['cont'];
 
             if($_FILES){
                 $setting = C('UPLOAD_FILE_QINIU');
                 $Upload = new \Think\Upload($setting);
                 $info = $Upload->upload($_FILES);
-                if($info['pic']){
-                    $picdata['url'] =$info['pic']['url'];
-                    $picdata['proid'] =$id;
-                    $picdata['addtime'] =date('Y-m-d H:i:s',time());
-                    M('p_product_banner')->add($picdata);
-                }
+            }
+            if($info['fenmian']){
+                $data['pic'] =$info['fenmian']['url'];
             }
 
+            if(!$id){  //新增
+                $data['addtime']=date('Y-m-d H:i:s');
+                $data['state']= 2 ;
+                $data['uid']= session('uid') ;
+                $data['shopid']= $shopinfo['id'] ;
+                $id= $p_product->add($data);
+            }else{   // 修改
+                $p_product->where(array('id'=>$id))->save($data);
+            }
+
+
+            if($info['pic']){
+                $picdata['url'] =$info['pic']['url'];
+                $picdata['proid'] =$id;
+                $picdata['addtime'] =date('Y-m-d H:i:s',time());
+                M('p_product_banner')->add($picdata);
+            }
+
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Home/Shop/productedit/id/".$id."';</script>";
+            exit();
         }
         $banner_list = M('p_product_banner')->where(array('proid'=>$id))->select();
         $this->assign('proinfo',$proinfo);
