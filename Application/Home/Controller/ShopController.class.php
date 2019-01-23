@@ -70,6 +70,7 @@ class ShopController extends CommonController{
 
         // 订单数量
         $order_num = M('p_orderlog')->where(array('shopid'=>$shop['id']))->count();
+        $this->assign('shop',$shop);
         $this->assign('order_num',$order_num);
         $this->assign('sale_num',$sale_num);
         $this->assign('user_accout_info',$user_accout_info);
@@ -279,5 +280,43 @@ class ShopController extends CommonController{
         echo "<script>window.location.href = '".__ROOT__."/index.php/Home/Shop/productedit/id/".$proid."';</script>";
         exit();
 
+    }
+
+    public function cashapply(){
+        if($_POST['numbers'] > 0 ){
+            if ($_POST['numbers'] % 500){
+                echo "<script>alert('提现需500倍数');window.location.href = '".__ROOT__."/index.php/Home/Shop/cashapply';</script>";
+                exit();
+            }
+            if ($_POST['numbers']< 1000){
+                echo "<script>alert('提现金额大于1000');window.location.href = '".__ROOT__."/index.php/Home/Shop/cashapply';</script>";
+                exit();
+            }
+            $shopinfo = M('p_shop')->where(array('userid'=>session('uid')))->find();
+            if($shopinfo['account'] <$_POST['numbers']){
+                echo "<script>alert('账户余额不足');window.location.href = '".__ROOT__."/index.php/Home/Shop/shop';</script>";
+                exit();
+            }
+
+            $data['uid'] =session('uid');
+            $data['shopid'] =$shopinfo['id'];
+            $data['price'] = $_POST['numbers'];
+            $data['status'] = 1;
+            $data['addtime'] = date('Y-m-d H:i:s',time());
+            $data['overtime'] =date("Y-m-d H:i:s",strtotime("+1 day")) ;
+            M('p_cashapply')->add($data);
+            $left = $shopinfo['account'] - $_POST['numbers'];
+            M('p_shop')->where(array('userid'=>session('uid')))->save(array('account'=>$left));
+            echo "<script>alert('操作成功');window.location.href = '".__ROOT__."/index.php/Home/Shop/cashapplylist';</script>";
+            exit();
+        }
+        $this->display();
+    }
+
+    public function cashapplylist(){
+        $record_list =  M('p_cashapply')->where(array('uid'=>session('uid')))->order('id desc')->select();
+
+         $this->assign('record_list',$record_list);
+        $this->display();
     }
 }

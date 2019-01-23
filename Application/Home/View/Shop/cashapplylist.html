@@ -24,9 +24,14 @@
 			</a>
 		</div>
 		<h1 >
-			<a href="" style="color: #fff;font-size: 0.4rem;">余额明细</a>
+			<a href="" style="color: #fff;font-size: 0.4rem;">提现记录</a>
 		</h1>
+		<div class="am-header-right am-header-nav">
+			<a href="/index.php/Home/Shop/cashapply" class="">
+				<h5>提现申请</h5>
+			</a>
 
+		</div>
 	</header>
 	<div style="height: 49px;"></div>
 		<div id="list">
@@ -34,16 +39,15 @@
 				<div class="intergralRow fix position">
 
 						<span class="intergralTitle position">
-							{$v.recordbody}
+							商户余额提现   <span class="intergralIncome">申请中</span>
 
 						<span class="intergralTime2">
-							{$v.createdate}
+							{$v.addtime}
 						</span>
 						</span>
 
 
-					<span class="intergralMoney <if condition="$v.recordstatus eq 1">intergralIncome <else/> intergralSpending</if>  ">
-				<if condition="$v.recordstatus eq 1">+ <else/> -</if>  {$v.recordprice}
+					<span class="intergralMoney"> {$v.price}
 
 				</span>
 				</div>
