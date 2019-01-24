@@ -46,7 +46,12 @@ class UserController extends CommonController{
 
     public function orderdetail(){
         $orderid =$_GET['orderid'];
-        $orderinfo = M('p_orderlog')->where(array('orderid'=>$orderid))->select();
+        $cond['orderid'] =$orderid;
+        if($_GET['id']){
+            $cond['id'] =$_GET['id'];
+        }
+
+        $orderinfo = M('p_orderlog')->where($cond)->select();
         if(!$orderinfo[0]['id']){
             echo "<script>alert('订单ID不存在');window.location.href = '".__ROOT__."/index.php/Home/User/allorder';</script>";
             exit();
@@ -56,7 +61,25 @@ class UserController extends CommonController{
             exit();
         }
         if($_POST['ispost']){
-            M('p_orderlog')->where(array('orderid'=>$orderid))->save(array('state'=>4));
+            // 把订单的钱汇入商户余额
+            foreach($orderinfo as $k=>$v){
+                $datalog =array();
+                $shopinfo =M('p_shop')->where(array('id'=>$v['shopid']))->find();
+                $recordNowPrice =$shopinfo['account'] + bcmul($v['productmoney'],$v['num']);
+                $datalog['recordBody']="售卖商品";
+                $datalog['recordPrice']=bcmul($v['productmoney'],$v['num']);
+                $datalog['recordNowPrice']=$recordNowPrice;
+                $datalog['recordStatus']=1;
+                $datalog['recordType']=0;
+                $datalog['recordMold']=7;
+                $datalog['recordToObject']=$orderid;
+                $datalog['recordToUserId']=$shopinfo['userid'];
+                $datalog['recordToAccountId']=session('uid');
+                $datalog['createDate']=date('Y-m-d H:i:s');
+                M('p_incomelog')->add($datalog);
+                M('p_shop')->where(array('id'=>$v['shopid']))->save(array('account'=>$recordNowPrice));
+            }
+            M('p_orderlog')->where($cond)->save(array('state'=>4));
             echo "<script>alert('收货成功');window.location.href = '".__ROOT__."/index.php/Home/User/allorder/state/4';</script>";
             exit();
         }
