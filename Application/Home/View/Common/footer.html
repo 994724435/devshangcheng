@@ -2,26 +2,26 @@
  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
       <ul class="am-navbar-nav am-cf am-avg-sm-4">   
           <li>
-            <a href="/index.php/Home/Index/index" class="curr">
+            <a href="/index.php/Home/Index/index" class=" <if condition="$curfunction eq 1">curr</if> ">
                 <span class="am-icon-home"></span>
                 <span class="am-navbar-label">首页</span>
             </a>
           </li>
           <li>
-            <a href="/index.php/Home/Product/category" class="">
+            <a href="/index.php/Home/Product/category" class=" <if condition="$curfunction eq 2">curr</if> ">
                 <span class="am-icon-th-large"></span>
                 <span class="am-navbar-label">分类</span>
             </a>
           </li>
        
           <li>
-            <a href="/index.php/Home/Product/shopcart" class="">
+            <a href="/index.php/Home/Product/shopcart" class=" <if condition="$curfunction eq 3">curr</if> ">
                 <span class="am-icon-shopping-cart"></span>
                 <span class="am-navbar-label">购物车</span>
             </a>
           </li>
           <li>
-            <a href="/index.php/Home/User/member" class="">
+            <a href="/index.php/Home/User/member" class=" <if condition="$curfunction eq 4">curr</if> ">
                 <span class="am-icon-user"></span>
                 <span class="am-navbar-label">个人中心</span>
             </a>
@@ -29,18 +29,20 @@
 
           <if condition="$isshop eq 1">
               <li>
-                  <a href="/index.php/Home/Shop/shop" >
+                  <a href="/index.php/Home/Shop/shop" class=" <if condition="$curfunction eq 5">curr</if> ">
                       <span class="am-icon-ship"></span>
                       <span class="am-navbar-label">我的店铺</span>
                   </a>
               </li>
-           <else/>
+           <elseif condition="$isshop eq 2"/>
               <li>
-                  <a href="/index.php/Home/Shop/shopapply" >
+                  <a href="/index.php/Home/Shop/shopapply" class=" <if condition="$curfunction eq 5">curr</if> ">
                       <span class="am-icon-ship"></span>
                       <span class="am-navbar-label">店铺申请</span>
                   </a>
               </li>
+           <else/>
+
           </if>
 
 

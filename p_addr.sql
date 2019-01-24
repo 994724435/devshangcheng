@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : bendi
+Source Server         : 本机
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : cs_365_6
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-24 17:09:00
+Date: 2019-01-24 22:03:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -144,7 +144,7 @@ DROP TABLE IF EXISTS `p_incomelog`;
 CREATE TABLE `p_incomelog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `recordBody` varchar(125) DEFAULT '' COMMENT '记录详情',
-  `recordPrice` decimal(11,0) DEFAULT '1' COMMENT '1收入   2支出 3失败',
+  `recordPrice` int(11) DEFAULT '1' COMMENT '1收入   2支出 3失败',
   `recordNowPrice` int(11) DEFAULT NULL,
   `recordStatus` int(1) DEFAULT NULL COMMENT '增加或减少标识：0-减少  1-增加',
   `recordType` int(1) DEFAULT NULL COMMENT '当前记录对应账户类型：0-金额  1-积分',
@@ -154,7 +154,7 @@ CREATE TABLE `p_incomelog` (
   `recordToAccountId` int(11) DEFAULT NULL COMMENT '关联账户',
   `createDate` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=710 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=704 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_incomelog
@@ -165,11 +165,6 @@ INSERT INTO `p_incomelog` VALUES ('700', '下单购买', '24', '50', '0', '0', '
 INSERT INTO `p_incomelog` VALUES ('701', '下单购买', '2', '48', '0', '0', '6', '购买商品，订单号201901191129215186', '5', '5', '2019-01-19 18:37:42');
 INSERT INTO `p_incomelog` VALUES ('702', '下单购买', '222', '778', '0', '0', '6', '购买商品，订单号201901201302389797', '5', '5', '2019-01-20 13:02:42');
 INSERT INTO `p_incomelog` VALUES ('703', '下单购买', '222', '556', '0', '0', '6', '购买商品，订单号201901201301441489', '5', '5', '2019-01-20 13:05:53');
-INSERT INTO `p_incomelog` VALUES ('704', '下单购买扣除余额', '1', '462', '0', '0', '6', '201901241336556383', '5', '6', '2019-01-24 13:36:57');
-INSERT INTO `p_incomelog` VALUES ('705', '下单购买扣除积分', '10', '70', '0', '1', '6', '201901241336556383', '5', '6', '2019-01-24 13:36:57');
-INSERT INTO `p_incomelog` VALUES ('706', '下单购买扣除余额', '37', '425', '0', '0', '6', '201901241339155926', '5', '6', '2019-01-24 13:39:17');
-INSERT INTO `p_incomelog` VALUES ('707', '下单购买扣除积分', '10', '60', '0', '1', '6', '201901241339155926', '5', '6', '2019-01-24 13:39:17');
-INSERT INTO `p_incomelog` VALUES ('709', '售卖商品', '1', '1', '1', '0', '7', '201901241336556383', '8', '5', '2019-01-24 14:21:30');
 
 -- ----------------------------
 -- Table structure for `p_login`
@@ -240,7 +235,7 @@ CREATE TABLE `p_orderlog` (
   `expressname` varchar(64) DEFAULT NULL COMMENT '快递名称',
   `expressorderid` varchar(128) DEFAULT NULL COMMENT '快递单号',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_orderlog
@@ -249,9 +244,6 @@ INSERT INTO `p_orderlog` VALUES ('100', '5', '5', '11', '法国加力果12个装
 INSERT INTO `p_orderlog` VALUES ('101', '5', '5', '10', '特价武夷山桐木关正山小种红茶高档礼盒2', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '5', '201901191129215186', '2', '2', '1', '', '2019-01-19 11:29:21', '2019-01-19 21:29:09', '6', 'HTKY', '百世快递', '23412412341234');
 INSERT INTO `p_orderlog` VALUES ('102', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '2', '201901201301441489', '2', '222', '1', '', '2019-01-20 13:01:44', '2019-01-20 13:05:53', '7', null, null, null);
 INSERT INTO `p_orderlog` VALUES ('103', '5', '5', '12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '111', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '5', '201901201302389797', '2', '222', '1', '', '2019-01-20 13:02:38', '2019-01-20 13:09:39', '7', 'ZTO', '中通快递', '123456789');
-INSERT INTO `p_orderlog` VALUES ('104', '5', '3', '10', '特价武夷山桐木关正山小种红茶高档礼盒2', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '4', '201901241336556383', '1', '1', '1', '', '2019-01-24 13:36:55', '2019-01-24 14:21:30', '7', 'ZTO', '中通快递', '12312312');
-INSERT INTO `p_orderlog` VALUES ('105', '5', '3', '14', '104', '24', 'http://df.cqyuyan.cn/_2019-01-06_5c3198ddcc021.png', '2', '201901241339155926', '1', '37', '1', '', '2019-01-24 13:39:15', '2019-01-24 14:20:20', '7', null, null, null);
-INSERT INTO `p_orderlog` VALUES ('106', '5', '3', '9', '特价武夷山桐木关正山小种红茶高档礼盒1', '13', 'http://df.cqyuyan.cn/_2019-01-09_5c35b08508dc8.png', '2', '201901241339155926', '1', '37', '1', '', '2019-01-24 13:39:15', '2019-01-24 14:20:20', '7', null, null, null);
 
 -- ----------------------------
 -- Table structure for `p_product`
@@ -281,12 +273,12 @@ CREATE TABLE `p_product` (
 -- ----------------------------
 -- Records of p_product
 -- ----------------------------
-INSERT INTO `p_product` VALUES ('12', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮3', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '111', '1', '6', '1', '1', '0', '1', '2019-01-06 10:29:53', '0', '3', null, '0');
-INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', '								121231					    	', '1', 'http://df.cqyuyan.cn/_2019-01-09_5c35b08508dc8.png', '13', '1', '6', '0', '0', '0', '1', '2019-01-09 16:27:49', '0', '3', null, '0');
-INSERT INTO `p_product` VALUES ('10', '特价武夷山桐木关正山小种红茶高档礼盒2', '123adsfasdfasdf', '1', '/Public/Uploads/2019-01-02/5c2cbe49e0073.png', '1', '1', '6', '0', '1', '1', '1', '2019-01-06 10:30:12', '0', '3', null, '0');
-INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '', '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '1', '6', '1', '1', '1', '2', '2019-01-06 10:30:20', '0', '3', null, '0');
-INSERT INTO `p_product` VALUES ('13', '13000000003', '32312423', '1', 'http://df.cqyuyan.cn/_2019-01-13_5c3adb51120e5.png', '12', '1', '6', '0', '0', '0', '2', '2019-01-13 14:31:45', '0', '3', null, '0');
-INSERT INTO `p_product` VALUES ('14', '104', '21312', '1', 'http://df.cqyuyan.cn/_2019-01-06_5c3198ddcc021.png', '24', '1', '6', '0', '0', '0', '1', '2019-01-06 13:57:50', '10', '3', '0', '0');
+INSERT INTO `p_product` VALUES ('12', '乐鲜果园智利进口车厘子JJJ级超大果2斤新鲜大樱桃水果现货发顺丰', '31241234124123412', '1', '/Public/Uploads/2019-01-02/5c2cc1183e08a.png', '111', '1', '6', '1', '1', '0', '1', '2019-01-06 10:29:53', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('9', '特价武夷山桐木关正山小种红茶高档礼盒1', '								121231					    	', '1', 'http://df.cqyuyan.cn/_2019-01-24_5c49bb59dff77.jpg', '13', '1', '6', '0', '0', '0', '1', '2019-01-09 16:27:49', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('10', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '123adsfasdfasdf', '1', '/Public/Home/images/test5.png', '1', '1', '6', '0', '1', '1', '1', '2019-01-06 10:30:12', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('11', '法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮', '', '1', '/Public/Uploads/2019-01-02/5c2cbeebcf33e.png', '12', '1', '6', '1', '0', '1', '1', '2019-01-06 10:30:20', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('13', '正宗丹东东港99草莓新鲜现摘现发牛奶草莓水果包邮3斤装孕妇可吃', '32312423', '1', 'http://df.cqyuyan.cn/_2019-01-24_5c49bb59dff77.jpg', '12', '1', '6', '0', '1', '0', '1', '2019-01-24 21:19:38', '0', '5', null, '0');
+INSERT INTO `p_product` VALUES ('14', '橙子 海南绿橙新鲜 橙子新鲜水果包邮 当季三亚琼中特产绿橙5斤', '21312', '1', 'http://df.cqyuyan.cn/_2019-01-24_5c49bae837f80.jpg', '24', '1', '6', '1', '0', '0', '1', '2019-01-24 21:17:29', '10', '5', '0', '0');
 
 -- ----------------------------
 -- Table structure for `p_product_banner`
@@ -299,19 +291,22 @@ CREATE TABLE `p_product_banner` (
   `url` varchar(255) DEFAULT NULL,
   `addtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of p_product_banner
 -- ----------------------------
-INSERT INTO `p_product_banner` VALUES ('8', '0', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471cb797764.png', '2019-01-22 21:38:00');
-INSERT INTO `p_product_banner` VALUES ('9', '0', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471cbb7a812.png', '2019-01-22 21:38:03');
-INSERT INTO `p_product_banner` VALUES ('10', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471ce6975fa.png', '2019-01-22 21:38:47');
-INSERT INTO `p_product_banner` VALUES ('11', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471cea36eec.png', '2019-01-22 21:38:50');
-INSERT INTO `p_product_banner` VALUES ('12', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d1b22cdd.png', '2019-01-22 21:39:42');
-INSERT INTO `p_product_banner` VALUES ('13', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d2fc6239.png', '2019-01-22 21:40:00');
-INSERT INTO `p_product_banner` VALUES ('14', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d4f6fe41.png', '2019-01-22 21:40:32');
+INSERT INTO `p_product_banner` VALUES ('8', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471cb797764.png', '2019-01-24 21:34:42');
+INSERT INTO `p_product_banner` VALUES ('9', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471cbb7a812.png', '2019-01-24 21:34:39');
+INSERT INTO `p_product_banner` VALUES ('20', '14', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49c03fab758.jpg', '2019-01-24 21:40:16');
+INSERT INTO `p_product_banner` VALUES ('21', '12', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49c09431351.jpg', '2019-01-24 21:41:40');
+INSERT INTO `p_product_banner` VALUES ('13', '11', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d2fc6239.png', '2019-01-24 21:34:33');
+INSERT INTO `p_product_banner` VALUES ('14', '10', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d4f6fe41.png', '2019-01-24 21:34:32');
 INSERT INTO `p_product_banner` VALUES ('15', '9', null, 'http://df.cqyuyan.cn/_2019-01-22_5c471d8e51d96.png', '2019-01-22 21:41:35');
+INSERT INTO `p_product_banner` VALUES ('17', '13', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49bf8d9ed94.jpg', '2019-01-24 21:37:18');
+INSERT INTO `p_product_banner` VALUES ('18', '13', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49bfd358582.jpg', '2019-01-24 21:38:27');
+INSERT INTO `p_product_banner` VALUES ('19', '14', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49c01abd608.jpg', '2019-01-24 21:39:39');
+INSERT INTO `p_product_banner` VALUES ('22', '12', null, 'http://df.cqyuyan.cn/_2019-01-24_5c49c0a118050.jpg', '2019-01-24 21:41:53');
 
 -- ----------------------------
 -- Table structure for `p_shop`
@@ -340,10 +335,10 @@ CREATE TABLE `p_shop` (
 -- ----------------------------
 -- Records of p_shop
 -- ----------------------------
-INSERT INTO `p_shop` VALUES ('1', '6', '店小二111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18111', '1337689900111', '重庆花花村子111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '1', '开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱', '/Public/Home/images/test.jpg', '1', '2019-01-15 14:41:31', '2019-01-23 20:26:27', '0');
-INSERT INTO `p_shop` VALUES ('2', '7', '钱小鸭1', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '1', '阿斯顿发斯蒂芬阿斯顿发生', '/Public/Home/images/test.jpg', null, '2019-01-15 14:33:49', '2019-01-23 20:26:29', '0');
-INSERT INTO `p_shop` VALUES ('3', '8', '唐笑话', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '1', '阿斯顿发送到发送到', '/Public/Home/images/test.jpg', null, null, '2019-01-24 14:21:30', '1');
-INSERT INTO `p_shop` VALUES ('5', '5', '糖糖化12311', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '1', '撒打发斯蒂芬', '/Public/Home/images/test.jpg', null, '2019-01-15 14:32:20', '2019-01-23 21:39:18', '6000');
+INSERT INTO `p_shop` VALUES ('1', '5', '平面包装广告海报设计', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e95a697.png', '1', '9--18111', '1337689900111', '重庆花花村子111', 'http://df.cqyuyan.cn/_2019-01-14_5c3c91e8a133e.png', '1', '平面设计 LOGO设计 店铺装修 原创 森米高端设计 满意为止', 'http://df.cqyuyan.cn/_2019-01-24_5c49c19fdb725.jpg', '1', '2019-01-15 14:41:31', '2019-01-24 22:01:03', '0');
+INSERT INTO `p_shop` VALUES ('2', '13', '钱小鸭', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96483e749.jpg', '1', '9点到6点', '18883287644', '重庆渝北区', 'http://df.cqyuyan.cn/_2019-01-14_5c3c96465560c.png', '1', '台湾牛奶脆蜜枣5斤当地特产水果枣子收藏优先发货', 'http://df.cqyuyan.cn/_2019-01-24_5c49c253d2de2.jpg', null, '2019-01-15 14:33:49', '2019-01-24 21:59:07', '0');
+INSERT INTO `p_shop` VALUES ('3', '14', '龙凤山泉', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975d9e841.png', '1', '90：----11:00', '18883287644', '湖北省宜昌市', 'http://df.cqyuyan.cn/_2019-01-14_5c3c975c69083.png', '1', '新米东北大米正宗五常稻花香大米5kg鸭稻米黑龙江农家自产', 'http://df.cqyuyan.cn/_2019-01-24_5c49c32240d44.png', null, null, '2019-01-24 21:58:26', '0');
+INSERT INTO `p_shop` VALUES ('5', '15', '李文锁城', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a08fc69.png', '1', '90：----11:00', '136495881231', '重庆花花村子', 'http://df.cqyuyan.cn/_2019-01-14_5c3c97a05f306.png', '1', '开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱开、修、换各式民用锁具（各类普通房门、防盗门、车库门、密码箱', '/Public/Home/images/test.jpg', null, '2019-01-15 14:32:20', '2019-01-24 22:00:09', '6000');
 
 -- ----------------------------
 -- Table structure for `p_type`
@@ -380,6 +375,7 @@ DROP TABLE IF EXISTS `p_user`;
 CREATE TABLE `p_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL COMMENT '登录名',
+  `name` varchar(255) DEFAULT NULL,
   `password` varchar(125) DEFAULT NULL,
   `state` int(1) DEFAULT '1' COMMENT '1 有效',
   `addtime` datetime DEFAULT NULL COMMENT '注册时间',
@@ -390,7 +386,7 @@ CREATE TABLE `p_user` (
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES ('1', '0', '123asd', '1', '2017-03-10 13:56:27', null);
-INSERT INTO `p_user` VALUES ('2', '0', '123456', '1', '2017-03-10 13:56:27', null);
-INSERT INTO `p_user` VALUES ('16', '6', '2', '1', '2019-01-18 13:54:02', '2019-01-18 13:58:49');
-INSERT INTO `p_user` VALUES ('17', '5', 'c4ca4238a0b923820dcc509a6f75849b', '1', '2019-01-18 13:59:28', '2019-01-18 13:59:28');
+INSERT INTO `p_user` VALUES ('1', '0', null, '123asd', '1', '2017-03-10 13:56:27', null);
+INSERT INTO `p_user` VALUES ('2', '0', null, '123456', '1', '2017-03-10 13:56:27', null);
+INSERT INTO `p_user` VALUES ('16', '6', 'admin', '2', '1', '2019-01-18 13:54:02', '2019-01-24 21:09:40');
+INSERT INTO `p_user` VALUES ('17', '5', null, 'c4ca4238a0b923820dcc509a6f75849b', '1', '2019-01-18 13:59:28', '2019-01-18 13:59:28');

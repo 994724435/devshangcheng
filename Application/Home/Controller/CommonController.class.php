@@ -22,27 +22,36 @@ class CommonController extends Controller {
         }
 
         $isshop =0;
+        $s_account_info = M('s_account')->where(array('userId'=>session('uid')))->find();
+        if($s_account_info['refereenum'] > 4){
+            $isshop =2;
+        }
+
         $shop =M('p_shop')->where(array('userid'=>session('uid')))->find();
 		if($shop['id']){
 		    if ($shop['status'] != 0){
                 $isshop =1;
             }
         }
+
         $this->assign('userinfocommon',$res_user[0]);
         $this->assign('isshop',$isshop);
+        $this->assign('curfunction',$this->getfunction($curfunction));
 
 	}
 
 	private function getfunction($curfunction){
-		if($curfunction=='index'){
+		if(in_array($curfunction, array('index')) ){
 			return 1;
-		}elseif($curfunction=='financial'){
+		}elseif(in_array($curfunction, array('category'))){
 			return 2;
-		}elseif($curfunction=='product'){
+		}elseif(in_array($curfunction, array('shopcart'))){
 			return 3;
-		}elseif($curfunction=='user'){
+		}elseif(in_array($curfunction, array('member'))){
 			return 4;
-		}else{
+		}elseif(in_array($curfunction, array('shop','shopapply'))){
+            return 5;
+        }else{
 			return 1;
 		}
 	}

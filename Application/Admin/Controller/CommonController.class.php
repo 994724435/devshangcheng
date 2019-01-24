@@ -15,7 +15,7 @@ class CommonController extends Controller {
 		}
 		$user = M('p_user');
 		$result= $user->where(array('name'=>$_SESSION['uname']))->select();
-		if(!$result[0]['manager']){
+		if(!$result[0]['state']){
             echo "账号已被禁用";
             exit();
         }
