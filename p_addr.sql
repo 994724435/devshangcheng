@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本机
+Source Server         : bendi
 Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : cs_365_6
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-24 22:03:58
+Date: 2019-01-25 17:08:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -196,6 +196,7 @@ CREATE TABLE `p_ordercommits` (
   `userid` int(11) NOT NULL,
   `shopid` int(11) NOT NULL,
   `productid` int(11) NOT NULL,
+  `keyid` int(11) DEFAULT NULL COMMENT 'orderlog的id',
   `type` int(11) NOT NULL COMMENT '1 好评 2中评 3 差评',
   `commits` text,
   `addtime` datetime DEFAULT NULL,
@@ -206,9 +207,9 @@ CREATE TABLE `p_ordercommits` (
 -- ----------------------------
 -- Records of p_ordercommits
 -- ----------------------------
-INSERT INTO `p_ordercommits` VALUES ('4', '201901191129215186', '5', '5', '10', '1', '\r\n		撒大声地', '2019-01-19 21:29:09', '2019-01-20 14:08:27');
-INSERT INTO `p_ordercommits` VALUES ('3', '201901191124273384', '5', '5', '11', '2', 'niceadfad\r\n		', '2019-01-19 21:06:27', '2019-01-19 21:19:46');
-INSERT INTO `p_ordercommits` VALUES ('5', '201901201302389797', '5', '5', '12', '3', '不好不好', '2019-01-20 13:09:39', '2019-01-20 13:09:39');
+INSERT INTO `p_ordercommits` VALUES ('4', '201901191129215186', '5', '5', '10', null, '1', '\r\n		撒大声地', '2019-01-19 21:29:09', '2019-01-20 14:08:27');
+INSERT INTO `p_ordercommits` VALUES ('3', '201901191124273384', '5', '5', '11', null, '2', 'niceadfad\r\n		', '2019-01-19 21:06:27', '2019-01-19 21:19:46');
+INSERT INTO `p_ordercommits` VALUES ('5', '201901201302389797', '5', '5', '12', null, '3', '不好不好', '2019-01-20 13:09:39', '2019-01-20 13:09:39');
 
 -- ----------------------------
 -- Table structure for `p_orderlog`

@@ -5,7 +5,14 @@ class CommonController extends Controller {
 	public function _initialize(){
 		$function = explode('/',__ACTION__);
 		$curfunction =$function[count($function)-1];
-		session('uid',5);
+		// session('uid',20389);
+		if(I('code')){
+			$userid_info = M('s_user')->where(array('token'=>I('code')))->find();
+			if ($userid_info['id']) {
+				session('uid',$userid_info['id']);
+			}
+		}
+		// session('uid',5);
 		if(!session('uid')){
 			echo "<script>";
 			echo "window.location.href='https://www.365sjf.com/html/login.html';";
@@ -34,6 +41,7 @@ class CommonController extends Controller {
             }
         }
 
+        ob_clean();
         $this->assign('userinfocommon',$res_user[0]);
         $this->assign('isshop',$isshop);
         $this->assign('curfunction',$this->getfunction($curfunction));

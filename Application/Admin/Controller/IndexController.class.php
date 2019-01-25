@@ -213,19 +213,42 @@ class IndexController extends CommonController {
     public function select(){
         $orderlog = M('p_orderlog');
         if($_GET['state']){
-//            $map['name']=array('like','%'.$_GET['name'].'%');
             $map['state'] =$_GET['state'];
         }
         if($_GET['uid']){
-            $map['userid'] =$_GET['uid'];
+            $select_user = M('p_user')->where(array('userAccount'=>$_GET['uid']))->find();
+            $map['userid'] = $select_user['id'];
         }
         if($_GET['orderid']){
             $map['orderid'] =$_GET['orderid'];
         }
-        $map['type'] =10;
-        $users= $orderlog->where($map)->order('logid DESC')->select();
 
+        $users= $orderlog ->alias('t')-> field('t.*,u.useraccount')->join('left join s_user as u on t.userid=u.id ')->where($map)->order('t.id DESC')->select();
+       
         $this->assign('users',$users);
+        $this->display();
+    }
+
+    public function orderdetail()
+    {
+        
+        $orderid =$_GET['orderid'];
+        $cond['orderid'] =$orderid;
+        if($_GET['id']){
+            $cond['id'] =$_GET['id'];
+        }
+
+        $orderinfo = M('p_orderlog')->where($cond)->select();
+        
+        
+        // addr
+        $addr = M('p_addr')->where(array('id'=>$orderinfo[0]['addrid']))->find();
+        // commit
+        $commits = M('p_ordercommits')->where(array('orderid'=>$orderid))->find();
+
+        $this->assign('addr',$addr);
+        $this->assign('orderlog',$orderinfo[0]);
+        $this->assign('commits',$commits);
         $this->display();
     }
 

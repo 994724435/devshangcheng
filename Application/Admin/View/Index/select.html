@@ -15,11 +15,16 @@
 				  <div class="form-group">
 					  订单id <input type="text" name="orderid" style="width: 150px" value="" id="focusedinput" placeholder="">
 					  <!--产品id <input type="text" name="productid" style="width: 150px" value=""  id="focusedinput" placeholder="">-->
-					  用户id <input type="text" name="uid" style="width: 150px" value="" id="focusedinput" placeholder="">
+					  用户账号 <input type="text" name="uid" style="width: 150px" value="" id="focusedinput" placeholder="">
 					  订单状态<select style="width: 150px" name="state">
 								  <option value="0">全部</option>
-								  <option value="1">已购买</option>
-					  			  <option value="2">已发货</option>
+								  <option value="1">待支付</option>
+					  			  <option value="2">待收货</option>
+					  			  <option value="3">已发货</option>
+					  			  <option value="4">已收货</option>
+					  			  <option value="5">交易完成</option>
+					  			  <option value="6">已取消</option>
+					  			  <option value="7">退货</option>
 							  </select>
 
 					   </div>
@@ -37,14 +42,13 @@
 
 		        </tr>
 		        <tr>
-					<th>用户id</th>
-					<!--<th>产品id</th>-->
+					<th>用户账号</th>
+					<th>订单号</th>
 		          <th>购买产品</th>
 		          <th>购买数量</th>
-				  <th>支付状态</th>
 					<th>产品价格</th>
+					<th>订单状态</th>
 					<th>操作</th>
-					<!--<th>地址，姓名，电话，邮编</th>-->
 		        </tr>
 		      </thead>
 		      <tbody>	      
@@ -60,14 +64,21 @@
 						echo "<tr class='info'>";
 					}
 		      	?>
-				  <th>{$v.userid}</th>
-				  <!--<th>{$v.productid}</th>-->
+				  <th>{$v.useraccount}</th>
+				   <th>{$v.orderid}</th>
 		          <th>{$v.productname}</th>
 		          <th>{$v.num}</th>
-				  <th><if condition="$v.state eq 0"> 待支付<elseif condition="$v.state eq 1"/>已购买<elseif condition="$v.state eq 2"/>已发货</if></th>
-				  <th>{$v.price}</th>
-				  <th><if condition="$v.state eq 1"><a href="__ROOT__/index.php/Admin/Index/comproduct/id/{$v.logid}">发货</a><elseif condition="$v.state eq 2"/>已发货</if></if></th>
-				  <!--<th>{$v.option}</th>-->
+				  <th>{$v.productmoney}</th>
+				 
+				  <th><if condition="$v.state eq 1"> 待支付
+				  	<elseif condition="$v.state eq 2"/>待收货
+				  	<elseif condition="$v.state eq 3"/>已发货
+				  	<elseif condition="$v.state eq 4"/>已收货
+				  	<elseif condition="$v.state eq 5"/>交易完成
+				  	<elseif condition="$v.state eq 6"/>已取消
+				  	<elseif condition="$v.state eq 7"/>退货
+				  </if></th>
+				  <th><a href="/index.php/Admin/Index/orderdetail/orderid/{$v.orderid}/id/{$v.id}">详情</a></th>
 			  </tr>
 		      	<?php $i++ ;?>
 		       </foreach>		      

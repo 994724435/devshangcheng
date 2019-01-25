@@ -249,7 +249,7 @@ class ProductController extends CommonController{
         $banner_list  = M('p_product_banner')->where(array('proid'=>I(id)))->select();
         $this->assign('res',$result[0]);
         $this->assign('banner',$banner_list);
-
+        ob_clean();
         $this->display();
     }
 
