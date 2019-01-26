@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2019-01-25 17:08:41
+Date: 2019-01-26 18:12:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -107,7 +107,7 @@ CREATE TABLE `p_cashapply` (
 -- ----------------------------
 -- Records of p_cashapply
 -- ----------------------------
-INSERT INTO `p_cashapply` VALUES ('1', '5', '5', '1000', '1', '2019-01-23 21:05:41', null, null);
+INSERT INTO `p_cashapply` VALUES ('1', '5', '5', '1000', '1', '2019-01-23 21:05:41', '2019-01-26 18:06:12', '2019-01-26 18:06:10');
 INSERT INTO `p_cashapply` VALUES ('2', '5', '5', '2000', '1', '2019-01-23 21:38:48', null, '2019-01-24 21:38:48');
 INSERT INTO `p_cashapply` VALUES ('3', '5', '5', '1000', '1', '2019-01-23 21:39:18', null, '2019-01-24 21:39:18');
 

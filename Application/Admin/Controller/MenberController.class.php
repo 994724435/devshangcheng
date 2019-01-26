@@ -191,62 +191,14 @@ class MenberController extends CommonController {
         }
     }
 
-    //充值审核
-    public function chargesheng(){
-        $income =M('p_incomelog');
-        $data['p_incomelog.type'] =0;
-        $data['p_incomelog.state'] =0;
-        $data['p_incomelog.reson'] ='充值';
-        $data['p_incomelog.addtime'] =array('gt',0);
-        $result =$income->field('p_incomelog.addtime as addtimes,p_incomelog.addymd as addymds,p_menber.name,p_incomelog.userid,income,id')->join('p_menber ON p_incomelog.userid=p_menber.uid')->where($data)->select();
-        $this->assign('res',$result);
-        $this->display();
-    }
 
-    public function ischarge(){
-        $income =M('p_incomelog');
-        $result = $income->where(array('id'=>$_GET['id']))->select();
-        if($result[0]){
-            if($_GET['state']==1){
-                $data['type'] =2;
-                $data['state'] =1;
-                $income->where(array('id'=>$_GET['id']))->save($data);
-                $menber =M('p_menber');
-                $user= $menber->where(array('uid'=>$result[0]['userid']))->select();
-//                $chargebag =$user[0]['chargebag']+$result[0]['income'];
-                $chargebag =bcadd($user[0]['chargebag'],$result[0]['income'],2);
-                $menber->where(array('uid'=>$result[0]['userid']))->save(array('chargebag'=>$chargebag));
-                echo "<script>alert('更新成功');window.location.href = '".__ROOT__."/index.php/Admin/Menber/chargesheng';</script>";exit();
-            }
-            if($_GET['state']==2){
-                $data['type'] =2;
-                $data['state'] =0;
-                $income->where(array('id'=>$_GET['id']))->save($data);
-                echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Menber/chargesheng';</script>";exit();
-            }
-        }
-    }
+
+
 
     public function tixiansheng(){
-        $income =M('p_incomelog');
-//        $data['p_incomelog.type'] = 7;
-        $data['p_incomelog.type'] = array('in','3,4,7');
-        $data['p_incomelog.state'] =0;
-        $data['p_incomelog.addtime'] =array('gt',0);
-        $result =$income->field('p_incomelog.addtime as addtimes,p_incomelog.addymd as addymds,p_menber.name,p_menber.tel,p_menber.email,p_menber.realname,p_menber.zhifubao,p_menber.weixin,p_menber.bank,p_menber.bankname,p_menber.bankfrom,p_incomelog.userid,income,id,orderid,reson')->join('p_menber ON p_incomelog.userid=p_menber.uid')->where($data)->select();
+        $income =M('p_cashapply');
+        $result =$income->alias('a')->join(' LEFT JOIN s_user b on a.uid=b.id')->order('a.id desc')->field('a.*,b.useraccount')->order('a.id desc')->select();
 
-//        foreach($result as $k=>$v){
-//            if($v['orderid']){
-//                $account =explode(',',$v['orderid']);
-//                $result[$k]['accountname'] =$account[0];
-//                $result[$k]['accountnum'] =$account[1];
-//                $result[$k]['carnum'] =$account[2];
-//                $result[$k]['carmame'] =$account[3];
-//                $result[$k]['carhang'] =$account[4];
-//                $result[$k]['caraddr'] =$account[5];
-//            }
-//        }
-//        print_r($result);die;
         $this->assign('res',$result);
         $this->display();
     }
