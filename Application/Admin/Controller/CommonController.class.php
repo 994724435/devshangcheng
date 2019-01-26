@@ -15,12 +15,12 @@ class CommonController extends Controller {
 //				exit;
 		}
 
-		$ip =$this->get_remote_addr();
-		$allowip = M('s_dict')->where(array('code'=>'DICT_IP'))->find();
-		if ($allowip['displayvalue'] != $ip) {
-			echo "IP错误";
-		    exit();
-		}
+		// $ip =$this->get_remote_addr();
+		// $allowip = M('s_dict')->where(array('code'=>'DICT_IP'))->find();
+		// if ($allowip['displayvalue'] != $ip) {
+		// 	echo "IP错误";
+		//     exit();
+		// }
 
 		$user = M('p_user');
 		$result= $user->where(array('name'=>$_SESSION['uname']))->select();

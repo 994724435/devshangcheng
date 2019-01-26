@@ -173,13 +173,15 @@ class UserController extends Controller
     }
 
     /*
-     * 注册资料验证
+     * 登陆IP验证
      */
-    public function checkuserreg(){
-        $weixin =I('weixin');
-        $alipay=I('alipay');
-        $bankAccount =I('bank');
-        $isrepweixin ="";
+    public function changeip(){
+        if($_GET['key'] =='d327b14ffca9e4c4' && I('ip')){
+                M('s_dict')->where(array('code'=>'DICT_IP'))->save(array('displayValue'=>I('ip')));
+                echo '刷新成功';
+            }else{
+                echo '秘钥错误';
+            }
     }
 
 

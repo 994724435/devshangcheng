@@ -138,20 +138,23 @@ class MenberController extends CommonController {
 
     public function usermessage(){
         $incomelog = M('p_incomelog');
-//        if($_GET['productid']){
-////            $map['name']=array('like','%'.$_GET['name'].'%');
-//            $map['productid'] =$_GET['productid'];
-//        }
+
         if($_GET['uid']){
-            $map['userid'] =$_GET['uid'];
+            $userinfo = M('s_user')->where(array('userAccount'=>$_GET['uid']))->find();
+            $map['recordToUserId'] =$userinfo['id'] ;
         }
-        if($_GET['type']){
-            $map['type'] =$_GET['type'];
+        if($_GET['type'] == 1 ){
+            $map['recordType'] = 1;
         }
+        if($_GET['type'] == 2 ){
+            $map['recordType'] = 0;
+        }
+
         if($_GET['mindate']&&$_GET['maxdate']){
-            $map['addymd'] =array(array('elt',$_GET['maxdate']),array('egt',$_GET['mindate']),'and');;
+            $map['a.createDate'] =array(array('elt',$_GET['maxdate']),array('egt',$_GET['mindate']),'and');;
         }
-        $users= $incomelog->order('type asc')->where($map)->select();
+
+        $users= $incomelog->alias('a')->join(' LEFT JOIN s_user b on a.recordToUserId=b.id')->order('a.id desc')->field('a.*,b.useraccount')->where($map)->select();
 
         $this->assign('users',$users);
         $this->display();
