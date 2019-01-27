@@ -5,7 +5,7 @@ class CommonController extends Controller {
 	public function _initialize(){
 		$function = explode('/',__ACTION__);
 		$curfunction =$function[count($function)-1];
-		// session('uid',20389);
+		 session('uid',5);
 		if(I('code')){
 			$userid_info = M('s_user')->where(array('token'=>I('code')))->find();
 			if ($userid_info['id']) {
