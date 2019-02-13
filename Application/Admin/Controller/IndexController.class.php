@@ -49,7 +49,8 @@ class IndexController extends CommonController {
                     unset($types[$key]);
                 }
         }   
-       
+       $shoplist = M("p_shop")->alias('a')->join('LEFT JOIN s_user b on a.userid=b.id')->field('a.id,a.shopname,b.userAccount')->select();
+
         if($_POST){
             $pic='';
             if($_FILES['thumb']['name']){   // 上传文件
@@ -69,6 +70,7 @@ class IndexController extends CommonController {
             $data['ftype'] =$_POST['ftype'];
             $data['ctype'] =$_POST['ctype'];
             $data['cont'] =$_POST['content1'];
+            $data['shopid'] =$_POST['shopid'];
             $data['pic'] =$pic;
             $data['price'] =$_POST['price'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
@@ -82,6 +84,7 @@ class IndexController extends CommonController {
             }
 
         }
+        $this->assign('shoplist',$shoplist);
          $this->assign('fid',$temp_array);
         $this->display();
     }

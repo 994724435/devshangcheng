@@ -1,33 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<link rel="stylesheet" href="__ROOT__/Public/Admin/js/themes/default/default.css" />
-	<link rel="stylesheet" href="__ROOT__/Public/Admin/plugins/code/prettify.css" />
-	<script charset="utf-8" src="__ROOT__/Public/Admin/js/kindeditor.js"></script>
-	<script charset="utf-8" src="__ROOT__/Public/Admin/js/lang/zh_CN.js"></script>
-	<script charset="utf-8" src="__ROOT__/Public/Admin/js/plugins/code/prettify.js"></script>
-	<script>
-		KindEditor.ready(function(K) {
-			var editor1 = K.create('textarea[name="content1"]', {
-				cssPath : '__ROOT__/Public/Admin/js/plugins/code/prettify.css',
-				uploadJson : '__ROOT__/Public/Admin/js/php/upload_json.php',
-				fileManagerJson : '__ROOT__/Public/Admin/js/php/file_manager_json.php',
-				allowFileManager : true,
-				afterCreate : function() {
-					var self = this;
-					K.ctrl(document, 13, function() {
-						self.sync();
-						K('form[name=example]')[0].submit();
-					});
-					K.ctrl(self.edit.doc, 13, function() {
-						self.sync();
-						K('form[name=example]')[0].submit();
-					});
-				}
-			});
-			prettyPrint();
-		});
-	</script>
+
 
 <include file="Common/header" />
         <div id="page-wrapper">
@@ -183,7 +157,7 @@
    </div>
     <!-- /#wrapper -->
 <!-- Nav CSS -->
-<link href="__ROOT__/Public/admin/css/custom.css" rel="stylesheet">
+<link href="__ROOT__/Public/Admin/css/custom.css" rel="stylesheet">
 
 </body>
 </html>

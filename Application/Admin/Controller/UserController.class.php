@@ -224,7 +224,48 @@ class UserController extends Controller
             }
     }
 
+    /*
+     * 登陆IP验证
+     */
+    public function checkaccount(){
+        $sql='';
+        $sql=$sql."SELECT									";
+        $sql=$sql."	a.recordPrice,                          ";
+        $sql=$sql."	a.recordToObject,                       ";
+        $sql=$sql."  a.recordToUserId,                      ";
+        $sql=$sql."  count(*)                               ";
+        $sql=$sql."FROM                                     ";
+        $sql=$sql."	s_account_record a                      ";
+        $sql=$sql."WHERE                                    ";
+        $sql=$sql."	a.recordType = 0                        ";
+        $sql=$sql."  and a.recordToObject !=''              ";
+        $sql=$sql."AND a.createDate > '2019-02-09'          ";
+        $sql=$sql."GROUP BY                                 ";
+        $sql=$sql."	a.recordPrice,                          ";
+        $sql=$sql."	a.recordToObject HAVING count(*) > 1    ";
+        $Model = M();
+//        $result = $Model->query($sql);
+        $json ="";
 
+        $tes =json_decode($json);
+        $result =$tes->RECORDS;
+        if ($result) {
+            $s_account_record= M("s_account_record");
+            foreach ($result as $k=>$v){
+                $where=array();
+                $where['recordPrice']=$v->recordPrice;
+                $where['recordToObject']=$v->recordToObject;
+                $where['recordToUserId']=$v->recordToUserId;
+                $where['createDate']= array('gt','2019-02-09');
+
+                $temp = $s_account_record->where($where)->select();
+
+                if ($temp[0]['recordnowprice'] != $temp[1]['recordnowprice'] ){
+                    print_r($temp[0]);die;
+                }
+            }
+        }
+    }
 }
 
 
