@@ -266,6 +266,41 @@ class UserController extends Controller
             }
         }
     }
+
+
+    public function checkReferee(){
+        $id =$_GET['id'];
+        if(empty($id)){
+            $dist = M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->find();
+            $id =(int) $dist['realvalue'];
+        }
+        $con['status'] =1;
+        $con['isDelete'] =0;
+        $con['arrangement'] =0;
+        $con['id'] =array('EGT',$id);
+        $molde =M();
+        $alluser =  M("s_user")->where($con)->limit(10)->select();
+
+        $temuid = 0 ;
+        if($alluser[0]){
+          foreach($alluser as $k=>$v){
+              $sql ="SELECT count(  DISTINCT m.planToonUserId ) as bnum from m_mate m where m.planToonUserId IN(SELECT id from s_user s_user where s_user.refereeId = ".$v['id']." )";
+              $num = $molde->query($sql);
+              $s_account = M("s_account");
+              $account_info = $s_account->where(array('userId'=>$v['id']))->find();
+
+             if( $account_info['refereenum'] != $num[0]['bnum']) {
+                 $updatebool= $s_account->where(array('userId'=>$v['id']))->save(array('refereeNum'=>$num[0]['bnum']));
+                 echo $v['id'].'已经更新'.$num[0]['bnum'].'状态'. $updatebool.'<br/>';
+             }else{
+                 echo $v['id'].'无需更新'.'<br/>';
+             }
+              $temuid =  $v['id'];
+          }
+        }
+
+      M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->save(array('realValue'=>(int)$temuid));
+    }
 }
 
 
