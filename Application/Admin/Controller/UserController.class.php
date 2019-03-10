@@ -284,7 +284,10 @@ class UserController extends Controller
         $temuid = 0 ;
         if($alluser[0]){
           foreach($alluser as $k=>$v){
-              $sql ="SELECT count(  DISTINCT m.planToonUserId ) as bnum from m_mate m where m.planToonUserId IN(SELECT id from s_user s_user where s_user.refereeId = ".$v['id']." )";
+              if($v['id'] == 20389){
+                 continue;
+              }
+              $sql ="SELECT count(  DISTINCT m.planToonUserId ) as bnum from m_mate m where m.planToonUserId IN(SELECT id from s_user s_user where s_user.status =1 and s_user.refereeId = ".$v['id']." )";
               $num = $molde->query($sql);
               $s_account = M("s_account");
               $account_info = $s_account->where(array('userId'=>$v['id']))->find();
@@ -303,69 +306,6 @@ class UserController extends Controller
 
       M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->save(array('realValue'=>(int)$temuid));
     }
-
-
-
-
-    function send_post($url, $post_data) {
-        $postdata = http_build_query($post_data);
-        header("content-type:text/html;charset=gbk");
-        $options = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => 'content-type:text/html;charset=gbk',
-                'content' => $postdata,
-                'timeout' => 15 * 60 // 超时时间（单位:s）
-            )
-        );
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        return $result;
-    }
-
-    public function sendmsg(){
-        $cont ='亲爱的会员，您帐号18883287644订单已签单，请收货后确认,一切以后台信息为准！2019-02-25 16:14:35';
-        $post_data = array(
-            'CorpID' => 'CQJS0032XXX1',
-            'Mobile' => '18883287644',
-            'Content' => $cont,
-            'Cell' => '',
-            'SendTime' => '',
-            'Pwd' => 'xsxxx123'
-        );
-      $res = $this->send_post('https://sdk2.028lk.com/sdk2/LinkWS.asmx/BatchSend2', $post_data);
-      print_r($res);die;
-
-    }
-
-
-
-
-    /**
-     * 模拟post进行url请求
-     * @param string $url
-     * @param string $param
-     */
-    function request_post($url = '', $param = '') {
-        if (empty($url) || empty($param)) {
-            return false;
-        }
-        header("content-type:text/html;charset=gbk");
-
-        $postUrl = $url;
-        $curlPost = $param;
-        $ch = curl_init();//初始化curl
-        curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
-        curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
-        $data = curl_exec($ch);//运行curl
-        curl_close($ch);
-
-        return $data;
-    }
-
 }
 
 
