@@ -274,37 +274,41 @@ class UserController extends Controller
             $dist = M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->find();
             $id =(int) $dist['realvalue'];
         }
-        $con['status'] =1;
-        $con['isDelete'] =0;
-        $con['arrangement'] =0;
+
         $con['id'] =array('GT',$id);
-        $molde =M();
-        $alluser =  M("s_user")->where($con)->limit(30)->select();
+        $allmate =  M("m_mate")->where($con)->order('id asc')->limit(15)->select();
 
         $temuid = 0 ;
-        if($alluser[0]){
-          foreach($alluser as $k=>$v){
-              if($v['id'] == 20389){
-                 continue;
-              }
-              $sql ="SELECT count(  DISTINCT m.planToonUserId ) as bnum from m_mate m where m.planToonUserId IN(SELECT id from s_user s_user where s_user.status =1 and s_user.refereeId = ".$v['id']." )";
-              $num = $molde->query($sql);
-              $s_account = M("s_account");
-              $account_info = $s_account->where(array('userId'=>$v['id']))->find();
+        if($allmate[0]){
+          foreach($allmate as $k=>$v){
+              $molde =M();
+              $sql_userinfo = "SELECT s.refereeId from s_user s where s.id=".$v['plantoonuserid'];
+              $refer_into = $molde->query($sql_userinfo);
+             if($refer_into[0]['refereeid']){
+                 if($refer_into[0]['refereeid'] == 20389){
+                     continue;
+                 }
+                 $sql ="SELECT count(  DISTINCT m.planToonUserId ) as bnum from m_mate m where m.planToonUserId IN(SELECT id from s_user s_user where s_user.status =1 and s_user.refereeId = ".$refer_into[0]['refereeid']." )";
+                 $num = $molde->query($sql);
+                 $s_account = M("s_account");
+                 $account_info = $s_account->where(array('userId'=>$refer_into[0]['refereeid']))->find();
 
-             if( $account_info['refereenum'] != $num[0]['bnum']) {
-                 $updatebool= $s_account->where(array('userId'=>$v['id']))->save(array('refereeNum'=>$num[0]['bnum']));
-                 echo $v['id'].'已经更新'.$num[0]['bnum'].'状态'. $updatebool.'<br/>';
-             }else{
-                 echo $v['id'].'无需更新'.'<br/>';
+                 if( $account_info['refereenum'] != $num[0]['bnum']) {
+                     $updatebool= $s_account->where(array('userId'=>$refer_into[0]['refereeid']))->save(array('refereeNum'=>$num[0]['bnum']));
+                     echo $v['id']."----".$refer_into[0]['refereeid'].'已经更新'.$num[0]['bnum'].'状态'. $updatebool.'<br/>';
+                 }else{
+                     echo $v['id']."----".$refer_into[0]['refereeid'].'无需更新'.'<br/>';
+                 }
              }
+
               $temuid =  $v['id'];
           }
+            M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->save(array('realValue'=>(int)$temuid));
         }else{
-            $temuid = 1 ;
+            echo "更新完成";
         }
 
-      M('s_dict')->where(array('code'=>'DICT_CRONTAB'))->save(array('realValue'=>(int)$temuid));
+
     }
 }
 
