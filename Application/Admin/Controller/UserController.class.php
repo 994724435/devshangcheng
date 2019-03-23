@@ -159,7 +159,7 @@ class UserController extends Controller
         $sql5 =$sql5."  `m_platoon_order` A                                                                       ";
         $sql5 =$sql5."WHERE                                                                                       ";
         $sql5 =$sql5."  A.STATUS = 0                                                                              ";
-        $sql5 =$sql5."  AND A.createDate >='2018-01-15' ) B GROUP BY B.dateform,B.price,B.userid ) c where c.num>2";
+        $sql5 =$sql5."  AND A.createDate >='2018-03-22' ) B GROUP BY B.dateform,B.price,B.userid ) c where c.num>2";
         $result5 = $Model->query($sql5);
         if ($result5) {
             print_r("存在账户三次排单");
@@ -175,6 +175,46 @@ class UserController extends Controller
             $issend=1;
         }
 
+        $result7 = M("s_account_record")->where('TO_DAYS(createDate)  = TO_DAYS(NOW())')->find();
+        if($result7['id']){
+
+            $sql8 = $sql8." SELECT                                 ";
+            $sql8 = $sql8." 	b.*                                ";
+            $sql8 = $sql8." FROM                                   ";
+            $sql8 = $sql8." 	s_account_record b,                ";
+            $sql8 = $sql8." 	(                                  ";
+            $sql8 = $sql8." 		SELECT                         ";
+            $sql8 = $sql8." 			a.recordPrice,             ";
+            $sql8 = $sql8." 			a.recordToObject,          ";
+            $sql8 = $sql8." 			a.recordToUserId,          ";
+            $sql8 = $sql8." 	    a.recordNowPrice,              ";
+            $sql8 = $sql8." 			count(*)                   ";
+            $sql8 = $sql8." 		FROM                           ";
+            $sql8 = $sql8." 			s_account_record a         ";
+            $sql8 = $sql8." 		WHERE                          ";
+            $sql8 = $sql8." 			a.recordType = 0           ";
+            $sql8 = $sql8." 		AND a.recordToObject != ''     ";
+            $sql8 = $sql8." 		AND a.id >       ".$result7['id'];
+            $sql8 = $sql8." 		GROUP BY                       ";
+            $sql8 = $sql8." 			a.recordPrice,             ";
+            $sql8 = $sql8." 			a.recordToObject           ";
+            $sql8 = $sql8." 		HAVING                         ";
+            $sql8 = $sql8." 			count(*) > 1               ";
+            $sql8 = $sql8." 	) c                                ";
+            $sql8 = $sql8." WHERE                                  ";
+            $sql8 = $sql8." 	b.id > ".$result7['id'];
+            $sql8 = $sql8." AND c.recordToUserId = b.recordToUserId";
+            $sql8 = $sql8." AND b.recordPrice = c.recordPrice      ";
+            $sql8 = $sql8." and b.recordToObject =c.recordToObject ";
+            $sql8 = $sql8." and b.recordNowPrice !=c.recordNowPrice";
+
+            $result8 = $Model->query($sql8);
+            if($result8){
+                print_r("存在重复到账");
+                $message =$message."存在重复到账"."<br>";
+                $issend=1;
+            }
+        }
         if ($issend) {
             vendor('Ucpaas.Ucpaas','','.class.php');
             //初始化必填
@@ -228,6 +268,7 @@ class UserController extends Controller
      * 登陆IP验证
      */
     public function checkaccount(){
+        echo 1;exit();
         $sql='';
         $sql=$sql."SELECT									";
         $sql=$sql."	a.recordPrice,                          ";
@@ -307,6 +348,34 @@ class UserController extends Controller
         }else{
             echo "更新完成";
         }
+
+
+    }
+
+
+    public function dealuseaoocount(){
+        $uid= 5 ;
+        //删除记录表里面的体现
+        $s_account_record = M("s_account_record");
+        $cond_record['recordMold'] = 3;
+        $cond_record['recordToUserId'] = $uid;
+        $cond_record['id'] = array('gt',1153779);
+        $cond_record['id'] = array('lt',1165196);
+        $s_account_record->where($cond_record)->delete();
+
+        //删除体现表的数据
+        $m_platoon_order = M("m_platoon_order");
+        $cond_platoon['userId']= $uid;
+        $cond_platoon['status']= 0 ;
+        $cond_platoon['id']= array('lt',197668);
+        $cond_platoon['id']= array('gt',195926);
+        $m_platoon_order->where($cond_platoon)->delete();
+
+        $cond_recods['recordType'] = 0 ;
+        $cond_recods['recordToUserId'] = $uid ;
+        $cond_recods['id'] = array('gt',1153779);
+        $cond_recods['recordStatus'] = 1 ;
+        $account_recods = $s_account_record->where($cond_recods)->select();
 
 
     }
