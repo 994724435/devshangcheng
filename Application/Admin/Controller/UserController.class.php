@@ -352,32 +352,67 @@ class UserController extends Controller
 
     }
 
+    /*
+    *  到账程序
+    */
+    public function dealjob(){
+        try{
+            $cond['status'] =0 ;
+            $cond['overDate']=array('LT',date('Y-m-d H:i:s',time())) ;
+            $joblist = M("m_job")->where($cond)->select();
+            $m_mate = M("m_mate");
+            $s_account_record =M("s_account_record");
+            $m_dist=M("s_dict");
+            foreach ($joblist as $k=>$v){
+              $account_record =$s_account_record->where(array('recordToObject'=>$v['mateid']))->find();
+              if($account_record['id']){
+                  echo "排单已经入账<br>";
+                  continue;
+              }
 
-    public function dealuseaoocount(){
-        $uid= 5 ;
-        //删除记录表里面的体现
-        $s_account_record = M("s_account_record");
-        $cond_record['recordMold'] = 3;
-        $cond_record['recordToUserId'] = $uid;
-        $cond_record['id'] = array('gt',1153779);
-        $cond_record['id'] = array('lt',1165196);
-        $s_account_record->where($cond_record)->delete();
+              $mate_info =  $m_mate->where(array('id'=>$v['mateid']))->find();
+                $accountRecordMold = 0;
+              if ($mate_info['type'] == 1){ //抢单
+                  $accountRecordMold = 1;
+                  $accountRecordBody = "抢单到账";
+                  $code ="DICT_MATE_ROB_RATIO";
+              }else{ //排单
+                  $accountRecordBody = "排单到账";
+                  $code="DICT_MATE_PLATOON_RATIO";
+              }
+              if(!$mate_info['plantoonuserid']){
+                  continue;
+              }
+              $disvalue = $m_dist->where(array('code'=>$code))->find();
+              $addmoney = $mate_info['price']*$disvalue['realvalue']/100;
+              $account_info =M("s_account")->where(array('userId'=>$mate_info['plantoonuserid']))->find();
+              if(empty($account_info)){
+                  echo "排单用户不存在";
+                  continue;
+              }
+              $updatecon['totalPrice'] =$account_info['totalprice'] + $addmoney;
+              $updatecon['canPrice']   =$account_info['canprice'] + $addmoney;
+               M("s_account")->where(array('userId'=>$mate_info['plantoonuserid']))->save($updatecon);
 
-        //删除体现表的数据
-        $m_platoon_order = M("m_platoon_order");
-        $cond_platoon['userId']= $uid;
-        $cond_platoon['status']= 0 ;
-        $cond_platoon['id']= array('lt',197668);
-        $cond_platoon['id']= array('gt',195926);
-        $m_platoon_order->where($cond_platoon)->delete();
+               //日志
+                $loginfo=array();
+                $loginfo['recordBody']=$accountRecordBody;
+                $loginfo['recordPrice']=$addmoney;
+                $loginfo['recordNowPrice']=$account_info['totalprice'] + $addmoney;
+                $loginfo['recordStatus']=1;
+                $loginfo['recordType']=0;
+                $loginfo['recordMold']=$accountRecordMold;
+                $loginfo['recordToObject']=$v['mateid'];
+                $loginfo['recordToUserId']=$mate_info['plantoonuserid'];
+                $loginfo['recordToAccountId']=$account_info['id'];
+                $loginfo['createDate']=date('Y-m-d H:i:s',time());
+                $s_account_record->add($loginfo);
+                echo "success UserID==>".$mate_info['plantoonuserid']."********mateID=>".$v['mateid']."price==>".$addmoney."<br>";
 
-        $cond_recods['recordType'] = 0 ;
-        $cond_recods['recordToUserId'] = $uid ;
-        $cond_recods['id'] = array('gt',1153779);
-        $cond_recods['recordStatus'] = 1 ;
-        $account_recods = $s_account_record->where($cond_recods)->select();
-
-
+        }
+        }catch (\Exception $e){
+            echo $e->getMessage();
+        }
     }
 }
 
