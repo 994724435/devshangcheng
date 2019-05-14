@@ -418,7 +418,7 @@ class UserController extends Controller
      * 处理冻结钱包余额
      */
     public function dealUserDong(){
-
+        echo "功能已下线";exit();
         $m_user =M("s_user");
         $m_cashapply_order = M("m_cashapply_order");
         $m_rob_order = M("m_rob_order");
@@ -508,7 +508,7 @@ class UserController extends Controller
         $m_s_account_record=M("s_account_record");
         $s_dict = M("s_dict")->where(array('code'=>'DICT_CRONTAB_MATE'))->find();
         $id =(int)$s_dict['realvalue'];
-//        $id =621;
+        $id =621;
         $new_id = 0;
         $jon_con['id'] =array('GT',$id);
         $job_list = $m_job->where($jon_con)->limit(10)->select();
@@ -527,7 +527,7 @@ class UserController extends Controller
                     if($account_info['dongprice'] <= 0){ //账户已经扣除完了
                         echo $mate_info['plantoonuserid']."账户冻结钱包已经为0"."<br>";
                         continue;
-                    }else{  // 扣除10%
+                    }else{  //抢单 扣除10%
                         $rob_info = $m_rob_order->where(array('id'=>$mate_info['plantoonid']))->find();
                         if(empty($rob_info['price'])){
                             continue;
@@ -542,7 +542,7 @@ class UserController extends Controller
                         $account_price['canPrice'] =$account_info['canprice'] + $shi_price;
 
                         $m_account->where(array('userId'=>$mate_info['plantoonuserid']))->save($account_price);
-                        echo $mate_info['plantoonuserid']."更新释放10%"."<br>";
+                        echo $mate_info['plantoonuserid']."更新释放抢单10%"."<br>";
                         $datalog =array();
                         $datalog['plantoonid'] =$mate_info['plantoonid'];
                         $datalog['type'] =3;
@@ -572,7 +572,7 @@ class UserController extends Controller
                 continue;
             }
 
-            if($mate_info['plantoonid']){
+            if($mate_info['plantoonid']){ // 排单
                 $dog_log =  $m_dong_log->where(array('plantoonid'=>$mate_info['plantoonid'],'type'=>1))->find();
                 if(empty($dog_log['id'])){ //如果没有到账记录
                     $account_info =  $m_account->where(array('userId'=>$mate_info['plantoonuserid']))->find();
@@ -594,7 +594,7 @@ class UserController extends Controller
                         $account_price['canPrice'] =$account_info['canprice'] + $shi_price;
 
                         $m_account->where(array('userId'=>$mate_info['plantoonuserid']))->save($account_price);
-                        echo $mate_info['plantoonuserid']."更新释放10%"."<br>";
+                        echo $mate_info['plantoonuserid']."更新释放排单10%"."<br>";
                         $datalog =array();
                         $datalog['plantoonid'] =$mate_info['plantoonid'];
                         $datalog['type'] =1;
