@@ -533,7 +533,7 @@ class UserController extends Controller
         $m_s_account_record=M("s_account_record");
         $s_dict = M("s_dict")->where(array('code'=>'DICT_CRONTAB_MATE'))->find();
         $id =(int)$s_dict['realvalue'];
-        $id =621;
+//        $id =621;
         $new_id = 0;
         $jon_con['id'] =array('GT',$id);
         $job_list = $m_job->where($jon_con)->limit(10)->select();
