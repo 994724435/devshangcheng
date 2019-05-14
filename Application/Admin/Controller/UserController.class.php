@@ -405,7 +405,32 @@ class UserController extends Controller
         $account_info = $s_account->where(array('userId'=>$userid))->find();
 
         if( $account_info['refereenum'] != $num[0]['bnum']) {
-            $updatebool= $s_account->where(array('userId'=>$userid))->save(array('refereeNum'=>$num[0]['bnum']));
+            $account_price= array();
+            $account_price['refereeNum'] =$num[0]['bnum'];
+            if($account_info['refereenum'] <  $num[0]['bnum'] &&  $account_info['dongprice'] > 0){ // 推荐人增多，释放冻结金额
+                $shi_price_one = (int)( $account_info['dongprice']/10 ) ;
+                $add_num = $num[0]['bnum'] - $account_info['refereenum'];
+                $shi_price = $add_num * $shi_price_one;
+                $account_price['dongprice'] = $account_info['dongprice'] - $shi_price ;
+                $account_price['totalPrice'] =$account_info['totalprice'] + $shi_price;
+                $account_price['canPrice'] =$account_info['canprice'] + $shi_price;
+
+                $m_s_account_record=M("s_account_record");
+                $account_recordlog=array();
+                $account_recordlog['recordBody'] ="冻结钱包解冻推荐人";
+                $account_recordlog['recordPrice'] =$shi_price;
+                $account_recordlog['recordNowPrice'] =$account_price['totalPrice'];
+                $account_recordlog['recordStatus'] =1 ;
+                $account_recordlog['recordType'] =0;
+                $account_recordlog['recordMold'] =9;
+                $account_recordlog['recordToUserId'] =$userid;
+                $account_recordlog['recordToAccountId'] =$userid;
+                $account_recordlog['createDate'] =date("Y-m-d H:i:s",time());
+                $m_s_account_record->add($account_recordlog);
+            }
+
+            $updatebool= $s_account->where(array('userId'=>$userid))->save($account_price);
+
             echo "<script>alert('刷新成功');window.location.href = 'https://www.365sjf.com/html/index.html';</script>";
             exit();
         }else{
